@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">YAMDA Deluxe</string>
+    <string name="action_settings">Opções</string>
+    <string name="search_title">Procurar</string>
+    <string name="search_hint">Procurar Titulo</string>
+
+    <string name="page_theaters">Nos Cinemas</string>
+    <string name="page_soon">A Estrear</string>
+    <string name="page_top">Mais Vistos</string>
+</resources>
