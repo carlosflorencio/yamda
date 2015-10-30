@@ -21,6 +21,13 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
+
+    sourceSets {
+
+        test {
+            java.srcDirs = ['test/java']
+        }
+    }
 }
 
 dependencies {
@@ -28,10 +35,13 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.0'
     compile 'com.android.support:design:23.1.0'
     compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
+    compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
 
     testCompile 'junit:junit:4.12'
     testCompile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
+    testCompile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
 
     androidTestCompile 'junit:junit:4.12'
     androidTestCompile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
+    androidTestCompile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
 }

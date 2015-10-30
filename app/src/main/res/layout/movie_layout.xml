@@ -3,12 +3,27 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/cover"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true" />
+
+    <TextView
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/movie_layout"
-        android:orientation="vertical">
+        android:textSize="@dimen/movie_view_title"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"/>
 
-    </LinearLayout>
+    <TextView
+        android:id="@+id/overview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/title"
+        android:layout_alignParentRight="true"/>
+
 
 </RelativeLayout>

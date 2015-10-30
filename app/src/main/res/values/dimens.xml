@@ -9,4 +9,8 @@
     <dimen name="rating">15dip</dimen>
     <dimen name="genre">13dip</dimen>
     <dimen name="year">12dip</dimen>
+
+    <!-- Dimensions of Movie View-->
+    <dimen name="movie_view_title">25dp</dimen>
+    <dimen name="movie_view_overview">17dp</dimen>
 </resources>

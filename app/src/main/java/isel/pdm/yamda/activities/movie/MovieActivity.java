@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -19,14 +18,6 @@ import isel.pdm.yamda.activities.home.TabFragment;
  */
 public class MovieActivity extends AppCompatActivity{
 
-    TextView title;
-    TextView rating;
-    TextView genre;
-    TextView releaseYear;
-    TextView overview;
-    ImageView image;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,27 +26,17 @@ public class MovieActivity extends AppCompatActivity{
     }
 
     private void handleIntent(Intent intent) {
-        this.title = new TextView(this);
-        this.title.setText(intent.getStringExtra(TabFragment.KEY_TITLE));
+        ((ImageView)findViewById(R.id.cover)).setImageResource(R.drawable.cover);
 
-        this.rating = new TextView(this);
-        this.rating.setText(intent.getStringExtra(TabFragment.KEY_RATING));
+        ((TextView)findViewById(R.id.title)).setText(intent.getStringExtra(TabFragment.KEY_TITLE));
 
-        this.genre = new TextView(this);
-        this.genre.setText(intent.getStringExtra(TabFragment.KEY_GENRE));
+        //((TextView)findViewById(R.id.rating)).setText(intent.getStringExtra(TabFragment.KEY_RATING));
 
-        this.releaseYear = new TextView(this);
-        this.releaseYear.setText(intent.getStringExtra(TabFragment.KEY_RELEASE_YEAR));
+        //((TextView)findViewById(R.id.genre)).setText(intent.getStringExtra(TabFragment.KEY_GENRE));
 
-        this.overview = new TextView(this);
-        this.overview.setText(intent.getStringExtra(TabFragment.KEY_OVERVIEW));
+        //((TextView)findViewById(R.id.release_year)).setText(intent.getStringExtra(TabFragment.KEY_RELEASE_YEAR));
 
-        LinearLayout layout = (LinearLayout) findViewById(R.id.movie_layout);
-        layout.addView(title);
-        layout.addView(rating);
-        layout.addView(genre);
-        layout.addView(releaseYear);
-        layout.addView(overview);
+        ((TextView)findViewById(R.id.overview)).setText(intent.getStringExtra(TabFragment.KEY_OVERVIEW));
     }
 
     @Override

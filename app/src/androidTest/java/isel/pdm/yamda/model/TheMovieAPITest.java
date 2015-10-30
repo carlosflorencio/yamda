@@ -2,9 +2,14 @@ package isel.pdm.yamda.model;
 
 import junit.framework.TestCase;
 
+import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
+
 import retrofit.Call;
+import retrofit.GsonConverterFactory;
+import retrofit.Response;
 import retrofit.Retrofit;
 
 /**
@@ -12,32 +17,85 @@ import retrofit.Retrofit;
  */
 public class TheMovieAPITest extends TestCase{
 
+    private TheMovieAPI service;
+
+    @Before
+    public void setUp() {
+        service = new Retrofit.Builder()
+                .baseUrl(TheMovieAPI.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(TheMovieAPI.class);
+    }
+
+    @Test
+    public void testGetConfiguration() throws IOException {
+        Call<Configuration> configurationCall = service.getConfig(TheMovieAPI.API_KEY);
+        Configuration configuration = configurationCall.execute().body();
+
+        assertNotNull(configuration.getImageConfigurations());
+    }
+
     @Test
     public void testGetMovie() throws Exception {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(TheMovieAPI.BASE_URL)
-                .build();
+        Call<Movie> movieCall = service.getMovie(550, TheMovieAPI.API_KEY, "en", null);
+        Response<Movie> response = movieCall.execute();
 
-        TheMovieAPI service = retrofit.create(TheMovieAPI.class);
+        Movie movie = response.body();
 
-        Call<Movie> movie = service.getMovie("550", TheMovieAPI.API_KEY, null, null);
-
-        System.out.println(movie.execute().body().toString());
-
+        assertNotNull(movie);
+        assertEquals(550, movie.getId());
     }
 
     @Test
     public void testGetNowPlaying() throws Exception {
+        Call<MovieListing> movieCall = service.getNowPlaying(TheMovieAPI.API_KEY, 1, "en");
+        Response<MovieListing> response = movieCall.execute();
 
+        MovieListing movies = response.body();
+
+        assertNotNull(movies);
+
+        assertEquals(1, movies.getPage());
+        assertEquals(20, movies.getResults().size());
     }
 
     @Test
     public void testGetUpcoming() throws Exception {
+        Call<MovieListing> movieCall = service.getUpcoming(TheMovieAPI.API_KEY, 1, "en");
+        Response<MovieListing> response = movieCall.execute();
 
+        MovieListing movies = response.body();
+
+        assertNotNull(movies);
+
+        assertEquals(1, movies.getPage());
+        assertEquals(20, movies.getResults().size());
     }
 
     @Test
     public void testGetMostPopular() throws Exception {
+        Call<MovieListing> movieCall = service.getMostPopular(TheMovieAPI.API_KEY, 1, "en");
+        Response<MovieListing> response = movieCall.execute();
 
+        MovieListing movies = response.body();
+
+        assertNotNull(movies);
+
+        assertEquals(1, movies.getPage());
+        assertEquals(20, movies.getResults().size());
+    }
+
+    @Test
+    public void testGetMovieImages() throws Exception {
+        Call<Images> movieCall = service.getMovieImages(550, TheMovieAPI.API_KEY, "en", null, null);
+        Response<Images> response = movieCall.execute();
+
+        Images images = response.body();
+        Images.Image smallest = images.getSmallestPoster();
+
+        assertNotNull(images);
+
+        assertEquals(550, images.getId());
     }
 }
