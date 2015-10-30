@@ -1,63 +1,97 @@
 package isel.pdm.yamda.model.entity;
 
 /**
- * Created by Nuno on 27/10/2015.
+ * Created by Nuno on 30/10/2015.
  */
 public class Movie {
 
-    private static class Genre{
-        private int id;
-        private String name;
-
-        public int getId() {
-            return id;
-        }
-
-        public String getName() {
-            return name;
-        }
-    }
-    // DTO (Data Transfer Object)
-
-    private Genre[] genres;
-    private int id;
-    private String imdb_id;
-    private String poster_path;
-    private String release_date;
-    private String status;
     private String title;
-    private float vote_average;
 
-    public Genre[] getGenres() {
+    private String abbreviation;
+
+    private String[] genres;
+
+    private String releaseDate;
+
+    private String director;
+
+    private String[] writers;
+
+    private String[] actors;
+
+    private String status;
+
+    private String poster;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getAbbreviation() {
+        return abbreviation;
+    }
+
+    public void setAbbreviation(String abbreviation) {
+        this.abbreviation = abbreviation;
+    }
+
+    public String[] getGenres() {
         return genres;
     }
 
-    public int getId() {
-        return id;
+    public void setGenres(String[] genres) {
+        this.genres = genres;
     }
 
-    public String getImdb_id() {
-        return imdb_id;
+    public String getReleaseDate() {
+        return releaseDate;
     }
 
-    public String getPoster_path() {
-        return poster_path;
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
     }
 
-    public String getRelease_date() {
-        return release_date;
+    public String getDirector() {
+        return director;
+    }
+
+    public void setDirector(String director) {
+        this.director = director;
+    }
+
+    public String[] getWriters() {
+        return writers;
+    }
+
+    public void setWriters(String[] writers) {
+        this.writers = writers;
+    }
+
+    public String[] getActors() {
+        return actors;
+    }
+
+    public void setActors(String[] actors) {
+        this.actors = actors;
     }
 
     public String getStatus() {
         return status;
     }
 
-    public String getTitle() {
-        return title;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public float getVote_average() {
-        return vote_average;
+    public String getPoster() {
+        return poster;
     }
 
+    public void setPoster(String poster) {
+        this.poster = poster;
+    }
 }

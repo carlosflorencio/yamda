@@ -1,4 +1,4 @@
-package isel.pdm.yamda.model.entity;
+package isel.pdm.yamda.data.entity;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -7,18 +7,18 @@ import java.util.Scanner;
 /**
  * Created by Nuno on 29/10/2015.
  */
-public class Configuration {
+public class ConfigurationDTO {
 
-    public class ImageConfigurations {
+    public class ImageConfigurationsDTO {
         String base_url;
         //String[] backdrop_sizes;
         //String[] logo_sizes;
         String[] poster_sizes;
     }
 
-    private ImageConfigurations images;
+    private ImageConfigurationsDTO images;
 
-    public ImageConfigurations getImageConfigurations() {
+    public ImageConfigurationsDTO getImageConfigurations() {
         return images;
     }
 
@@ -30,13 +30,13 @@ public class Configuration {
         return images == null ? null : images.poster_sizes;
     }
 
-    public static Configuration createFromFile(String path) throws FileNotFoundException {
+    public static ConfigurationDTO createFromFile(String path) throws FileNotFoundException {
         Scanner scanner = new Scanner(new FileInputStream(path));
         //TODO: Read from file
         throw new UnsupportedOperationException();
     }
 
-    public static Configuration createFromCache() throws FileNotFoundException {
+    public static ConfigurationDTO createFromCache() throws FileNotFoundException {
         //TODO: Read from cache
         throw new UnsupportedOperationException();
     }

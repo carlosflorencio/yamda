@@ -1,9 +1,10 @@
-package isel.pdm.yamda.model.api;
+package isel.pdm.yamda.data.api;
 
-import isel.pdm.yamda.model.entity.Configuration;
-import isel.pdm.yamda.model.entity.Images;
-import isel.pdm.yamda.model.entity.Movie;
-import isel.pdm.yamda.model.entity.MovieListing;
+import isel.pdm.yamda.data.entity.ConfigurationDTO;
+import isel.pdm.yamda.data.entity.GenresDTO;
+import isel.pdm.yamda.data.entity.ImagesDTO;
+import isel.pdm.yamda.data.entity.MovieDTO;
+import isel.pdm.yamda.data.entity.MovieListingDTO;
 import retrofit.Call;
 import retrofit.http.GET;
 import retrofit.http.Path;
@@ -16,7 +17,11 @@ public interface TheMovieAPI {
     String API_KEY = "3b4c65c3780fc1ef44ec5500b186d833";
 
     @GET("/3/configuration")
-    Call<Configuration> getConfig(@Query("api_key") String api_key);
+    Call<ConfigurationDTO> getConfig(@Query("api_key") String api_key);
+
+    @GET("/3/genre/movie/list")
+    Call<GenresDTO> getGenres(@Query("api_key") String api_key,
+                             @Query("language") String language);
 
     /**
      *
@@ -26,28 +31,28 @@ public interface TheMovieAPI {
      * @return
      */
     @GET("/3/movie/{id}")
-    Call<Movie> getMovie(@Path("id") int id,
+    Call<MovieDTO> getMovie(@Path("id") int id,
                          @Query("api_key") String api_key,
                          @Query("language") String lang,
                          @Query("append_to_response") String response_append);
 
     @GET("/3/movie/now_playing")
-    Call<MovieListing> getNowPlaying(@Query("api_key") String API_KEY,
+    Call<MovieListingDTO> getNowPlaying(@Query("api_key") String API_KEY,
                                     @Query("page") int page,
                                     @Query("language") String language);
 
     @GET("/3/movie/upcoming")
-    Call<MovieListing> getUpcoming(@Query("api_key") String API_KEY,
+    Call<MovieListingDTO> getUpcoming(@Query("api_key") String API_KEY,
                                   @Query("page") int page,
                                   @Query("language") String language);
 
     @GET("/3/movie/popular")
-    Call<MovieListing> getMostPopular(@Query("api_key") String API_KEY,
+    Call<MovieListingDTO> getMostPopular(@Query("api_key") String API_KEY,
                                      @Query("page") int page,
                                      @Query("language") String language);
 
     @GET("/3/movie/{id}/images")
-    Call<Images> getMovieImages(@Path("id") int id,
+    Call<ImagesDTO> getMovieImages(@Path("id") int id,
                                 @Query("api_key") String api_key,
                                 @Query("language") String lang,
                                 @Query("append_to_response") String response_append,

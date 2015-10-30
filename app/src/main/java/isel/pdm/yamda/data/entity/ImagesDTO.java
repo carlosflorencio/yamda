@@ -1,13 +1,13 @@
-package isel.pdm.yamda.model.entity;
+package isel.pdm.yamda.data.entity;
 
 import java.util.List;
 
 /**
  * Created by Nuno on 29/10/2015.
  */
-public class Images {
+public class ImagesDTO {
 
-    public class Image{
+    public class ImageDTO {
         private String file_path;
         private int width;
         private int height;
@@ -32,18 +32,18 @@ public class Images {
 
     private int id;
 
-    private List<Image> posters;
+    private List<ImageDTO> posters;
 
     public int getId() {
         return id;
     }
 
-    public List<Image> getPosters() {
+    public List<ImageDTO> getPosters() {
         return posters;
     }
 
-    public Image getSmallestPoster(){
-        Image image = posters.get(0);
+    public ImageDTO getSmallestPoster(){
+        ImageDTO image = posters.get(0);
         for (int i = 1; i < posters.size(); i++) {
             if (Float.compare(image.aspect_ratio, posters.get(i).aspect_ratio) > 0) {
                 image = posters.get(i);

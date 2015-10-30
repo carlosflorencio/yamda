@@ -1,11 +1,11 @@
-package isel.pdm.yamda.model.entity;
+package isel.pdm.yamda.data.entity;
 
 import java.util.List;
 
 /**
  * Created by Nuno on 29/10/2015.
  */
-public class MovieListing {
+public class MovieListingDTO {
 
     public static final String NOW_PLAYING_TAG = "NOW_PLAYING";
 
@@ -15,13 +15,13 @@ public class MovieListing {
 
     private int page;
 
-    private List<Movie> results;
+    private List<MovieListDTO> results;
 
     public int getPage() {
         return page;
     }
 
-    public List<Movie> getResults() {
+    public List<MovieListDTO> getResults() {
         return results;
     }
 }

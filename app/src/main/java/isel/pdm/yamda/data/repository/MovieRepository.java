@@ -1,11 +1,11 @@
-package isel.pdm.yamda.model.repository;
+package isel.pdm.yamda.data.repository;
 
 import java.io.IOException;
 import java.util.HashMap;
 
-import isel.pdm.yamda.model.api.TheMovieAPI;
-import isel.pdm.yamda.model.entity.Configuration;
-import isel.pdm.yamda.model.entity.MovieListing;
+import isel.pdm.yamda.data.api.TheMovieAPI;
+import isel.pdm.yamda.data.entity.ConfigurationDTO;
+import isel.pdm.yamda.data.entity.MovieListingDTO;
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 
@@ -16,11 +16,11 @@ public class MovieRepository implements IMovieRepository {
 
     private TheMovieAPI api;
 
-    private Configuration apiConfiguration;
+    private ConfigurationDTO apiConfiguration;
 
-    private HashMap<String, MovieListing> listings;
+    private HashMap<String, MovieListingDTO> listings;
 
-    public MovieRepository(TheMovieAPI api, Configuration apiConfiguration, HashMap<String, MovieListing> listings) {
+    public MovieRepository(TheMovieAPI api, ConfigurationDTO apiConfiguration, HashMap<String, MovieListingDTO> listings) {
         this.api = api;
         this.apiConfiguration = apiConfiguration;
         this.listings = listings;
@@ -31,7 +31,7 @@ public class MovieRepository implements IMovieRepository {
     }
 
     @Override
-    public Configuration getApiConfiguration() throws IOException {
+    public ConfigurationDTO getApiConfiguration() throws IOException {
         if(apiConfiguration == null){
             apiConfiguration = api.getConfig(TheMovieAPI.API_KEY).execute().body();
         }
@@ -39,39 +39,39 @@ public class MovieRepository implements IMovieRepository {
     }
 
     @Override
-    public HashMap<String, MovieListing> getListings() throws IOException {
+    public HashMap<String, MovieListingDTO> getListings() throws IOException {
         if (listings == null) {
             listings = new HashMap<>();
-            if (listings.get(MovieListing.NOW_PLAYING_TAG) == null) {
-                listings.put(MovieListing.NOW_PLAYING_TAG, api.getNowPlaying(TheMovieAPI.API_KEY, 1, "en").execute().body());
+            if (listings.get(MovieListingDTO.NOW_PLAYING_TAG) == null) {
+                listings.put(MovieListingDTO.NOW_PLAYING_TAG, api.getNowPlaying(TheMovieAPI.API_KEY, 1, "en").execute().body());
             }
-            if (listings.get(MovieListing.UPCOMING_TAG) == null) {
-                listings.put(MovieListing.UPCOMING_TAG, api.getUpcoming(TheMovieAPI.API_KEY, 1, "en").execute().body());
+            if (listings.get(MovieListingDTO.UPCOMING_TAG) == null) {
+                listings.put(MovieListingDTO.UPCOMING_TAG, api.getUpcoming(TheMovieAPI.API_KEY, 1, "en").execute().body());
             }
-            if (listings.get(MovieListing.POPULAR_TAG) == null) {
-                listings.put(MovieListing.POPULAR_TAG, api.getMostPopular(TheMovieAPI.API_KEY, 1, "en").execute().body());
+            if (listings.get(MovieListingDTO.POPULAR_TAG) == null) {
+                listings.put(MovieListingDTO.POPULAR_TAG, api.getMostPopular(TheMovieAPI.API_KEY, 1, "en").execute().body());
             }
         }
         return listings;
     }
 
     @Override
-    public MovieListing getListing(String tag) throws IOException {
+    public MovieListingDTO getListing(String tag) throws IOException {
         if (listings == null) {
             listings = new HashMap<>();
         }
         if(listings.get(tag) == null) {
-            MovieListing listing;
+            MovieListingDTO listing;
             switch (tag) {
-                case MovieListing.NOW_PLAYING_TAG:
+                case MovieListingDTO.NOW_PLAYING_TAG:
                     listing = api.getNowPlaying(TheMovieAPI.API_KEY, 1, "en").execute().body();
                     listings.put(tag, listing);
                     break;
-                case MovieListing.POPULAR_TAG:
+                case MovieListingDTO.POPULAR_TAG:
                     listing = api.getMostPopular(TheMovieAPI.API_KEY, 1, "en").execute().body();
                     listings.put(tag, listing);
                     break;
-                case MovieListing.UPCOMING_TAG:
+                case MovieListingDTO.UPCOMING_TAG:
                     listing = api.getUpcoming(TheMovieAPI.API_KEY, 1, "en").execute().body();
                     listings.put(tag, listing);
                     break;
@@ -97,14 +97,14 @@ public class MovieRepository implements IMovieRepository {
                 .build()
                 .create(TheMovieAPI.class);
 
-        Configuration apiConfiguration = api.getConfig(TheMovieAPI.API_KEY)
+        ConfigurationDTO apiConfiguration = api.getConfig(TheMovieAPI.API_KEY)
                 .execute()
                 .body();
 
-        HashMap<String, MovieListing> listings = new HashMap<>();
-        listings.put(MovieListing.NOW_PLAYING_TAG, api.getNowPlaying(TheMovieAPI.API_KEY, 1, "en").execute().body());
-        listings.put(MovieListing.UPCOMING_TAG, api.getUpcoming(TheMovieAPI.API_KEY, 1, "en").execute().body());
-        listings.put(MovieListing.POPULAR_TAG, api.getMostPopular(TheMovieAPI.API_KEY, 1, "en").execute().body());
+        HashMap<String, MovieListingDTO> listings = new HashMap<>();
+        listings.put(MovieListingDTO.NOW_PLAYING_TAG, api.getNowPlaying(TheMovieAPI.API_KEY, 1, "en").execute().body());
+        listings.put(MovieListingDTO.UPCOMING_TAG, api.getUpcoming(TheMovieAPI.API_KEY, 1, "en").execute().body());
+        listings.put(MovieListingDTO.POPULAR_TAG, api.getMostPopular(TheMovieAPI.API_KEY, 1, "en").execute().body());
 
         return new MovieRepository(api, apiConfiguration, listings);
     }
