@@ -7,6 +7,10 @@ import org.junit.Test;
 
 import java.io.IOException;
 
+import isel.pdm.yamda.model.api.TheMovieAPI;
+import isel.pdm.yamda.model.entity.Configuration;
+import isel.pdm.yamda.model.entity.Movie;
+import isel.pdm.yamda.model.entity.MovieListing;
 import retrofit.Call;
 import retrofit.GsonConverterFactory;
 import retrofit.Response;
@@ -84,18 +88,5 @@ public class TheMovieAPITest extends TestCase{
 
         assertEquals(1, movies.getPage());
         assertEquals(20, movies.getResults().size());
-    }
-
-    @Test
-    public void testGetMovieImages() throws Exception {
-        Call<Images> movieCall = service.getMovieImages(550, TheMovieAPI.API_KEY, "en", null, null);
-        Response<Images> response = movieCall.execute();
-
-        Images images = response.body();
-        Images.Image smallest = images.getSmallestPoster();
-
-        assertNotNull(images);
-
-        assertEquals(550, images.getId());
     }
 }

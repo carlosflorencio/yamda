@@ -1,4 +1,4 @@
-package isel.pdm.yamda.model;
+package isel.pdm.yamda.model.entity;
 
 import java.util.List;
 

@@ -1,5 +1,9 @@
-package isel.pdm.yamda.model;
+package isel.pdm.yamda.model.api;
 
+import isel.pdm.yamda.model.entity.Configuration;
+import isel.pdm.yamda.model.entity.Images;
+import isel.pdm.yamda.model.entity.Movie;
+import isel.pdm.yamda.model.entity.MovieListing;
 import retrofit.Call;
 import retrofit.http.GET;
 import retrofit.http.Path;

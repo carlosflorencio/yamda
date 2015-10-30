@@ -1,4 +1,4 @@
-package isel.pdm.yamda.model;
+package isel.pdm.yamda.model.entity;
 
 /**
  * Created by Nuno on 27/10/2015.
