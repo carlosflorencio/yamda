@@ -1,4 +1,4 @@
-package isel.pdm.yamda.activities.search;
+package isel.pdm.yamda.presentation.view.activity.search;
 
 import android.app.ListActivity;
 import android.app.SearchManager;

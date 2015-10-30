@@ -1,4 +1,4 @@
-package isel.pdm.yamda.activities.home;
+package isel.pdm.yamda.presentation.view.activity.home;
 
 import android.app.Activity;
 import android.content.Context;

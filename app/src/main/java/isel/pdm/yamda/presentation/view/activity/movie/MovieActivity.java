@@ -1,4 +1,4 @@
-package isel.pdm.yamda.activities.movie;
+package isel.pdm.yamda.presentation.view.activity.movie;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -11,7 +11,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 
 import isel.pdm.yamda.R;
-import isel.pdm.yamda.activities.home.TabFragment;
+import isel.pdm.yamda.presentation.view.activity.home.TabFragment;
 
 /**
  * Created by Nuno on 28/10/2015.
