@@ -1,4 +1,4 @@
-package isel.pdm.yamda.presentation.view.activity.home;
+package isel.pdm.yamda.presentation.view.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,7 +14,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import isel.pdm.yamda.R;
-import isel.pdm.yamda.presentation.view.activity.movie.MovieActivity;
+import isel.pdm.yamda.presentation.view.activity.MovieActivity;
+import isel.pdm.yamda.presentation.view.adapter.LazyAdapter;
 
 
 public class TabFragment extends Fragment {

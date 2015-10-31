@@ -1,4 +1,4 @@
-package isel.pdm.yamda.presentation.view.activity.home;
+package isel.pdm.yamda.presentation.view.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import isel.pdm.yamda.R;
+import isel.pdm.yamda.presentation.view.fragment.TabFragment;
 
 /**
  * Created by Nuno on 28/10/2015.

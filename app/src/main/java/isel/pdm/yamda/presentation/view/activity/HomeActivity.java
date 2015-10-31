@@ -1,4 +1,4 @@
-package isel.pdm.yamda.presentation.view.activity.home;
+package isel.pdm.yamda.presentation.view.activity;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -15,7 +15,8 @@ import android.widget.SearchView;
 import java.util.Locale;
 
 import isel.pdm.yamda.R;
-import isel.pdm.yamda.presentation.view.activity.about.AboutActivity;
+import isel.pdm.yamda.presentation.view.activity.AboutActivity;
+import isel.pdm.yamda.presentation.view.fragment.ViewPagerAdapter;
 import vendor.SlidingTabLayout;
 
 public class HomeActivity extends AppCompatActivity {

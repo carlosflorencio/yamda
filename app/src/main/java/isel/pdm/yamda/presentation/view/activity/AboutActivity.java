@@ -1,4 +1,4 @@
-package isel.pdm.yamda.presentation.view.activity.about;
+package isel.pdm.yamda.presentation.view.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

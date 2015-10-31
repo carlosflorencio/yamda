@@ -1,4 +1,4 @@
-package isel.pdm.yamda.presentation.view.activity.movie;
+package isel.pdm.yamda.presentation.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import isel.pdm.yamda.R;
-import isel.pdm.yamda.presentation.view.activity.home.TabFragment;
+import isel.pdm.yamda.presentation.view.fragment.TabFragment;
 
 /**
  * Created by Nuno on 28/10/2015.

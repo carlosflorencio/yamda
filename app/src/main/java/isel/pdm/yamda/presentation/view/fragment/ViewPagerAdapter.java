@@ -1,4 +1,4 @@
-package isel.pdm.yamda.presentation.view.activity.home;
+package isel.pdm.yamda.presentation.view.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
