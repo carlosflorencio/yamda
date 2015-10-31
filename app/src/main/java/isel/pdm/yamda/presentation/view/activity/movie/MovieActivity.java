@@ -2,6 +2,7 @@ package isel.pdm.yamda.presentation.view.activity.movie;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ public class MovieActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movie_layout);
         handleIntent(getIntent());
+        setUpSupportActionBar();
     }
 
     private void handleIntent(Intent intent) {
@@ -37,5 +39,10 @@ public class MovieActivity extends AppCompatActivity{
                 "regain his old life as payment for a task considered to be impossible: " +
                 "\\\"inception\\\", the implantation of another person's idea into a target's" +
                 " subconscious.");
+    }
+
+    private void setUpSupportActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        //TODO: Set back button, destroys this activity and goes back to the other
     }
 }

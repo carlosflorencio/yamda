@@ -12,6 +12,7 @@ import isel.pdm.yamda.data.entity.ConfigurationDTO;
 import isel.pdm.yamda.data.entity.GenresDTO;
 import isel.pdm.yamda.data.entity.MovieDTO;
 import isel.pdm.yamda.data.entity.MovieListingDTO;
+import isel.pdm.yamda.data.entity.SearchMovieListDTO;
 import retrofit.Call;
 import retrofit.GsonConverterFactory;
 import retrofit.Response;
@@ -99,6 +100,16 @@ public class TheMovieAPITest extends TestCase{
         assertNotNull(genres);
         assertNotNull(genres.getGenres());
         assertNotNull(genres.getGenres()[0]);
+    }
 
+    @Test
+    public void testGetSearchMovie() throws Exception {
+        Call<SearchMovieListDTO> searchCall = service.getSearchedMovies(TheMovieAPI.API_KEY, "inception", 1, "en");
+        SearchMovieListDTO search = searchCall.execute().body();
+
+        assertNotNull(search);
+
+        assertEquals(1, search.getPage());
+        assertNotNull(search.getResults());
     }
 }
