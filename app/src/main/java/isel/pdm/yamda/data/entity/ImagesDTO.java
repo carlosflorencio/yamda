@@ -3,7 +3,8 @@ package isel.pdm.yamda.data.entity;
 import java.util.List;
 
 /**
- * Created by Nuno on 29/10/2015.
+ * Images Data Trasnfer Object
+ * Used to store data of images of a specific movie from TMDb
  */
 public class ImagesDTO {
 
@@ -30,8 +31,14 @@ public class ImagesDTO {
         }
     }
 
+    /**
+     * id of the specific movie
+     */
     private int id;
 
+    /**
+     * List of data of several poster images specific to one movie
+     */
     private List<ImageDTO> posters;
 
     public int getId() {

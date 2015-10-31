@@ -5,25 +5,48 @@
 
     <ImageView
         android:id="@+id/cover"
-        android:layout_width="150dp"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_above="@+id/release_year"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp" />
 
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/movie_view_title"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"/>
+        android:layout_toRightOf="@+id/cover"
+        android:textSize="@dimen/movie_view_title"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/overview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/title"
-        android:layout_alignParentRight="true"/>
+        android:textSize="@dimen/movie_view_overview"
+        android:layout_below="@id/title"
+        android:layout_toRightOf="@+id/cover"
+        android:layout_marginRight="8dp" />
+
+    <TextView
+        android:id="@+id/release_year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:layout_alignBottom="@+id/overview"
+        android:layout_alignRight="@+id/cover"
+        android:layout_marginRight="16dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/overview"
+        android:layout_marginTop="25dp"
+        android:layout_centerHorizontal="true"
+        android:text="@string/movie_button_more" />
 
 
 </RelativeLayout>

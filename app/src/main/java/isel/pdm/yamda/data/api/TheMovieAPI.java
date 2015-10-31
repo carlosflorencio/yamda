@@ -10,24 +10,41 @@ import retrofit.http.GET;
 import retrofit.http.Path;
 import retrofit.http.Query;
 
+/**
+ * Restrives information from online database through {@code Retrofit}.
+ */
 public interface TheMovieAPI {
 
     String BASE_URL = "http://api.themoviedb.org";
 
     String API_KEY = "3b4c65c3780fc1ef44ec5500b186d833";
 
+    /**
+     * Retrieves configuration information, such as image base url and sizes of images.
+     *
+     * @param api_key api_key used to retrieve information
+     * @return
+     */
     @GET("/3/configuration")
     Call<ConfigurationDTO> getConfig(@Query("api_key") String api_key);
 
+    /**
+     * Retrieves a list of genres used in movies.
+     *
+     * @param api_key  api_key used to retrieve information
+     * @param language to retrieve in this language (ISO 639-1 code)
+     * @return
+     */
     @GET("/3/genre/movie/list")
     Call<GenresDTO> getGenres(@Query("api_key") String api_key,
                              @Query("language") String language);
 
     /**
+     *  Retrieves a specific movie through his {@code id}
      *
-     * @param id
-     * @param api_key
-     * @param lang
+     * @param id         movie id
+     * @param api_key    api_key used to retrieve information
+     * @param lang       to retrieve in this language (ISO 639-1 code)
      * @return
      */
     @GET("/3/movie/{id}")
@@ -36,21 +53,55 @@ public interface TheMovieAPI {
                          @Query("language") String lang,
                          @Query("append_to_response") String response_append);
 
+    /**
+     *  Retrieves a list of movies that are now on cinema.
+     *
+     * @param API_KEY     api_key used to retrieve information
+     * @param page        page (Minimum 1, maximum 1000)
+     * @param language    to retrieve in this language (ISO 639-1 code)
+     * @return
+     */
     @GET("/3/movie/now_playing")
     Call<MovieListingDTO> getNowPlaying(@Query("api_key") String API_KEY,
                                     @Query("page") int page,
                                     @Query("language") String language);
 
+    /**
+     *  Retrieves a list of movies that are to come to cinema.
+     *
+     * @param API_KEY     api_key used to retrieve information
+     * @param page
+     * @param language    to retrieve in this language (ISO 639-1 code)
+     * @return
+     */
     @GET("/3/movie/upcoming")
     Call<MovieListingDTO> getUpcoming(@Query("api_key") String API_KEY,
                                   @Query("page") int page,
                                   @Query("language") String language);
 
+    /**
+     *  Retrieves a list of movies that are the most popular on TMDb.
+     *
+     * @param API_KEY     api_key used to retrieve information
+     * @param page
+     * @param language    to retrieve in this language (ISO 639-1 code)
+     * @return
+     */
     @GET("/3/movie/popular")
     Call<MovieListingDTO> getMostPopular(@Query("api_key") String API_KEY,
                                      @Query("page") int page,
                                      @Query("language") String language);
 
+    /**
+     *  Retrieves a list of images of a specific movie.
+     *
+     * @param id                 movie id
+     * @param api_key            api_key used to retrieve information
+     * @param lang               to retrieve in this language (ISO 639-1 code)
+     * @param response_append
+     * @param img_lang
+     * @return
+     */
     @GET("/3/movie/{id}/images")
     Call<ImagesDTO> getMovieImages(@Path("id") int id,
                                 @Query("api_key") String api_key,

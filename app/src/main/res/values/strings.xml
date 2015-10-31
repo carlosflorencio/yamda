@@ -4,7 +4,11 @@
     <string name="search_title">Search</string>
     <string name="search_hint">Search Title</string>
 
+    <string name="about">About</string>
+
     <string name="page_theaters">In Theaters</string>
     <string name="page_soon">Coming Soon</string>
     <string name="page_top">Most Popular</string>
+
+    <string name="movie_button_more">More</string>
 </resources>

@@ -1,7 +1,8 @@
 package isel.pdm.yamda.data.entity;
 
 /**
- * Created by Nuno on 27/10/2015.
+ * Movie Data Transfer Object
+ * Used to store the data of a movie from TMDb
  */
 public class MovieDTO {
 
@@ -17,15 +18,21 @@ public class MovieDTO {
             return name;
         }
     }
-    // DTO (Data Transfer Object)
 
     private GenreDTO[] genres;
+
     private int id;
+
     private String imdb_id;
+
     private String poster_path;
+
     private String release_date;
+
     private String status;
+
     private String title;
+
     private float vote_average;
 
     public GenreDTO[] getGenres() {

@@ -1,7 +1,8 @@
 package isel.pdm.yamda.data.entity;
 
 /**
- * Created by Nuno on 30/10/2015.
+ * Genres Data Transfer Object
+ * Used to store the data of every genre in movies category of TMDb
  */
 public class GenresDTO {
 

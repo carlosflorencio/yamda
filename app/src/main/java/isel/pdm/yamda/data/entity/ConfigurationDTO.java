@@ -5,7 +5,8 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 /**
- * Created by Nuno on 29/10/2015.
+ * Configuration Data Transfer Object
+ * Used to store data from configuration of TMDb
  */
 public class ConfigurationDTO {
 

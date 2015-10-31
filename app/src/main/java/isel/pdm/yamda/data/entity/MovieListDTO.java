@@ -1,7 +1,8 @@
 package isel.pdm.yamda.data.entity;
 
 /**
- * Created by Nuno on 30/10/2015.
+ * Small Movie Data Transfer Object
+ * Used to store a movie retrieved from a list of movies from TMDb
  */
 public class MovieListDTO {
 

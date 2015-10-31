@@ -3,7 +3,8 @@ package isel.pdm.yamda.data.entity;
 import java.util.List;
 
 /**
- * Created by Nuno on 29/10/2015.
+ * List of Movies Data Transfer Object
+ * Used to retrieve a series of movies from TMDb
  */
 public class MovieListingDTO {
 

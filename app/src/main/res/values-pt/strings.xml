@@ -4,7 +4,11 @@
     <string name="search_title">Procurar</string>
     <string name="search_hint">Procurar Titulo</string>
 
+    <string name="about">Sobre</string>
+
     <string name="page_theaters">Nos Cinemas</string>
     <string name="page_soon">A Estrear</string>
     <string name="page_top">Mais Vistos</string>
+
+    <string name="movie_button_more">Mais</string>
 </resources>

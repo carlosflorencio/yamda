@@ -1,7 +1,7 @@
 package isel.pdm.yamda.model.entity;
 
 /**
- * Created by Nuno on 30/10/2015.
+ * Class that represents a Movie in the model layer.
  */
 public class Movie {
 
