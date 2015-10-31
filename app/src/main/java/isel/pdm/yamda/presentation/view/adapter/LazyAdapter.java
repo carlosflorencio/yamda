@@ -10,10 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import isel.pdm.yamda.R;
-import isel.pdm.yamda.presentation.view.fragment.TabFragment;
+import isel.pdm.yamda.presentation.view.entity.MovieView;
 
 /**
  * Created by Nuno on 28/10/2015.
@@ -21,11 +20,11 @@ import isel.pdm.yamda.presentation.view.fragment.TabFragment;
 public class LazyAdapter extends BaseAdapter {
 
     private Activity activity;
-    private ArrayList<HashMap<String, String>> data;
+    private ArrayList<MovieView> data;
     private static LayoutInflater inflater=null;
     //public ImageLoader imageLoader;
 
-    public LazyAdapter(Activity a, ArrayList<HashMap<String, String>> d) {
+    public LazyAdapter(Activity a, ArrayList<MovieView> d) {
         activity = a;
         data=d;
         inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -56,15 +55,17 @@ public class LazyAdapter extends BaseAdapter {
         ImageView thumb_image = (ImageView) view.findViewById(R.id.thumbnail); // thumb image
         ImageView arrow = (ImageView) view.findViewById(R.id.arrow); // thumb image
 
-        HashMap<String, String> movie = data.get(position);
+        MovieView movie = data.get(position);
 
         // Setting all values in listview
-        title.setText(movie.get(TabFragment.KEY_TITLE));
-        rating.setText(movie.get(TabFragment.KEY_RATING));
-        genre.setText(movie.get(TabFragment.KEY_GENRE));
-        releaseYear.setText(movie.get(TabFragment.KEY_RELEASE_YEAR));
+        title.setText(movie.getTitle());
+        rating.setText("Rating: " + movie.getRating());
+        genre.setText(movie.getGenres());
+        releaseYear.setText(movie.getRelease_date());
         thumb_image.setImageResource(R.drawable.placeholder);
         //imageLoader.DisplayImage(movie.get(TabFragment.KEY_THUMB_URL), thumb_image);
         return view;
     }
+
+
 }
