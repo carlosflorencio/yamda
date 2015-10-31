@@ -9,7 +9,7 @@ import android.util.Log;
  */
 public class LoggingActivity extends AppCompatActivity {
 
-    protected final String TAG = getClass().getSimpleName();
+    protected final String TAG = "DEBUG_" + getClass().getSimpleName();
 
     /**
      * Helper method that produces a log message with the given method name and suffix.
