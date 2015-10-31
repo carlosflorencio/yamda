@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import isel.pdm.yamda.R;
+import isel.pdm.yamda.presentation.view.entity.MovieView;
 import isel.pdm.yamda.presentation.view.fragment.TabFragment;
 
 /**
@@ -24,15 +25,17 @@ public class MovieActivity extends AppCompatActivity{
     }
 
     private void handleIntent(Intent intent) {
-        ((ImageView)findViewById(R.id.cover)).setImageResource(R.drawable.cover);
+        MovieView movie = intent.getExtras().getParcelable(TabFragment.MOVIE_TAG);
 
-        ((TextView)findViewById(R.id.title)).setText(intent.getStringExtra(TabFragment.KEY_TITLE));
+        ((ImageView) findViewById(R.id.cover)).setImageResource(R.drawable.cover);
 
-//        ((TextView)findViewById(R.id.rating)).setText(intent.getStringExtra(TabFragment.KEY_RATING));
-//
-//        ((TextView)findViewById(R.id.genre)).setText(intent.getStringExtra(TabFragment.KEY_GENRE));
+        ((TextView) findViewById(R.id.title)).setText(movie.getTitle());
 
-        ((TextView) findViewById(R.id.release_year)).setText(intent.getStringExtra(TabFragment.KEY_RELEASE_YEAR));
+        //((TextView)findViewById(R.id.rating)).setText(movie.getRating());
+
+        //((TextView)findViewById(R.id.genre)).setText(movie.getGenres());
+
+        ((TextView) findViewById(R.id.release_year)).setText(movie.getRelease_date());
 
         ((TextView) findViewById(R.id.overview)).setText("Cobb, a skilled thief who commits corporate" +
                 " espionage by infiltrating the subconscious of his targets is offered a chance to " +
