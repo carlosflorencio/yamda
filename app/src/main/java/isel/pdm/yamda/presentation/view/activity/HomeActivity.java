@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -15,11 +14,11 @@ import android.widget.SearchView;
 import java.util.Locale;
 
 import isel.pdm.yamda.R;
-import isel.pdm.yamda.presentation.view.activity.AboutActivity;
+import isel.pdm.yamda.presentation.view.activity.common.BaseActivity;
 import isel.pdm.yamda.presentation.view.fragment.ViewPagerAdapter;
 import vendor.SlidingTabLayout;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends BaseActivity {
 
     Toolbar toolbar;
     ViewPager pager;
