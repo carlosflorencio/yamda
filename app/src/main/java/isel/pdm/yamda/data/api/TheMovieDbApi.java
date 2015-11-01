@@ -26,7 +26,7 @@ public class TheMovieDbApi implements IMovieApi {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         this.api = retrofit.create(ITheMovieDbServiceAPI.class);
-        this.language = Locale.getDefault().getDisplayLanguage();
+        this.language = Locale.getDefault().getLanguage();
     }
 
     /** {@inheritDoc} **/

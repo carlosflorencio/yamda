@@ -3,6 +3,7 @@ package isel.pdm.yamda.presentation.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,9 +23,7 @@ public class MovieActivity extends BaseActivity implements IMovieView {
     private static final String SAVE_TAG = "movie_details";
 
     MovieViewPresenter presenter;
-
     MovieView movieView;
-
     ImageLoader imageLoader;
 
     @Override
@@ -37,10 +36,10 @@ public class MovieActivity extends BaseActivity implements IMovieView {
     }
 
     private void initPresenter(Intent intent) {
-        presenter = new MovieViewPresenter();
-        presenter.setId(intent.getExtras().getInt(ID_TAG));
-        presenter.initialize();
+        this.presenter = new MovieViewPresenter();
         this.presenter.setView(this);
+        this.presenter.setId(intent.getExtras().getInt(ID_TAG));
+        this.presenter.initialize();
     }
 
     @Override

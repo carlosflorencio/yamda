@@ -1,5 +1,7 @@
 package isel.pdm.yamda.presentation.presenter;
 
+import android.util.Log;
+
 import isel.pdm.yamda.model.entity.Movie;
 import isel.pdm.yamda.model.repository.IMovieRepository;
 import isel.pdm.yamda.presentation.creator.DataFactory;
