@@ -2,6 +2,7 @@ package isel.pdm.yamda.presentation.view.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +23,6 @@ import isel.pdm.yamda.presentation.view.fragment.common.PresentableFragment;
 
 
 public class ListMoviesFragment extends PresentableFragment implements IMoviesListView, AdapterView.OnItemClickListener {
-
-    private static final String TAG = ListMoviesFragment.class.getSimpleName();
 
     private View view;
     private ListView listView;

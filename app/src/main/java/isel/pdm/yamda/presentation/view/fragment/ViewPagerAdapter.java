@@ -85,9 +85,9 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
      */
     public void setupFragments() {
         this.tabs = new Fragment[] {
-                createMovieTabFragment(Titles[0].toString()),
-                createMovieTabFragment(Titles[1].toString()),
-                createMovieTabFragment(Titles[2].toString())
+                addTypeInfotToFragmentBundle(new InTheathersMoviesListFragment(), Titles[0].toString()),
+                addTypeInfotToFragmentBundle(new SoonMoviesListFragment(), Titles[1].toString()),
+                addTypeInfotToFragmentBundle(new TopMoviesListFragment(), Titles[2].toString())
         };
     }
 
@@ -96,8 +96,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
      * @param type
      * @return
      */
-    public Fragment createMovieTabFragment(String type) {
-        Fragment f = new ListMoviesFragment();
+    public Fragment addTypeInfotToFragmentBundle(Fragment f, String type) {
         Bundle b = new Bundle();
         b.putString(FRAGMENT_KEY, type);
         f.setArguments(b);
