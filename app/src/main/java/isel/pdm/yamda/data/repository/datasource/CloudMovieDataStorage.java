@@ -10,7 +10,7 @@ import retrofit.Call;
 /**
  * This class should use an api to fetch the data
  */
-public class CloudMovieDataStorage implements IMovieDataStore {
+public class CloudMovieDataStorage implements IMovieApi {
 
     private final IMovieApi api;
 
@@ -19,27 +19,32 @@ public class CloudMovieDataStorage implements IMovieDataStore {
     }
 
     @Override
-    public Call<ConfigurationDTO> apiConfiguration() {
+    public Call<ConfigurationDTO> getApiConfiguration() {
         return this.api.getApiConfiguration();
     }
 
     @Override
-    public Call<MovieListingDTO> theaterMovieListEntity(int page) {
+    public Call<MovieListingDTO> getTheatersMovies(int page) {
         return this.api.getTheatersMovies(page);
     }
 
     @Override
-    public Call<MovieListingDTO> soonMovieListEntity(int page) {
+    public Call<MovieListingDTO> getSoonMovies(int page) {
         return this.api.getSoonMovies(page);
     }
 
     @Override
-    public Call<MovieListingDTO> topMovieListEntity(int page) {
+    public Call<MovieListingDTO> getTopMovies(int page) {
         return this.api.getTopMovies(page);
     }
 
     @Override
-    public Call<MovieDTO> movieEntityDetails(int id) {
+    public Call<MovieDTO> getMovie(int id) {
         return this.api.getMovie(id);
+    }
+
+    @Override
+    public Call<MovieListingDTO> getMoviesSearch(String search, int page) {
+        return this.api.getMoviesSearch(search, page);
     }
 }

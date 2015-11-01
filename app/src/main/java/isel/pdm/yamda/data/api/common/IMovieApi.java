@@ -44,4 +44,11 @@ public interface IMovieApi {
      * @return
      */
     Call<MovieDTO> getMovie(int id);
+
+    /**
+     * Get the top movies in theaters
+     * @param search
+     * @return
+     */
+    Call<MovieListingDTO> getMoviesSearch(String search, int page);
 }
