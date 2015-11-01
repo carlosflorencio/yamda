@@ -6,6 +6,10 @@ package isel.pdm.yamda.data.entity.tmdb;
  */
 public class MovieDTO {
 
+    public String getOverview() {
+        return overview;
+    }
+
     public static class GenreDTO {
         private int id;
         private String name;
@@ -19,7 +23,7 @@ public class MovieDTO {
         }
     }
 
-    private int[] genres;
+    private GenreDTO[] genres;
 
     private int id;
 
@@ -35,8 +39,14 @@ public class MovieDTO {
 
     private float vote_average;
 
-    public int[] getGenres() {
-        return genres;
+    private String overview;
+
+    public String[] getGenres() {
+        String[] strings = new String[genres.length];
+        for (int i = 0; i < genres.length; i++) {
+            strings[i] = genres[i].name;
+        }
+        return strings;
     }
 
     public int getId() {

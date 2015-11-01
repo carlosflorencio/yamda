@@ -39,8 +39,7 @@ public interface ITheMovieDbServiceAPI {
     @GET("/3/movie/{id}")
     Call<MovieDTO> getMovie(@Path("id") int id,
                          @Query("api_key") String api_key,
-                         @Query("language") String lang
-                         );
+                            @Query("language") String lang);
 
     /**
      *  Retrieves a list of movies that are now on cinema.

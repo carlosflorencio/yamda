@@ -9,7 +9,6 @@ import java.io.IOException;
 
 import isel.pdm.yamda.data.api.ITheMovieDbServiceAPI;
 import isel.pdm.yamda.data.entity.tmdb.ConfigurationDTO;
-import isel.pdm.yamda.data.entity.tmdb.GenresDTO;
 import isel.pdm.yamda.data.entity.tmdb.MovieDTO;
 import isel.pdm.yamda.data.entity.tmdb.MovieListingDTO;
 import isel.pdm.yamda.data.entity.tmdb.SearchMovieListDTO;
@@ -44,7 +43,7 @@ public class TheMovieAPITest extends TestCase{
 
     @Test
     public void testGetMovie() throws Exception {
-        Call<MovieDTO> movieCall = service.getMovie(550, ITheMovieDbServiceAPI.API_KEY, "en", null);
+        Call<MovieDTO> movieCall = service.getMovie(550, ITheMovieDbServiceAPI.API_KEY, "en");
         Response<MovieDTO> response = movieCall.execute();
 
         MovieDTO movie = response.body();
@@ -90,16 +89,6 @@ public class TheMovieAPITest extends TestCase{
 
         assertEquals(1, movies.getPage());
         assertEquals(20, movies.getResults().size());
-    }
-
-    @Test
-    public void testGetGenres() throws Exception {
-        Call<GenresDTO> genresCall = service.getGenres(ITheMovieDbServiceAPI.API_KEY, "en");
-        GenresDTO genres = genresCall.execute().body();
-
-        assertNotNull(genres);
-        assertNotNull(genres.getGenres());
-        assertNotNull(genres.getGenres()[0]);
     }
 
     @Test

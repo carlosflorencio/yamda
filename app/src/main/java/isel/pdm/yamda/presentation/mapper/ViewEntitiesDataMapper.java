@@ -17,10 +17,11 @@ public class ViewEntitiesDataMapper {
      * @return
      */
     public MovieView transform(Movie movie) {
-        return new MovieView(movie.getTitle(),
+        return new MovieView(movie.getId(),
+                movie.getTitle(),
                 movie.getStatus(),
                 movie.getReleaseDate(),
-                movie.getAbbreviation(),
+                movie.getOverview(),
                 movie.getPoster(),
                 new String[] {"oi"},
                 movie.getRating());
