@@ -16,7 +16,7 @@ import java.net.URLConnection;
 import isel.pdm.yamda.R;
 
 /**
- * Created by Nuno on 01/11/2015.
+ * Class that handles the loading of images
  */
 public class LoadImageView extends ImageView {
 
