@@ -1,5 +1,6 @@
 package isel.pdm.yamda.presentation.presenter;
 
+import android.os.AsyncTask;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -36,7 +37,6 @@ public class MoviesListViewPresenter implements IPresenter {
     }
 
     private ArrayList<MovieView> createList(String type) {
-        Log.v("DEBUG", "createList");
         ArrayList<MovieView> list = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             list.add(new MovieView(type, "Released", "2010", null, new String[]{"Action", "Mystery", "Sci-Fi"}, "8.8"));
