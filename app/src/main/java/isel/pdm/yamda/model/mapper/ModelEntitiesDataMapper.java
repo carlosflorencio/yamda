@@ -28,7 +28,9 @@ public class ModelEntitiesDataMapper {
      * @return
      */
     public Movie transform(MovieDTO dto) {
-        return new Movie(dto.getTitle(),
+        return new Movie(dto.getId(),
+                dto.getTitle(),
+                dto.getOverview(),
                 dto.getGenres(),
                 dto.getRelease_date(),
                 dto.getStatus(),
@@ -55,7 +57,7 @@ public class ModelEntitiesDataMapper {
      * @return
      */
     public Movie transform(MovieListDTO dto) {
-        return new Movie(dto.getTitle(), null, dto.getRelease_date(), null, createPosterLink(dto.getPoster_path()));
+        return new Movie(dto.getId(), dto.getTitle(), null, null, dto.getRelease_date(), null, createPosterLink(dto.getPoster_path()));
     }
 
 

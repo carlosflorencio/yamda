@@ -10,10 +10,12 @@ public class Navigator {
 
     public static final String MOVIE_TAG = MovieView.class.toString();
 
+    public static final String ID_TAG = "movie_id";
+
     public void navigateToMovieDetails(Context context, MovieView movieView) {
         if (context != null) {
             Intent intent = new Intent(context, MovieActivity.class);
-            intent.putExtra(MOVIE_TAG, movieView);
+            intent.putExtra(ID_TAG, movieView.getId());
             context.startActivity(intent);
         }
     }

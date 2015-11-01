@@ -13,20 +13,20 @@ public interface IMoviesListView {
      * Set items to list
      * @param items
      */
-    public void setItems(List<MovieView> items);
+    void setItems(List<MovieView> items);
 
     /**
      * Show progress bar when loading data
      */
-    public void showProgress();
+    void showProgress();
 
     /**
      * Hide progress bar when loading data
      */
-    public void hideProgress();
+    void hideProgress();
 
     /**
      * Handle item on click
      */
-    public void onItemClicked(MovieView mv);
+    void onItemClicked(MovieView mv);
 }

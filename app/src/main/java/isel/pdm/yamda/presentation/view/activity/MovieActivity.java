@@ -7,41 +7,73 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import isel.pdm.yamda.R;
-import isel.pdm.yamda.presentation.navigator.Navigator;
+import isel.pdm.yamda.data.image.ImageLoader;
+import isel.pdm.yamda.presentation.presenter.MovieViewPresenter;
 import isel.pdm.yamda.presentation.view.activity.common.BaseActivity;
+import isel.pdm.yamda.presentation.view.activity.contract.IMovieView;
 import isel.pdm.yamda.presentation.view.entity.MovieView;
 
 /**
  * Activity to display the movie details
  */
-public class MovieActivity extends BaseActivity{
+public class MovieActivity extends BaseActivity implements IMovieView {
+
+    public static final String ID_TAG = "movie_id";
+    private static final String SAVE_TAG = "movie_details";
+
+    MovieViewPresenter presenter;
+
+    MovieView movieView;
+
+    ImageLoader imageLoader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movie_layout);
-        handleIntent(getIntent());
+        imageLoader = new ImageLoader(getApplicationContext());
+        initPresenter(getIntent());
         setUpSupportActionBar();
     }
 
-    private void handleIntent(Intent intent) {
-        MovieView movie = intent.getExtras().getParcelable(Navigator.MOVIE_TAG);
+    private void initPresenter(Intent intent) {
+        presenter = new MovieViewPresenter();
+        presenter.setId(intent.getExtras().getInt(ID_TAG));
+        presenter.initialize();
+        this.presenter.setView(this);
+    }
 
-        ((ImageView) findViewById(R.id.cover)).setImageResource(R.drawable.cover);
+    @Override
+    public void setItem(MovieView movieView) {
+        this.movieView = movieView;
+        updateView();
+    }
 
-        ((TextView) findViewById(R.id.title)).setText(movie.getTitle());
+    private void updateView() {
+        ImageView imageView = (ImageView) findViewById(R.id.cover);
+        TextView title = (TextView) findViewById(R.id.title);
+        TextView overview = (TextView) findViewById(R.id.overview);
+        TextView releaseYear = (TextView) findViewById(R.id.release_year);
 
-        //((TextView)findViewById(R.id.rating)).setText(movie.getRating());
+        title.setText(movieView.getTitle());
+        overview.setText(movieView.getOverview());
+        //rating.setText("Rating: " + movieView.getRating());
+        //genre.setText(movieView.getGenres());
+        releaseYear.setText(movieView.getRelease_date());
+        imageLoader.DisplayImage(movieView.getPoster(), imageView);
+    }
 
-        //((TextView)findViewById(R.id.genre)).setText(movie.getGenres());
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(SAVE_TAG, movieView);
+    }
 
-        ((TextView) findViewById(R.id.release_year)).setText(movie.getRelease_date());
-
-        ((TextView) findViewById(R.id.overview)).setText("Cobb, a skilled thief who commits corporate" +
-                " espionage by infiltrating the subconscious of his targets is offered a chance to " +
-                "regain his old life as payment for a task considered to be impossible: " +
-                "\\\"inception\\\", the implantation of another person's idea into a target's" +
-                " subconscious.");
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        this.movieView = savedInstanceState.getParcelable(SAVE_TAG);
+        updateView();
     }
 
     private void setUpSupportActionBar() {

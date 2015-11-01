@@ -5,11 +5,13 @@ package isel.pdm.yamda.model.entity;
  */
 public class Movie {
 
+    private int id;
+
     private String title;
 
-    private String abbreviation;
+    private String overview;
 
-    private int[] genres;
+    private String[] genres;
 
     private String releaseDate;
 
@@ -25,8 +27,10 @@ public class Movie {
 
     private String rating;
 
-    public Movie(String title, int[] genres, String releaseDate, String status, String poster) {
+    public Movie(int id, String title, String overview, String[] genres, String releaseDate, String status, String poster) {
+        this.id = id;
         this.title = title;
+        this.overview = overview;
         this.genres = genres;
         this.releaseDate = releaseDate;
         this.status = status;
@@ -41,19 +45,19 @@ public class Movie {
         this.title = title;
     }
 
-    public String getAbbreviation() {
-        return abbreviation;
+    public String getOverview() {
+        return overview;
     }
 
-    public void setAbbreviation(String abbreviation) {
-        this.abbreviation = abbreviation;
+    public void setOverview(String overview) {
+        this.overview = overview;
     }
 
-    public int[] getGenres() {
+    public String[] getGenres() {
         return genres;
     }
 
-    public void setGenres(int[] genres) {
+    public void setGenres(String[] genres) {
         this.genres = genres;
     }
 
@@ -107,5 +111,9 @@ public class Movie {
 
     public String getRating() {
         return rating;
+    }
+
+    public int getId() {
+        return id;
     }
 }
