@@ -11,8 +11,14 @@ public class TMDbConfiguration implements IConfiguration {
     }
 
     @Override
-    public String getPosterSize() {
+    public String getListPosterSize() {
         return "w92";
     }
+
+    @Override
+    public String getDetailPosterSize() {
+        return "w342";
+    }
+
 
 }

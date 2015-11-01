@@ -34,7 +34,7 @@ public class ModelEntitiesDataMapper {
                 dto.getGenres(),
                 dto.getRelease_date(),
                 dto.getStatus(),
-                this.createPosterLink(dto.getPoster_path()));
+                this.createDetailPosterLink(dto.getPoster_path()));
     }
 
     /**
@@ -57,7 +57,7 @@ public class ModelEntitiesDataMapper {
      * @return
      */
     public Movie transform(MovieListDTO dto) {
-        return new Movie(dto.getId(), dto.getTitle(), null, null, dto.getRelease_date(), null, createPosterLink(dto.getPoster_path()));
+        return new Movie(dto.getId(), dto.getTitle(), null, null, dto.getRelease_date(), null, createListPosterLink(dto.getPoster_path()));
     }
 
 
@@ -66,9 +66,13 @@ public class ModelEntitiesDataMapper {
      * @param path
      * @return
      */
-    private String createPosterLink(String path) {
+    private String createListPosterLink(String path) {
         if(path == null) return null;
 
-        return this.configuration.getImagesURI() + this.configuration.getPosterSize() + path;
+        return this.configuration.getImagesURI() + this.configuration.getListPosterSize() + path;
+    }
+
+    private String createDetailPosterLink(String path) {
+        return this.configuration.getImagesURI() + this.configuration.getDetailPosterSize() + path;
     }
 }

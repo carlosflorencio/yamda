@@ -3,7 +3,7 @@ package isel.pdm.yamda.presentation.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,9 +30,9 @@ public class MovieActivity extends BaseActivity implements IMovieView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movie_layout);
+        setUpSupportActionBar();
         imageLoader = new ImageLoader(getApplicationContext());
         initPresenter(getIntent());
-        setUpSupportActionBar();
     }
 
     private void initPresenter(Intent intent) {
@@ -77,6 +77,18 @@ public class MovieActivity extends BaseActivity implements IMovieView {
 
     private void setUpSupportActionBar() {
         ActionBar actionBar = getSupportActionBar();
-        //TODO: Set back button, destroys this activity and goes back to the other
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Back Button
+            case android.R.id.home:
+                finish();
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
