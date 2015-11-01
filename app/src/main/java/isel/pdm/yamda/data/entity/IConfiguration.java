@@ -5,7 +5,9 @@ package isel.pdm.yamda.data.entity;
  */
 public interface IConfiguration {
 
-    public String getImagesURI();
+    String getImagesURI();
 
-    public String getPosterSize();
+    String getListPosterSize();
+
+    String getDetailPosterSize();
 }
