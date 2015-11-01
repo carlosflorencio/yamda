@@ -58,6 +58,7 @@ public abstract class ToolbarActivity extends BaseActivity {
 
         //Expand the search widget
         searchView.setIconifiedByDefault(false);
+
         return true;
     }
 
