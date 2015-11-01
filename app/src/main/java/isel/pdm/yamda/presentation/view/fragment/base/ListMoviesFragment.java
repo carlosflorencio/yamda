@@ -38,6 +38,7 @@ public class ListMoviesFragment extends PresentableFragment implements IMoviesLi
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         this.view = inflater.inflate(R.layout.home_tab, container, false);
         this.listView = ((ListView) view.findViewById(R.id.list_view));
+        this.listView.setOnItemClickListener(this);
 
         return view;
     }
@@ -52,17 +53,23 @@ public class ListMoviesFragment extends PresentableFragment implements IMoviesLi
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         ((MoviesListViewPresenter) this.presenter).setView(this);
-        this.presenter.initialize();
 
         if (savedInstanceState != null) {
-            this.items = savedInstanceState.getParcelableArrayList(TAG);
+            this.items = savedInstanceState.getParcelableArrayList(SAVE_TAG);
+            setListViewAdapter();
+        } else {
+            this.presenter.initialize();
         }
     }
 
     @Override
     public void setItems(List<MovieView> items) {
-        this.listView.setAdapter(new LazyAdapter(getActivity(), items));
-        this.listView.setOnItemClickListener(this);
+        this.items = (ArrayList<MovieView>) items;
+        setListViewAdapter();
+    }
+
+    private void setListViewAdapter() {
+        this.listView.setAdapter(new LazyAdapter(getActivity(), this.items));
         view.invalidate();
     }
 

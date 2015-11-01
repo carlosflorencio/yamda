@@ -13,11 +13,14 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import isel.pdm.yamda.R;
+
 /**
  * Created by Nuno on 01/11/2015.
  */
 public class LoadImageView extends ImageView {
-    private int imagePlaceHolderResourceId;
+
+    private static final int imagePlaceHolderResourceId = R.drawable.placeholder2;
 
     public LoadImageView(Context context) {
         super(context);
@@ -29,11 +32,6 @@ public class LoadImageView extends ImageView {
 
     public LoadImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-    }
-
-    public void setImagePlaceHolder(int resourceId) {
-        this.imagePlaceHolderResourceId = resourceId;
-        this.loadImagePlaceHolder();
     }
 
     public void setImageUrl(final String imageUrl) {
@@ -73,15 +71,13 @@ public class LoadImageView extends ImageView {
     }
 
     private void loadImagePlaceHolder() {
-        if (this.imagePlaceHolderResourceId != -1) {
-            ((Activity) getContext()).runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    LoadImageView.this.setImageResource(
-                            LoadImageView.this.imagePlaceHolderResourceId);
-                }
-            });
-        }
+        ((Activity) getContext()).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                LoadImageView.this.setImageResource(
+                        LoadImageView.this.imagePlaceHolderResourceId);
+            }
+        });
     }
 
     private boolean isThereInternetConnection() {
