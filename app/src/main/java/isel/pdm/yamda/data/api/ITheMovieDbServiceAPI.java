@@ -4,7 +4,6 @@ import isel.pdm.yamda.data.entity.tmdb.ConfigurationDTO;
 import isel.pdm.yamda.data.entity.tmdb.ImagesDTO;
 import isel.pdm.yamda.data.entity.tmdb.MovieDTO;
 import isel.pdm.yamda.data.entity.tmdb.MovieListingDTO;
-import isel.pdm.yamda.data.entity.tmdb.SearchMovieListDTO;
 import retrofit.Call;
 import retrofit.http.GET;
 import retrofit.http.Path;
@@ -90,7 +89,7 @@ public interface ITheMovieDbServiceAPI {
      * @return
      */
     @GET("/3/search/movie")
-    Call<SearchMovieListDTO> getSearchedMovies(@Query("api_key") String API_KEY,
+    Call<MovieListingDTO> getSearchedMovies(@Query("api_key") String API_KEY,
                                                @Query("query") String movie,
                                                @Query("page") int page,
                                                @Query("language") String lang);

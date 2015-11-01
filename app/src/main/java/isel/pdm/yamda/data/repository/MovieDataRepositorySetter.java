@@ -4,10 +4,10 @@ import android.util.Log;
 
 import java.util.List;
 
+import isel.pdm.yamda.data.api.common.IMovieApi;
 import isel.pdm.yamda.data.entity.tmdb.MovieDTO;
 import isel.pdm.yamda.data.entity.tmdb.MovieListingDTO;
 import isel.pdm.yamda.model.mapper.ModelEntitiesDataMapper;
-import isel.pdm.yamda.data.repository.datasource.IMovieDataStore;
 import isel.pdm.yamda.data.repository.datasource.MovieDataStoreFactory;
 import isel.pdm.yamda.model.entity.Movie;
 import isel.pdm.yamda.model.repository.IMovieRepository;
@@ -21,6 +21,8 @@ import retrofit.Retrofit;
  */
 public class MovieDataRepositorySetter implements IMovieRepository {
 
+    protected final String TAG = "DEBUG_" + getClass().getSimpleName();
+
     private final MovieDataStoreFactory factory;
     private final ModelEntitiesDataMapper mapper;
 
@@ -32,37 +34,37 @@ public class MovieDataRepositorySetter implements IMovieRepository {
     @Override
     public void setTheatersMovies(ILoadDataView<List<Movie>> presenter, int page) {
         // Always get the online data ?
-        final IMovieDataStore storage = this.factory.createCloudDataStore();
+        final IMovieApi storage = this.factory.createCloudDataStore();
 
-        storage.theaterMovieListEntity(page).enqueue(new MovieListingCallback(presenter));
+        storage.getTheatersMovies(page).enqueue(new MovieListingCallback(presenter));
     }
 
     @Override
     public void setSoonMovies(ILoadDataView<List<Movie>> presenter, int page) {
         // Always get the online data ?
-        final IMovieDataStore storage = this.factory.createCloudDataStore();
+        final IMovieApi storage = this.factory.createCloudDataStore();
 
-        storage.soonMovieListEntity(page).enqueue(new MovieListingCallback(presenter));
+        storage.getSoonMovies(page).enqueue(new MovieListingCallback(presenter));
     }
 
     @Override
     public void setTopMovies(ILoadDataView<List<Movie>> presenter, int page) {
         // Always get the online data ?
-        final IMovieDataStore storage = this.factory.createCloudDataStore();
+        final IMovieApi storage = this.factory.createCloudDataStore();
 
-        storage.topMovieListEntity(page).enqueue(new MovieListingCallback(presenter));
+        storage.getTopMovies(page).enqueue(new MovieListingCallback(presenter));
     }
 
     @Override
     public void  setMovie(final ILoadDataView<Movie> presenter,int id) {
         // get cached or online
-        final IMovieDataStore storage = this.factory.create(id);
+        final IMovieApi storage = this.factory.create(id);
 
-        storage.movieEntityDetails(id).enqueue(new Callback<MovieDTO>() {
+        storage.getMovie(id).enqueue(new Callback<MovieDTO>() {
             @Override
             public void onResponse(Response<MovieDTO> response, Retrofit retrofit) {
                 Movie movie = mapper.transform(response.body());
-                Log.v("DEBUG_", "onResponse " + movie.getTitle());
+                Log.v(TAG, "Downloading a Movie: " + response.raw());
 
                 presenter.hideLoading();
                 presenter.setData(movie);
@@ -74,6 +76,14 @@ public class MovieDataRepositorySetter implements IMovieRepository {
                 presenter.showError(t.getMessage());
             }
         });
+    }
+
+    @Override
+    public void setMovieSearch(final ILoadDataView<List<Movie>> presenter, String search, int page) {
+        // Always get the online data ?
+        final IMovieApi storage = this.factory.createCloudDataStore();
+
+        storage.getMoviesSearch(search, page).enqueue(new MovieListingCallback(presenter));
     }
 
 
@@ -91,7 +101,8 @@ public class MovieDataRepositorySetter implements IMovieRepository {
         @Override
         public void onResponse(Response<MovieListingDTO> response, Retrofit retrofit) {
             List<Movie> list = mapper.transform(response.body());
-            Log.v("DEBUG_", "onResponse " + list.size());
+            Log.v(TAG, "Downloading a MovieList: " + response.raw());
+
             presenter.hideLoading();
             presenter.setData(list);
         }

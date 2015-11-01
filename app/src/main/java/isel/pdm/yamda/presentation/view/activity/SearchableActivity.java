@@ -32,7 +32,7 @@ public class SearchableActivity extends ListActivity {
             String query = intent.getStringExtra(SearchManager.QUERY);
             //use the query to search your data somehow
 
-            Log.v("DEBUG", "Searched: " + query);
+            Log.v("DEBUG_", "Searched: " + query);
 
             ArrayList<String> items = new ArrayList<>();
             items.add("Teste");

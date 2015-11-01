@@ -37,4 +37,11 @@ public interface IMovieRepository {
      * @return
      */
     void setMovie(ILoadDataView<Movie> presenter, int id);
+
+    /**
+     * Search for a movie by name
+     * @param presenter
+     * @param search
+     */
+    void setMovieSearch(ILoadDataView<List<Movie>> presenter, String search, int page);
 }

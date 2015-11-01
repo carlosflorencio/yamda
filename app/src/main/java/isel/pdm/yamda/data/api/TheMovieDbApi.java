@@ -58,4 +58,9 @@ public class TheMovieDbApi implements IMovieApi {
     public Call<MovieDTO> getMovie(int id) {
         return this.api.getMovie(id, ITheMovieDbServiceAPI.API_KEY,  this.language);
     }
+
+    @Override
+    public Call<MovieListingDTO> getMoviesSearch(String search, int page) {
+        return this.api.getSearchedMovies(ITheMovieDbServiceAPI.API_KEY, search, page, this.language);
+    }
 }
