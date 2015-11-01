@@ -85,7 +85,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
      */
     public void setupFragments() {
         this.tabs = new Fragment[] {
-                addTypeInfotToFragmentBundle(new InTheathersMoviesListFragment(), Titles[0].toString()),
+                addTypeInfotToFragmentBundle(new InTheatersMoviesListFragment(), Titles[0].toString()),
                 addTypeInfotToFragmentBundle(new SoonMoviesListFragment(), Titles[1].toString()),
                 addTypeInfotToFragmentBundle(new TopMoviesListFragment(), Titles[2].toString())
         };

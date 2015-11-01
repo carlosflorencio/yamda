@@ -1,6 +1,6 @@
 package isel.pdm.yamda.presentation.presenter;
 
-import android.os.AsyncTask;
+
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -11,29 +11,43 @@ import isel.pdm.yamda.presentation.view.entity.MovieView;
 public class MoviesListViewPresenter implements IPresenter {
 
     private IMoviesListView view;
+    private String type;
 
-    public MoviesListViewPresenter(IMoviesListView v, String type) {
-        this.view = v;
-
-        this.view.setItems(createList(type));
+    public MoviesListViewPresenter(String type) {
+        this.type = type;
     }
 
-    /** {@inheritDoc} **/
+    /**
+     * {@inheritDoc}
+     **/
     @Override
     public void onResume() {
         this.view.showProgress();
     }
 
-    /** {@inheritDoc} **/
+    /**
+     * {@inheritDoc}
+     **/
     @Override
     public void onPause() {
 
     }
 
-    /** {@inheritDoc} **/
+    /**
+     * {@inheritDoc}
+     **/
     @Override
     public void onDestroy() {
 
+    }
+
+    public void setView(IMoviesListView v) {
+        this.view = v;
+    }
+
+    public void initialize() {
+        Log.v("DEBUG_", "initialize " + type);
+        this.view.setItems(createList(this.type));
     }
 
     private ArrayList<MovieView> createList(String type) {

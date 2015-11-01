@@ -37,10 +37,10 @@ public class ListMoviesFragment extends PresentableFragment implements IMoviesLi
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         this.view = inflater.inflate(R.layout.home_tab, container, false);
         this.listView = ((ListView) view.findViewById(R.id.list_view));
-        this.presenter = new MoviesListViewPresenter(this, getArguments().getString(ViewPagerAdapter.FRAGMENT_KEY));
 
         return view;
     }
+
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -51,6 +51,8 @@ public class ListMoviesFragment extends PresentableFragment implements IMoviesLi
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        ((MoviesListViewPresenter) this.presenter).setView(this);
+        ((MoviesListViewPresenter) this.presenter).initialize();
 
         if (savedInstanceState != null) {
             this.items = savedInstanceState.getParcelableArrayList(TAG);

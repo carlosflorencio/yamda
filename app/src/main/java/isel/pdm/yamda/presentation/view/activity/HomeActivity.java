@@ -11,8 +11,6 @@ import vendor.SlidingTabLayout;
 public class HomeActivity extends ToolbarActivity {
 
     private ViewPager pager;
-    private ViewPagerAdapter adapter;
-    private SlidingTabLayout tabs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +33,7 @@ public class HomeActivity extends ToolbarActivity {
         };
 
         // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles for the Tabs.
-        adapter = new ViewPagerAdapter(getSupportFragmentManager(), titles);
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), titles);
 
         // Assigning ViewPager View and setting the adapter
         pager = (ViewPager) findViewById(R.id.pager);
@@ -49,7 +47,7 @@ public class HomeActivity extends ToolbarActivity {
      */
     private void setTabs() {
         // Assiging the Sliding Tab Layout View
-        tabs = (SlidingTabLayout) findViewById(R.id.tabs);
+        SlidingTabLayout tabs = (SlidingTabLayout) findViewById(R.id.tabs);
         tabs.setDistributeEvenly(false); // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
 
         // Setting Custom Color for the Scroll bar indicator of the Tab View
