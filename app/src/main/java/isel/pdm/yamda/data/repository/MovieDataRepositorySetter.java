@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.util.List;
 
+import isel.pdm.yamda.data.entity.tmdb.MovieDTO;
 import isel.pdm.yamda.data.entity.tmdb.MovieListingDTO;
 import isel.pdm.yamda.model.mapper.ModelEntitiesDataMapper;
 import isel.pdm.yamda.data.repository.datasource.IMovieDataStore;
@@ -29,23 +30,11 @@ public class MovieDataRepositorySetter implements IMovieRepository {
     }
 
     @Override
-    public void setTheatersMovies(final ILoadDataView<List<Movie>> presenter, int page) {
+    public void setTheatersMovies(ILoadDataView<List<Movie>> presenter, int page) {
         // Always get the online data ?
         final IMovieDataStore storage = this.factory.createCloudDataStore();
 
-        storage.theaterMovieListEntity(page).enqueue(new Callback<MovieListingDTO>() {
-            @Override
-            public void onResponse(Response<MovieListingDTO> response, Retrofit retrofit) {
-                List<Movie> list = mapper.transform(response.body());
-                Log.v("DEBUG_", "onResponse " + list.size());
-                presenter.setData(list);
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                presenter.showError("Error!!");
-            }
-        });
+        storage.theaterMovieListEntity(page).enqueue(new MovieListingCallback(presenter));
     }
 
     @Override
@@ -53,7 +42,7 @@ public class MovieDataRepositorySetter implements IMovieRepository {
         // Always get the online data ?
         final IMovieDataStore storage = this.factory.createCloudDataStore();
 
-        //return mapper.transform(storage.soonMovieListEntity(page));
+        storage.soonMovieListEntity(page).enqueue(new MovieListingCallback(presenter));
     }
 
     @Override
@@ -61,14 +50,55 @@ public class MovieDataRepositorySetter implements IMovieRepository {
         // Always get the online data ?
         final IMovieDataStore storage = this.factory.createCloudDataStore();
 
-        //return mapper.transform(storage.topMovieListEntity(page));
+        storage.topMovieListEntity(page).enqueue(new MovieListingCallback(presenter));
     }
 
     @Override
-    public void  setMovie(ILoadDataView<Movie> presenter,int id) {
+    public void  setMovie(final ILoadDataView<Movie> presenter,int id) {
         // get cached or online
         final IMovieDataStore storage = this.factory.create(id);
 
-        //return mapper.transform(storage.movieEntityDetails(id));
+        storage.movieEntityDetails(id).enqueue(new Callback<MovieDTO>() {
+            @Override
+            public void onResponse(Response<MovieDTO> response, Retrofit retrofit) {
+                Movie movie = mapper.transform(response.body());
+                Log.v("DEBUG_", "onResponse " + movie.getTitle());
+                presenter.hideLoading();
+                presenter.setData(movie);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                presenter.hideLoading();
+                presenter.showError(t.getMessage());
+            }
+        });
+    }
+
+
+    /**
+     * Class for representing a list callback
+     */
+    private class MovieListingCallback implements Callback<MovieListingDTO> {
+
+        private  ILoadDataView<List<Movie>> presenter;
+
+        public MovieListingCallback(ILoadDataView<List<Movie>> presenter) {
+            this.presenter = presenter;
+        }
+
+        @Override
+        public void onResponse(Response<MovieListingDTO> response, Retrofit retrofit) {
+            List<Movie> list = mapper.transform(response.body());
+            Log.v("DEBUG_", "onResponse " + list.size());
+            presenter.hideLoading();
+            presenter.setData(list);
+        }
+
+        @Override
+        public void onFailure(Throwable t) {
+            presenter.hideLoading();
+            presenter.showError(t.getMessage());
+        }
     }
 }

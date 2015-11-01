@@ -2,7 +2,6 @@ package isel.pdm.yamda.presentation.presenter;
 
 import android.util.Log;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import isel.pdm.yamda.model.entity.Movie;
