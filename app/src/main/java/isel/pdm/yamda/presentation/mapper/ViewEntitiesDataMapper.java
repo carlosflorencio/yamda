@@ -21,6 +21,7 @@ public class ViewEntitiesDataMapper {
                 movie.getStatus(),
                 movie.getReleaseDate(),
                 movie.getAbbreviation(),
+                movie.getPoster(),
                 new String[] {"oi"},
                 movie.getRating());
     }

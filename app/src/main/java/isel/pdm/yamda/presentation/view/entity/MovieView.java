@@ -22,7 +22,7 @@ public class MovieView implements Parcelable {
 
     private String[] genres;
 
-    public MovieView(String title, String status, String release_date, String overview, String[] genres, String rating) {
+    public MovieView(String title, String status, String release_date, String overview, String poster, String[] genres, String rating) {
         this.title = title;
         this.status = status;
         this.release_date = release_date;

@@ -1,7 +1,5 @@
 package isel.pdm.yamda.presentation.presenter.common;
 
-import android.view.View;
-
 /**
  * Interface representing a Presenter in a model view presenter (MVP) pattern.
  */

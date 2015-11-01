@@ -37,7 +37,6 @@ public class LoadImageView extends ImageView {
     }
 
     public void setImageUrl(final String imageUrl) {
-        LoadImageView.this.loadImagePlaceHolder();
         if (imageUrl != null) {
             this.loadImageFromUrl(imageUrl);
         } else {
