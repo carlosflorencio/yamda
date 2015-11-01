@@ -55,7 +55,7 @@ public class ModelEntitiesDataMapper {
      * @return
      */
     public Movie transform(MovieListDTO dto) {
-        return new Movie(dto.getTitle(), null, dto.getRelease_date(), null, dto.getPoster_path());
+        return new Movie(dto.getTitle(), null, dto.getRelease_date(), null, createPosterLink(dto.getPoster_path()));
     }
 
 
