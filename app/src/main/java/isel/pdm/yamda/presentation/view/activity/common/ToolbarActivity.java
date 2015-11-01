@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,11 +17,16 @@ import isel.pdm.yamda.presentation.view.activity.AboutActivity;
 public abstract class ToolbarActivity extends BaseActivity {
 
     protected Toolbar toolbar;
+    protected ProgressBar progressBar;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * Call this method at onCreate at the activity
+     * Setup the toolbar
+     */
     protected void setUpToolbar() {
         this.toolbar = (Toolbar) findViewById(R.id.home_toolbar);
         setSupportActionBar(toolbar);
@@ -30,10 +34,8 @@ public abstract class ToolbarActivity extends BaseActivity {
         toolbar.setLogo(R.mipmap.ic_launcher);
         toolbar.setTitle(R.string.app_name);
 
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_spinner);
-        progressBar.setVisibility(View.VISIBLE);
-
-        Log.v(TAG, "setup toolbar");
+        this.progressBar = (ProgressBar) findViewById(R.id.progress_spinner);
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     /**
