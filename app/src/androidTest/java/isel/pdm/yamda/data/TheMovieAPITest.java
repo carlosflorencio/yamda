@@ -7,12 +7,12 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import isel.pdm.yamda.data.api.TheMovieAPI;
-import isel.pdm.yamda.data.entity.ConfigurationDTO;
-import isel.pdm.yamda.data.entity.GenresDTO;
-import isel.pdm.yamda.data.entity.MovieDTO;
-import isel.pdm.yamda.data.entity.MovieListingDTO;
-import isel.pdm.yamda.data.entity.SearchMovieListDTO;
+import isel.pdm.yamda.data.api.ITheMovieDbServiceAPI;
+import isel.pdm.yamda.data.entity.tmdb.ConfigurationDTO;
+import isel.pdm.yamda.data.entity.tmdb.GenresDTO;
+import isel.pdm.yamda.data.entity.tmdb.MovieDTO;
+import isel.pdm.yamda.data.entity.tmdb.MovieListingDTO;
+import isel.pdm.yamda.data.entity.tmdb.SearchMovieListDTO;
 import retrofit.Call;
 import retrofit.GsonConverterFactory;
 import retrofit.Response;
@@ -23,20 +23,20 @@ import retrofit.Retrofit;
  */
 public class TheMovieAPITest extends TestCase{
 
-    private TheMovieAPI service;
+    private ITheMovieDbServiceAPI service;
 
     @Before
     public void setUp() {
         service = new Retrofit.Builder()
-                .baseUrl(TheMovieAPI.BASE_URL)
+                .baseUrl(ITheMovieDbServiceAPI.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
-                .create(TheMovieAPI.class);
+                .create(ITheMovieDbServiceAPI.class);
     }
 
     @Test
     public void testGetConfiguration() throws IOException {
-        Call<ConfigurationDTO> configurationCall = service.getConfig(TheMovieAPI.API_KEY);
+        Call<ConfigurationDTO> configurationCall = service.getConfig(ITheMovieDbServiceAPI.API_KEY);
         ConfigurationDTO configuration = configurationCall.execute().body();
 
         assertNotNull(configuration.getImageConfigurations());
@@ -44,7 +44,7 @@ public class TheMovieAPITest extends TestCase{
 
     @Test
     public void testGetMovie() throws Exception {
-        Call<MovieDTO> movieCall = service.getMovie(550, TheMovieAPI.API_KEY, "en", null);
+        Call<MovieDTO> movieCall = service.getMovie(550, ITheMovieDbServiceAPI.API_KEY, "en", null);
         Response<MovieDTO> response = movieCall.execute();
 
         MovieDTO movie = response.body();
@@ -55,7 +55,7 @@ public class TheMovieAPITest extends TestCase{
 
     @Test
     public void testGetNowPlaying() throws Exception {
-        Call<MovieListingDTO> movieCall = service.getNowPlaying(TheMovieAPI.API_KEY, 1, "en");
+        Call<MovieListingDTO> movieCall = service.getNowPlaying(ITheMovieDbServiceAPI.API_KEY, 1, "en");
         Response<MovieListingDTO> response = movieCall.execute();
 
         MovieListingDTO movies = response.body();
@@ -68,7 +68,7 @@ public class TheMovieAPITest extends TestCase{
 
     @Test
     public void testGetUpcoming() throws Exception {
-        Call<MovieListingDTO> movieCall = service.getUpcoming(TheMovieAPI.API_KEY, 1, "en");
+        Call<MovieListingDTO> movieCall = service.getUpcoming(ITheMovieDbServiceAPI.API_KEY, 1, "en");
         Response<MovieListingDTO> response = movieCall.execute();
 
         MovieListingDTO movies = response.body();
@@ -81,7 +81,7 @@ public class TheMovieAPITest extends TestCase{
 
     @Test
     public void testGetMostPopular() throws Exception {
-        Call<MovieListingDTO> movieCall = service.getMostPopular(TheMovieAPI.API_KEY, 1, "en");
+        Call<MovieListingDTO> movieCall = service.getMostPopular(ITheMovieDbServiceAPI.API_KEY, 1, "en");
         Response<MovieListingDTO> response = movieCall.execute();
 
         MovieListingDTO movies = response.body();
@@ -94,7 +94,7 @@ public class TheMovieAPITest extends TestCase{
 
     @Test
     public void testGetGenres() throws Exception {
-        Call<GenresDTO> genresCall = service.getGenres(TheMovieAPI.API_KEY, "en");
+        Call<GenresDTO> genresCall = service.getGenres(ITheMovieDbServiceAPI.API_KEY, "en");
         GenresDTO genres = genresCall.execute().body();
 
         assertNotNull(genres);
@@ -104,7 +104,7 @@ public class TheMovieAPITest extends TestCase{
 
     @Test
     public void testGetSearchMovie() throws Exception {
-        Call<SearchMovieListDTO> searchCall = service.getSearchedMovies(TheMovieAPI.API_KEY, "inception", 1, "en");
+        Call<SearchMovieListDTO> searchCall = service.getSearchedMovies(ITheMovieDbServiceAPI.API_KEY, "inception", 1, "en");
         SearchMovieListDTO search = searchCall.execute().body();
 
         assertNotNull(search);
