@@ -7,7 +7,7 @@ import isel.pdm.yamda.model.entity.Movie;
 /**
  * Homeview contract
  */
-public interface IHomeView {
+public interface IMoviesListView {
 
     /**
      * Set items to list

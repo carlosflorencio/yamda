@@ -63,7 +63,7 @@ public class LazyAdapter extends BaseAdapter {
         genre.setText(movie.getGenres());
         releaseYear.setText(movie.getRelease_date());
         thumb_image.setImageResource(R.drawable.placeholder);
-        //imageLoader.DisplayImage(movie.get(TabFragment.KEY_THUMB_URL), thumb_image);
+        //imageLoader.DisplayImage(movie.get(ListMoviesFragment.KEY_THUMB_URL), thumb_image);
         return view;
     }
 

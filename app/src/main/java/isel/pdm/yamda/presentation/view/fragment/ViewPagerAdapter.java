@@ -36,7 +36,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         Bundle bundle = new Bundle();
-        TabFragment tab = new TabFragment();
+        ListMoviesFragment tab = new ListMoviesFragment();
         switch (position) {
             case 0:
                 bundle.putString(TITLES_KEY, Titles[0].toString());

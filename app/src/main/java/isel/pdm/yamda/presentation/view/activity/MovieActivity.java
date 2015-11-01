@@ -3,14 +3,13 @@ package isel.pdm.yamda.presentation.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import isel.pdm.yamda.R;
 import isel.pdm.yamda.presentation.view.activity.common.BaseActivity;
 import isel.pdm.yamda.presentation.view.entity.MovieView;
-import isel.pdm.yamda.presentation.view.fragment.TabFragment;
+import isel.pdm.yamda.presentation.view.fragment.ListMoviesFragment;
 
 /**
  * Activity to display the movie details
@@ -26,7 +25,7 @@ public class MovieActivity extends BaseActivity{
     }
 
     private void handleIntent(Intent intent) {
-        MovieView movie = intent.getExtras().getParcelable(TabFragment.MOVIE_TAG);
+        MovieView movie = intent.getExtras().getParcelable(ListMoviesFragment.MOVIE_TAG);
 
         ((ImageView) findViewById(R.id.cover)).setImageResource(R.drawable.cover);
 

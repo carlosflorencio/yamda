@@ -1,12 +1,12 @@
 package isel.pdm.yamda.presentation.presenter;
 
-import isel.pdm.yamda.presentation.view.activity.contract.IHomeView;
+import isel.pdm.yamda.presentation.view.activity.contract.IMoviesListView;
 
-public class HomeViewPresenter implements IPresenter {
+public class MoviesListViewPresenter implements IPresenter {
 
-    private IHomeView view;
+    private IMoviesListView view;
 
-    public HomeViewPresenter(IHomeView v) {
+    public MoviesListViewPresenter(IMoviesListView v) {
         this.view = v;
     }
 

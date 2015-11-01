@@ -12,26 +12,36 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import isel.pdm.yamda.R;
+import isel.pdm.yamda.model.entity.Movie;
+import isel.pdm.yamda.presentation.presenter.IPresenter;
+import isel.pdm.yamda.presentation.presenter.MoviesListViewPresenter;
 import isel.pdm.yamda.presentation.view.activity.MovieActivity;
+import isel.pdm.yamda.presentation.view.activity.contract.IMoviesListView;
 import isel.pdm.yamda.presentation.view.adapter.LazyAdapter;
 import isel.pdm.yamda.presentation.view.entity.MovieView;
 
 
-public class TabFragment extends Fragment {
+public class ListMoviesFragment extends Fragment implements IMoviesListView {
 
-    private static final String TAG = TabFragment.class.getSimpleName();
-
+    private static final String TAG = ListMoviesFragment.class.getSimpleName();
     public static final String MOVIE_TAG = MovieView.class.toString();
 
     private ArrayList<MovieView> list;
-
     private View view;
+    private IPresenter presenter;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        this.presenter = new MoviesListViewPresenter(this);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.v("DEBUG", "onCreateView");
         view = inflater.inflate(R.layout.home_tab, container, false);
         return view;
     }
@@ -39,14 +49,13 @@ public class TabFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        Log.v("DEBUG", "onSaveInstanceState");
         outState.putSerializable(TAG, list);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Log.v("DEBUG", "onActivityCreated");
+
         if (savedInstanceState != null) {
             list = savedInstanceState.getParcelableArrayList(TAG);
         } else {
@@ -78,5 +87,42 @@ public class TabFragment extends Fragment {
             list.add(new MovieView("Inception", "Released", "2010", null, new String[]{"Action", "Mystery", "Sci-Fi"}, "8.8"));
         }
         return list;
+    }
+
+    @Override
+    public void setItems(List<Movie> items) {
+
+    }
+
+    @Override
+    public void showProgress() {
+        //progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgress() {
+        //progressBar.setVisibility(View.INVISIBLE);
+    }
+    @Override
+    public void onItemClicked(int position) {
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onResume();
+        presenter.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onResume();
+        presenter.onDestroy();
     }
 }
