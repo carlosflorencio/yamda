@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import isel.pdm.yamda.R;
+import isel.pdm.yamda.presentation.navigator.Navigator;
 import isel.pdm.yamda.presentation.view.activity.common.BaseActivity;
 import isel.pdm.yamda.presentation.view.entity.MovieView;
 import isel.pdm.yamda.presentation.view.fragment.ListMoviesFragment;
@@ -25,7 +26,7 @@ public class MovieActivity extends BaseActivity{
     }
 
     private void handleIntent(Intent intent) {
-        MovieView movie = intent.getExtras().getParcelable(ListMoviesFragment.MOVIE_TAG);
+        MovieView movie = intent.getExtras().getParcelable(Navigator.MOVIE_TAG);
 
         ((ImageView) findViewById(R.id.cover)).setImageResource(R.drawable.cover);
 

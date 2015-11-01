@@ -20,4 +20,8 @@ public abstract class BaseActivity extends LoggingActivity {
 
         this.navigator = new Navigator(); //make singleton? What about DI?
     }
+
+    public Navigator getNavigator() {
+        return this.navigator;
+    }
 }

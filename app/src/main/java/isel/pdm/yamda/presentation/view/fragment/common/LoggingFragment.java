@@ -1,5 +1,6 @@
 package isel.pdm.yamda.presentation.view.fragment.common;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;

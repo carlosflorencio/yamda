@@ -2,7 +2,7 @@ package isel.pdm.yamda.presentation.view.activity.contract;
 
 import java.util.List;
 
-import isel.pdm.yamda.model.entity.Movie;
+import isel.pdm.yamda.presentation.view.entity.MovieView;
 
 /**
  * Homeview contract
@@ -13,7 +13,7 @@ public interface IMoviesListView {
      * Set items to list
      * @param items
      */
-    public void setItems(List<Movie> items);
+    public void setItems(List<MovieView> items);
 
     /**
      * Show progress bar when loading data
@@ -27,7 +27,6 @@ public interface IMoviesListView {
 
     /**
      * Handle item on click
-     * @param position
      */
-    public void onItemClicked(int position);
+    public void onItemClicked(MovieView mv);
 }
