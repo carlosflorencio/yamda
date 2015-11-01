@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,6 @@ import isel.pdm.yamda.presentation.view.activity.HomeActivity;
 import isel.pdm.yamda.presentation.view.activity.contract.IMoviesListView;
 import isel.pdm.yamda.presentation.view.adapter.LazyAdapter;
 import isel.pdm.yamda.presentation.view.entity.MovieView;
-import isel.pdm.yamda.presentation.view.component.ViewPagerAdapter;
 import isel.pdm.yamda.presentation.view.fragment.common.PresentableFragment;
 
 
@@ -38,7 +38,6 @@ public class ListMoviesFragment extends PresentableFragment implements IMoviesLi
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         this.view = inflater.inflate(R.layout.home_tab, container, false);
         this.listView = ((ListView) view.findViewById(R.id.list_view));
-        this.presenter = new MoviesListViewPresenter(getArguments().getString(ViewPagerAdapter.FRAGMENT_KEY));
 
         return view;
     }
@@ -53,7 +52,7 @@ public class ListMoviesFragment extends PresentableFragment implements IMoviesLi
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         ((MoviesListViewPresenter) this.presenter).setView(this);
-        ((MoviesListViewPresenter) this.presenter).initialize();
+        this.presenter.initialize();
 
         if (savedInstanceState != null) {
             this.items = savedInstanceState.getParcelableArrayList(TAG);
@@ -69,12 +68,12 @@ public class ListMoviesFragment extends PresentableFragment implements IMoviesLi
 
     @Override
     public void showProgress() {
-        //progressBar.setVisibility(View.VISIBLE);
+        Toast.makeText(getActivity(), "Show Progress", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void hideProgress() {
-        //progressBar.setVisibility(View.INVISIBLE);
+        Toast.makeText(getActivity(), "Hide Progress", Toast.LENGTH_LONG).show();
     }
 
     @Override
