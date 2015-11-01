@@ -25,9 +25,9 @@ public class Movie {
 
     private String poster;
 
-    private String rating;
+    private float rating;
 
-    public Movie(int id, String title, String overview, String[] genres, String releaseDate, String status, String poster) {
+    public Movie(int id, String title, String overview, String[] genres, String releaseDate, String status, String poster, float rating) {
         this.id = id;
         this.title = title;
         this.overview = overview;
@@ -35,6 +35,7 @@ public class Movie {
         this.releaseDate = releaseDate;
         this.status = status;
         this.poster = poster;
+        this.rating = rating;
     }
 
     public String getTitle() {
@@ -109,7 +110,7 @@ public class Movie {
         this.poster = poster;
     }
 
-    public String getRating() {
+    public float getRating() {
         return rating;
     }
 
