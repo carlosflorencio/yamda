@@ -8,13 +8,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import isel.pdm.yamda.R;
+import isel.pdm.yamda.presentation.view.activity.common.BaseActivity;
 import isel.pdm.yamda.presentation.view.entity.MovieView;
 import isel.pdm.yamda.presentation.view.fragment.TabFragment;
 
 /**
- * Created by Nuno on 28/10/2015.
+ * Activity to display the movie details
  */
-public class MovieActivity extends AppCompatActivity{
+public class MovieActivity extends BaseActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

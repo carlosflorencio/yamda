@@ -10,7 +10,7 @@ import android.widget.ArrayAdapter;
 import java.util.ArrayList;
 
 /**
- * Created by carlo on 23/10/2015.
+ * Activity to display the movie search results
  */
 public class SearchableActivity extends ListActivity {
 
