@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.widget.ImageView;
 
 import java.io.File;
@@ -22,12 +23,17 @@ import java.util.concurrent.Executors;
 
 import isel.pdm.yamda.R;
 
+/**
+ * Class with the logic to load images from the internet and cache them
+ */
 public class ImageLoader {
 
-    MemoryCache memoryCache = new MemoryCache();
-    FileCache fileCache;
+    private static final String TAG = "ImageLoader";
+
+    private MemoryCache memoryCache = new MemoryCache();
+    private FileCache fileCache;
     private Map<ImageView, String> imageViews = Collections.synchronizedMap(new WeakHashMap<ImageView, String>());
-    ExecutorService executorService;
+    private ExecutorService executorService;
     final int placeholder = R.drawable.placeholder;
 
     public ImageLoader(Context context) {
@@ -42,8 +48,8 @@ public class ImageLoader {
         if (bitmap != null)
             imageView.setImageBitmap(bitmap);
         else {
-            queuePhoto(url, imageView);
             imageView.setImageResource(placeholder);
+            queuePhoto(url, imageView);
         }
     }
 
@@ -60,19 +66,25 @@ public class ImageLoader {
         if (b != null)
             return b;
 
+        Log.v(TAG, "Downloading image: " + url);
+
         //from web
         try {
             Bitmap bitmap = null;
             URL imageUrl = new URL(url);
+
             HttpURLConnection conn = (HttpURLConnection) imageUrl.openConnection();
             conn.setConnectTimeout(30000);
             conn.setReadTimeout(30000);
             conn.setInstanceFollowRedirects(true);
+
             InputStream is = conn.getInputStream();
             OutputStream os = new FileOutputStream(f);
             Utils.CopyStream(is, os);
+
             os.close();
             bitmap = decodeFile(f);
+
             return bitmap;
         } catch (Throwable ex) {
             ex.printStackTrace();
@@ -82,7 +94,11 @@ public class ImageLoader {
         }
     }
 
-    //decodes image and scales it to reduce memory consumption
+    /**
+     * Decodes image and scales it to reduce memory consumption
+     * @param f
+     * @return
+     */
     private Bitmap decodeFile(File f) {
         try {
             //decode image size
@@ -111,7 +127,9 @@ public class ImageLoader {
         return null;
     }
 
-    //Task for the queue
+    /**
+     * Task for the queue
+     */
     private class PhotoToLoad {
         public String url;
         public ImageView imageView;
@@ -133,10 +151,10 @@ public class ImageLoader {
         public void run() {
             if (imageViewReused(photoToLoad))
                 return;
+
             Bitmap bmp = getBitmap(photoToLoad.url);
             memoryCache.put(photoToLoad.url, bmp);
-            if (imageViewReused(photoToLoad))
-                return;
+
             BitmapDisplayer bd = new BitmapDisplayer(bmp, photoToLoad);
             Activity a = (Activity) photoToLoad.imageView.getContext();
             a.runOnUiThread(bd);
@@ -150,7 +168,9 @@ public class ImageLoader {
         return false;
     }
 
-    //Used to display bitmap in the UI thread
+    /**
+     * Used to display bitmap in the UI thread
+     */
     class BitmapDisplayer implements Runnable {
         Bitmap bitmap;
         PhotoToLoad photoToLoad;
@@ -163,6 +183,7 @@ public class ImageLoader {
         public void run() {
             if (imageViewReused(photoToLoad))
                 return;
+
             if (bitmap != null)
                 photoToLoad.imageView.setImageBitmap(bitmap);
             else
@@ -171,6 +192,7 @@ public class ImageLoader {
     }
 
     public void clearCache() {
+        Log.v(TAG, "Clearing Cache!");
         memoryCache.clear();
         fileCache.clear();
     }

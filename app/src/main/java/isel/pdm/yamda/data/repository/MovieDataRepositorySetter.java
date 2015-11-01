@@ -63,6 +63,7 @@ public class MovieDataRepositorySetter implements IMovieRepository {
             public void onResponse(Response<MovieDTO> response, Retrofit retrofit) {
                 Movie movie = mapper.transform(response.body());
                 Log.v("DEBUG_", "onResponse " + movie.getTitle());
+
                 presenter.hideLoading();
                 presenter.setData(movie);
             }

@@ -65,6 +65,8 @@ public class ModelEntitiesDataMapper {
      * @return
      */
     private String createPosterLink(String path) {
+        if(path == null) return null;
+
         return this.configuration.getImagesURI() + this.configuration.getPosterSize() + path;
     }
 }

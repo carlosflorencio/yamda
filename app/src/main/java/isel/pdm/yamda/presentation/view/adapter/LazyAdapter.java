@@ -2,6 +2,7 @@ package isel.pdm.yamda.presentation.view.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import isel.pdm.yamda.presentation.view.entity.MovieView;
  */
 public class LazyAdapter extends BaseAdapter {
 
+    private static final String TAG = "LazyAdapter";
     private Activity activity;
     private List<MovieView> data;
     private static LayoutInflater inflater=null;
@@ -62,8 +64,13 @@ public class LazyAdapter extends BaseAdapter {
         rating.setText("Rating: " + movie.getRating());
         genre.setText(movie.getGenres());
         releaseYear.setText(movie.getRelease_date());
-        imageLoader.DisplayImage(movie.getPoster(), thumb_image);
-        //img.setImageResource(R.drawable.placeholder);
+
+        if(movie.getPoster() == null) {
+            Log.v(TAG, "Movie without image: " + movie.getTitle());
+            thumb_image.setImageResource(R.drawable.placeholder);
+        } else {
+            imageLoader.DisplayImage(movie.getPoster(), thumb_image);
+        }
 
         return view;
     }

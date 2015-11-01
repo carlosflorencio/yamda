@@ -8,6 +8,9 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * Class to assist on caching images by ImageLoader
+ */
 public class MemoryCache {
 
     private static final String TAG = "MemoryCache";
@@ -23,7 +26,7 @@ public class MemoryCache {
 
     public void setLimit(long new_limit) {
         limit = new_limit;
-        Log.i(TAG, "MemoryCache will use up to " + limit / 1024. / 1024. + "MB");
+        Log.v(TAG, "MemoryCache will use up to " + limit / 1024. / 1024. + "MB");
     }
 
     public Bitmap get(String id) {
@@ -31,6 +34,8 @@ public class MemoryCache {
             if (!cache.containsKey(id))
                 return null;
             //NullPointerException sometimes happen here http://code.google.com/p/osmdroid/issues/detail?id=78
+
+            Log.v(TAG, "Loading image from cache " + id);
             return cache.get(id);
         } catch (NullPointerException ex) {
             ex.printStackTrace();
@@ -42,8 +47,10 @@ public class MemoryCache {
         try {
             if (cache.containsKey(id))
                 size -= getSizeInBytes(cache.get(id));
+
             cache.put(id, bitmap);
             size += getSizeInBytes(bitmap);
+
             checkSize();
         } catch (Throwable th) {
             th.printStackTrace();
@@ -61,7 +68,7 @@ public class MemoryCache {
                 if (size <= limit)
                     break;
             }
-            Log.i(TAG, "Clean cache. New size " + cache.size());
+            Log.v(TAG, "Clean cache. New size " + cache.size());
         }
     }
 
