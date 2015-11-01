@@ -1,4 +1,4 @@
-package isel.pdm.yamda.data.entity;
+package isel.pdm.yamda.data.entity.tmdb;
 
 /**
  * Small Movie Data Transfer Object

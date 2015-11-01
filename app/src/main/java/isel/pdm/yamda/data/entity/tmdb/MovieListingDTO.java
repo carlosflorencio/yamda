@@ -1,4 +1,4 @@
-package isel.pdm.yamda.data.entity;
+package isel.pdm.yamda.data.entity.tmdb;
 
 import java.util.List;
 

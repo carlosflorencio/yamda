@@ -1,11 +1,10 @@
 package isel.pdm.yamda.data.api;
 
-import isel.pdm.yamda.data.entity.ConfigurationDTO;
-import isel.pdm.yamda.data.entity.GenresDTO;
-import isel.pdm.yamda.data.entity.ImagesDTO;
-import isel.pdm.yamda.data.entity.MovieDTO;
-import isel.pdm.yamda.data.entity.MovieListingDTO;
-import isel.pdm.yamda.data.entity.SearchMovieListDTO;
+import isel.pdm.yamda.data.entity.tmdb.ConfigurationDTO;
+import isel.pdm.yamda.data.entity.tmdb.ImagesDTO;
+import isel.pdm.yamda.data.entity.tmdb.MovieDTO;
+import isel.pdm.yamda.data.entity.tmdb.MovieListingDTO;
+import isel.pdm.yamda.data.entity.tmdb.SearchMovieListDTO;
 import retrofit.Call;
 import retrofit.http.GET;
 import retrofit.http.Path;
@@ -14,10 +13,9 @@ import retrofit.http.Query;
 /**
  * Restrives information from online database through {@code Retrofit}.
  */
-public interface TheMovieAPI {
+public interface ITheMovieDbServiceAPI {
 
     String BASE_URL = "http://api.themoviedb.org";
-
     String API_KEY = "3b4c65c3780fc1ef44ec5500b186d833";
 
     /**
@@ -29,16 +27,6 @@ public interface TheMovieAPI {
     @GET("/3/configuration")
     Call<ConfigurationDTO> getConfig(@Query("api_key") String api_key);
 
-    /**
-     * Retrieves a list of genres used in movies.
-     *
-     * @param api_key  api_key used to retrieve information
-     * @param language to retrieve in this language (ISO 639-1 code)
-     * @return
-     */
-    @GET("/3/genre/movie/list")
-    Call<GenresDTO> getGenres(@Query("api_key") String api_key,
-                             @Query("language") String language);
 
     /**
      *  Retrieves a specific movie through his {@code id}
@@ -51,8 +39,8 @@ public interface TheMovieAPI {
     @GET("/3/movie/{id}")
     Call<MovieDTO> getMovie(@Path("id") int id,
                          @Query("api_key") String api_key,
-                         @Query("language") String lang,
-                         @Query("append_to_response") String response_append);
+                         @Query("language") String lang
+                         );
 
     /**
      *  Retrieves a list of movies that are now on cinema.

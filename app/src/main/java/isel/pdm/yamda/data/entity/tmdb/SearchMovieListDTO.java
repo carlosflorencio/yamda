@@ -1,4 +1,4 @@
-package isel.pdm.yamda.data.entity;
+package isel.pdm.yamda.data.entity.tmdb;
 
 /**
  * Class used to retrieve a list of movies by title

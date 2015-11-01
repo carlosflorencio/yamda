@@ -1,11 +1,11 @@
-package isel.pdm.yamda.data.entity;
+package isel.pdm.yamda.data.entity.tmdb;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 /**
- * Configuration Data Transfer Object
+ * TMDbConfiguration Data Transfer Object
  * Used to store data from configuration of TMDb
  */
 public class ConfigurationDTO {

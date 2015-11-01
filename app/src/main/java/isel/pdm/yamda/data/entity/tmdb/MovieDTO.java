@@ -1,4 +1,4 @@
-package isel.pdm.yamda.data.entity;
+package isel.pdm.yamda.data.entity.tmdb;
 
 /**
  * Movie Data Transfer Object
@@ -19,7 +19,7 @@ public class MovieDTO {
         }
     }
 
-    private GenreDTO[] genres;
+    private int[] genres;
 
     private int id;
 
@@ -35,7 +35,7 @@ public class MovieDTO {
 
     private float vote_average;
 
-    public GenreDTO[] getGenres() {
+    public int[] getGenres() {
         return genres;
     }
 
