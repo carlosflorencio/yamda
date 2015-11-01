@@ -1,0 +1,70 @@
+package isel.pdm.yamda.model.mapper;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import isel.pdm.yamda.data.entity.IConfiguration;
+import isel.pdm.yamda.data.entity.TMDbConfiguration;
+import isel.pdm.yamda.data.entity.tmdb.MovieDTO;
+import isel.pdm.yamda.data.entity.tmdb.MovieListDTO;
+import isel.pdm.yamda.data.entity.tmdb.MovieListingDTO;
+import isel.pdm.yamda.model.entity.Movie;
+
+/**
+ * This class knows how to transform a data entity to a model entity
+ */
+public class MovieEntityDataMapper {
+
+    private IConfiguration configuration;
+
+    public MovieEntityDataMapper() {
+        //TODO: change this!! the configuration should be requested and cached and not hard coded
+        this.configuration = new TMDbConfiguration();
+    }
+
+    /**
+     * Transform a movie data entity to a business model
+     * @param dto
+     * @return
+     */
+    public Movie transform(MovieDTO dto) {
+        return new Movie(dto.getTitle(),
+                dto.getGenres(),
+                dto.getRelease_date(),
+                dto.getStatus(),
+                this.createPosterLink(dto.getPoster_path()));
+    }
+
+    /**
+     * Transform a movie list data entity to a business list model
+     * @param dto
+     * @return
+     */
+    public List<Movie> transform(MovieListingDTO dto) {
+        List<Movie> movies = new ArrayList<>();
+        List<MovieListDTO> dtoList = dto.getResults();
+        for (MovieListDTO movie : dtoList) {
+            movies.add(transform(movie));
+        }
+        return movies;
+    }
+
+    /**
+     * Transform a movie list details data entity to a business details model
+     * @param dto
+     * @return
+     */
+    public Movie transform(MovieListDTO dto) {
+        return new Movie(dto.getTitle(), null, dto.getRelease_date(), null, dto.getPoster_path());
+    }
+
+
+    /**
+     * Transform a relative path to a complete URI poster image
+     * @param path
+     * @return
+     */
+    private String createPosterLink(String path) {
+        return this.configuration.getImagesURI() + this.configuration.getPosterSize() + path;
+    }
+}

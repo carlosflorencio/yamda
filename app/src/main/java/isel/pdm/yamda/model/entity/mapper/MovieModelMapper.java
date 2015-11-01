@@ -16,7 +16,7 @@ public class MovieModelMapper {
                 movie.getStatus(),
                 movie.getReleaseDate(),
                 movie.getAbbreviation(),
-                movie.getGenres(),
+                new String[] {"oi"},
                 movie.getRating());
     }
 

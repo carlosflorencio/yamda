@@ -9,7 +9,7 @@ public class Movie {
 
     private String abbreviation;
 
-    private String[] genres;
+    private int[] genres;
 
     private String releaseDate;
 
@@ -25,7 +25,7 @@ public class Movie {
 
     private String rating;
 
-    public Movie(String title, String[] genres, String releaseDate, String status, String poster) {
+    public Movie(String title, int[] genres, String releaseDate, String status, String poster) {
         this.title = title;
         this.genres = genres;
         this.releaseDate = releaseDate;
@@ -49,11 +49,11 @@ public class Movie {
         this.abbreviation = abbreviation;
     }
 
-    public String[] getGenres() {
+    public int[] getGenres() {
         return genres;
     }
 
-    public void setGenres(String[] genres) {
+    public void setGenres(int[] genres) {
         this.genres = genres;
     }
 
