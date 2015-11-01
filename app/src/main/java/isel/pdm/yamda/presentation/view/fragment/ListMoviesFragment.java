@@ -24,6 +24,7 @@ import isel.pdm.yamda.presentation.view.fragment.common.PresentableFragment;
 
 public class ListMoviesFragment extends PresentableFragment implements IMoviesListView, AdapterView.OnItemClickListener {
 
+    private static final String SAVE_TAG = "movielistdetails";
     private View view;
     private ListView listView;
     private ArrayList<MovieView> items;
@@ -45,7 +46,7 @@ public class ListMoviesFragment extends PresentableFragment implements IMoviesLi
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable(TAG, this.items);
+        outState.putSerializable(SAVE_TAG, this.items);
     }
 
     @Override

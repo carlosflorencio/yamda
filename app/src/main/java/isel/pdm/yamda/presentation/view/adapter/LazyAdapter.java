@@ -2,10 +2,12 @@ package isel.pdm.yamda.presentation.view.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -52,7 +54,8 @@ public class LazyAdapter extends BaseAdapter {
         TextView rating = (TextView)view.findViewById(R.id.rating); // rating
         TextView genre = (TextView)view.findViewById(R.id.genre); // genre
         TextView releaseYear = (TextView)view.findViewById(R.id.release_year); // release year
-        LoadImageView thumb_image = (LoadImageView) view.findViewById(R.id.thumbnail); // thumb image
+        //LoadImageView thumb_image = (LoadImageView) view.findViewById(R.id.thumbnail); // thumb image
+        ImageView img = (ImageView) view.findViewById(R.id.thumbnail);
 
         MovieView movie = data.get(position);
 
@@ -61,8 +64,10 @@ public class LazyAdapter extends BaseAdapter {
         rating.setText("Rating: " + movie.getRating());
         genre.setText(movie.getGenres());
         releaseYear.setText(movie.getRelease_date());
-        thumb_image.setImagePlaceHolder(R.drawable.placeholder2);
-        thumb_image.setImageUrl(movie.getPoster());
+        //thumb_image.setImagePlaceHolder(R.drawable.placeholder2);
+        //thumb_image.setImageUrl(movie.getPoster());
+        img.setImageResource(R.drawable.placeholder2);
+
         return view;
     }
 

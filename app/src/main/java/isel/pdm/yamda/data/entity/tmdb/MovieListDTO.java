@@ -6,17 +6,13 @@ package isel.pdm.yamda.data.entity.tmdb;
  */
 public class MovieListDTO {
 
-    private int id;
+    public int id;
+    public String poster_path;
+    public String release_date;
+    public String title;
+    public int[] genre_ids;
+    public float vote_average;
 
-    private String poster_path;
-
-    private String release_date;
-
-    private String title;
-
-    private int[] genre_ids;
-
-    private float vote_average;
 
     public String getTitle() {
         return title;

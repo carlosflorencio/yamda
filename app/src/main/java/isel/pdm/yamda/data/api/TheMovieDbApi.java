@@ -1,6 +1,5 @@
 package isel.pdm.yamda.data.api;
 
-import java.io.IOException;
 import java.util.Locale;
 
 import isel.pdm.yamda.data.api.common.IMovieApi;
@@ -8,6 +7,8 @@ import isel.pdm.yamda.data.entity.tmdb.ConfigurationDTO;
 import isel.pdm.yamda.data.entity.tmdb.MovieDTO;
 import isel.pdm.yamda.data.entity.tmdb.MovieListingDTO;
 import isel.pdm.yamda.data.exception.ApiFailedGettingDataException;
+import retrofit.Call;
+import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 
 /**
@@ -20,58 +21,41 @@ public class TheMovieDbApi implements IMovieApi {
 
     public TheMovieDbApi() {
         //TODO: DI ?
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(ITheMovieDbServiceAPI.BASE_URL).build();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ITheMovieDbServiceAPI.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
         this.api = retrofit.create(ITheMovieDbServiceAPI.class);
         this.language = Locale.getDefault().getDisplayLanguage();
     }
 
     /** {@inheritDoc} **/
     @Override
-    public ConfigurationDTO getApiConfiguration() throws ApiFailedGettingDataException {
-        try {
-            return this.api.getConfig(ITheMovieDbServiceAPI.API_KEY).execute().body();
-        } catch (IOException e) {
-            throw new ApiFailedGettingDataException(e);
-        }
+    public Call<ConfigurationDTO> getApiConfiguration() {
+        return this.api.getConfig(ITheMovieDbServiceAPI.API_KEY);
     }
 
     /** {@inheritDoc} **/
     @Override
-    public MovieListingDTO getTheatersMovies(int page) throws ApiFailedGettingDataException {
-        try {
-            return this.api.getNowPlaying(ITheMovieDbServiceAPI.API_KEY, page, this.language).execute().body();
-        } catch (IOException e) {
-            throw new ApiFailedGettingDataException(e);
-        }
+    public Call<MovieListingDTO> getTheatersMovies(int page) {
+       return this.api.getNowPlaying(ITheMovieDbServiceAPI.API_KEY, page, this.language);
     }
 
     /** {@inheritDoc} **/
     @Override
-    public MovieListingDTO getSoonMovies(int page) throws ApiFailedGettingDataException {
-        try {
-            return this.api.getUpcoming(ITheMovieDbServiceAPI.API_KEY, page, this.language).execute().body();
-        } catch (IOException e) {
-            throw new ApiFailedGettingDataException(e);
-        }
+    public Call<MovieListingDTO> getSoonMovies(int page) {
+        return this.api.getUpcoming(ITheMovieDbServiceAPI.API_KEY, page, this.language);
     }
 
     /** {@inheritDoc} **/
     @Override
-    public MovieListingDTO getTopMovies(int page) throws ApiFailedGettingDataException {
-        try {
-            return this.api.getMostPopular(ITheMovieDbServiceAPI.API_KEY, page, this.language).execute().body();
-        } catch (IOException e) {
-            throw new ApiFailedGettingDataException(e);
-        }
+    public Call<MovieListingDTO> getTopMovies(int page) {
+        return this.api.getMostPopular(ITheMovieDbServiceAPI.API_KEY, page, this.language);
     }
 
     /** {@inheritDoc} **/
     @Override
-    public MovieDTO getMovie(int id) throws ApiFailedGettingDataException {
-        try {
-            return this.api.getMovie(id, ITheMovieDbServiceAPI.API_KEY,  this.language).execute().body();
-        } catch (IOException e) {
-            throw new ApiFailedGettingDataException(e);
-        }
+    public Call<MovieDTO> getMovie(int id) {
+        return this.api.getMovie(id, ITheMovieDbServiceAPI.API_KEY,  this.language);
     }
 }

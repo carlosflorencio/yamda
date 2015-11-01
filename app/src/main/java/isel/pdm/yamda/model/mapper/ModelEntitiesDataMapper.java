@@ -13,11 +13,11 @@ import isel.pdm.yamda.model.entity.Movie;
 /**
  * This class knows how to transform a data entity to a model entity
  */
-public class MovieEntityDataMapper {
+public class ModelEntitiesDataMapper {
 
     private IConfiguration configuration;
 
-    public MovieEntityDataMapper() {
+    public ModelEntitiesDataMapper() {
         //TODO: change this!! the configuration should be requested and cached and not hard coded
         this.configuration = new TMDbConfiguration();
     }

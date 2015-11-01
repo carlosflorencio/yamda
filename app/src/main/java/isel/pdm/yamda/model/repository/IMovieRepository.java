@@ -1,43 +1,40 @@
 package isel.pdm.yamda.model.repository;
 
-import java.io.IOException;
 import java.util.List;
 
 import isel.pdm.yamda.model.entity.Movie;
+import isel.pdm.yamda.presentation.ILoadDataView;
 
 /**
- * This interface defines the contract with the data layer for getting the data
+ * This interface defines the contract with the data layer for setting the data in a viewLoadData
  */
 public interface IMovieRepository {
 
     /**
-     * Get the movies in the theaters right now
+     * Set the movies in the theaters right now
      * @param page
      * @return
-     * @throws IOException
      */
-    List<Movie> getTheatersMovies(int page) throws IOException;
+    void setTheatersMovies(ILoadDataView<List<Movie>> presenter, int page);
 
     /**
-     * Get next movies getting into theaters
+     * Set next movies getting into theaters
      * @param page
      * @return
-     * @throws IOException
      */
-    List<Movie> getSoonMovies(int page) throws IOException;
+    void setSoonMovies(ILoadDataView<List<Movie>> presenter,int page);
 
     /**
-     * Get the top movies in theaters
+     * Set the top movies in theaters
      * @param page
      * @return
-     * @throws IOException
      */
-    List<Movie> getTopMovies(int page) throws IOException;
+    void setTopMovies(ILoadDataView<List<Movie>> presenter, int page);
 
     /**
-     * Get a movie details
+     * Set a movie details
      * @param id
      * @return
      */
-    Movie getMovie(int id);
+    void setMovie(ILoadDataView<Movie> presenter, int id);
 }

@@ -3,12 +3,19 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <!-- Thumbnail Image -->
-    <LoadImageView
-        android:id="@+id/thumbnail"
+    <!--<LoadImageView-->
+        <!--android:id="@+id/thumbnail"-->
+        <!--android:layout_width="80dp"-->
+        <!--android:layout_height="80dp"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_marginRight="8dp" />-->
+
+    <ImageView
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:id="@+id/thumbnail"
         android:layout_alignParentLeft="true"
-        android:layout_marginRight="8dp" />
+        android:layout_marginRight="2dp"/>
 
     <!-- Movie Title -->
     <TextView
@@ -60,5 +67,6 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="8dp"/>
+
 
 </RelativeLayout>

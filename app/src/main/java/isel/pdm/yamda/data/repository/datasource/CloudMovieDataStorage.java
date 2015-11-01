@@ -5,7 +5,7 @@ import isel.pdm.yamda.data.api.common.IMovieApi;
 import isel.pdm.yamda.data.entity.tmdb.ConfigurationDTO;
 import isel.pdm.yamda.data.entity.tmdb.MovieDTO;
 import isel.pdm.yamda.data.entity.tmdb.MovieListingDTO;
-import isel.pdm.yamda.data.exception.ApiFailedGettingDataException;
+import retrofit.Call;
 
 /**
  * This class should use an api to fetch the data
@@ -19,47 +19,27 @@ public class CloudMovieDataStorage implements IMovieDataStore {
     }
 
     @Override
-    public ConfigurationDTO apiConfiguration() {
-        try {
-            return this.api.getApiConfiguration();
-        } catch (ApiFailedGettingDataException e) {
-            return null;
-        }
+    public Call<ConfigurationDTO> apiConfiguration() {
+        return this.api.getApiConfiguration();
     }
 
     @Override
-    public MovieListingDTO theaterMovieListEntity(int page) {
-        try {
-            return this.api.getTheatersMovies(page);
-        } catch (ApiFailedGettingDataException e) {
-            return null;
-        }
+    public Call<MovieListingDTO> theaterMovieListEntity(int page) {
+        return this.api.getTheatersMovies(page);
     }
 
     @Override
-    public MovieListingDTO soonMovieListEntity(int page) {
-        try {
-            return this.api.getSoonMovies(page);
-        } catch (ApiFailedGettingDataException e) {
-            return null;
-        }
+    public Call<MovieListingDTO> soonMovieListEntity(int page) {
+        return this.api.getSoonMovies(page);
     }
 
     @Override
-    public MovieListingDTO topMovieListEntity(int page) {
-        try {
-            return this.api.getTopMovies(page);
-        } catch (ApiFailedGettingDataException e) {
-            return null;
-        }
+    public Call<MovieListingDTO> topMovieListEntity(int page) {
+        return this.api.getTopMovies(page);
     }
 
     @Override
-    public MovieDTO movieEntityDetails(int id) {
-        try {
-            return this.api.getMovie(id);
-        } catch (ApiFailedGettingDataException e) {
-            return null;
-        }
+    public Call<MovieDTO> movieEntityDetails(int id) {
+        return this.api.getMovie(id);
     }
 }

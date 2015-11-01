@@ -3,11 +3,16 @@ package isel.pdm.yamda.presentation.presenter;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import isel.pdm.yamda.model.entity.Movie;
+import isel.pdm.yamda.model.repository.IMovieRepository;
+import isel.pdm.yamda.presentation.ILoadDataView;
+import isel.pdm.yamda.presentation.creator.DataFactory;
+import isel.pdm.yamda.presentation.mapper.ViewEntitiesDataMapper;
 import isel.pdm.yamda.presentation.view.activity.contract.IMoviesListView;
-import isel.pdm.yamda.presentation.view.entity.MovieView;
 
-public class MoviesListViewPresenter implements IPresenter {
+public class MoviesListViewPresenter implements IPresenter, ILoadDataView<List<Movie>> {
 
     private IMoviesListView view;
     private String type;
@@ -18,11 +23,14 @@ public class MoviesListViewPresenter implements IPresenter {
 
     public void initialize() {
         Log.v("DEBUG_", "initialize " + type);
-        this.view.setItems(createList(this.type));
+        this.askForData();
     }
 
-    private ArrayList<MovieView> createList(String type) {
-        return new ArrayList<>();
+    private void askForData() {
+        DataFactory factory = new DataFactory();
+        IMovieRepository repo = factory.getMoviesRepository();
+
+        repo.setTheatersMovies(this, 1);
     }
 
     /** {@inheritDoc} **/
@@ -47,4 +55,25 @@ public class MoviesListViewPresenter implements IPresenter {
         this.view = v;
     }
 
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void showError(String message) {
+
+    }
+
+    @Override
+    public void setData(List<Movie> data) {
+        ViewEntitiesDataMapper mapper = new ViewEntitiesDataMapper();
+        Log.v("DEBUG_", "setData " + type);
+        this.view.setItems(mapper.transform(data));
+    }
 }
