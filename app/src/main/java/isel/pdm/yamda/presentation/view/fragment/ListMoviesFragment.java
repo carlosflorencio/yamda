@@ -2,7 +2,6 @@ package isel.pdm.yamda.presentation.view.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +36,7 @@ public class ListMoviesFragment extends PresentableFragment implements IMoviesLi
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         this.view = inflater.inflate(R.layout.home_tab, container, false);
         this.listView = ((ListView) view.findViewById(R.id.list_view));
-        this.presenter = new MoviesListViewPresenter(this, getArguments().getString(ViewPagerAdapter.FRAGMENT_KEY));
+        this.presenter = MoviesListViewPresenter.create(this, getArguments().getString(ViewPagerAdapter.FRAGMENT_KEY));
 
         return view;
     }
