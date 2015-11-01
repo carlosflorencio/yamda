@@ -23,6 +23,16 @@ public class Movie {
 
     private String poster;
 
+    private String rating;
+
+    public Movie(String title, String[] genres, String releaseDate, String status, String poster) {
+        this.title = title;
+        this.genres = genres;
+        this.releaseDate = releaseDate;
+        this.status = status;
+        this.poster = poster;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -93,5 +103,9 @@ public class Movie {
 
     public void setPoster(String poster) {
         this.poster = poster;
+    }
+
+    public String getRating() {
+        return rating;
     }
 }
