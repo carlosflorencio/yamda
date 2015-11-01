@@ -7,17 +7,25 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
-    private static final String TITLES_KEY = "TITLES_KEY";
+    /**
+     * Argument key to be passed to the MoviesListFragment
+     */
+    public static final String FRAGMENT_KEY = "TYPE";
 
     /**
      * This will Store the Titles of the Tabs which are Going to be passed when ViewPagerAdapter is created
      */
-    CharSequence Titles[];
+    private CharSequence Titles[];
 
     /**
      * Store the number of tabs, this will also be passed when the ViewPagerAdapter is created
      */
-    int NumbOfTabs;
+    private int NumbOfTabs;
+
+    /**
+     * Tab fragments stored here
+     */
+    private Fragment[] tabs;
 
 
     /**
@@ -30,41 +38,70 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
         this.Titles = mTitles;
         this.NumbOfTabs = mTitles.length;
+
+        this.setupFragments();
     }
 
-    //This method returns the fragment for every position in the View Pager
+    /**
+     * This method returns the fragment for every position in the View Pager
+     * @param position
+     * @return
+     */
     @Override
     public Fragment getItem(int position) {
-        Bundle bundle = new Bundle();
-        ListMoviesFragment tab = new ListMoviesFragment();
         switch (position) {
             case 0:
-                bundle.putString(TITLES_KEY, Titles[0].toString());
-                tab.setArguments(bundle);
-                break;
+                return this.tabs[0];
             case 1:
-                bundle.putString(TITLES_KEY, Titles[1].toString());
-                tab.setArguments(bundle);
-                break;
+                return this.tabs[1];
             case 2:
-                bundle.putString(TITLES_KEY, Titles[2].toString());
-                tab.setArguments(bundle);
-                break;
+                return this.tabs[2];
             default:
                 throw new IllegalStateException();
         }
-        return tab;
     }
 
-    // This method returns the titles for the Tabs in the Tab Strip
+    /**
+     * This method returns the titles for the Tabs in the Tab Strip
+     * @param position
+     * @return
+     */
     @Override
     public CharSequence getPageTitle(int position) {
         return Titles[position];
     }
 
-    // This method returns the Number of tabs for the tabs Strip
+    /**
+     * This method returns the Number of tabs for the tabs Strip
+     * @return
+     */
     @Override
     public int getCount() {
         return NumbOfTabs;
+    }
+
+    /**
+     * Populate the fragment array with the 3 fragments
+     */
+    public void setupFragments() {
+        this.tabs = new Fragment[] {
+                createMovieTabFragment(Titles[0].toString()),
+                createMovieTabFragment(Titles[1].toString()),
+                createMovieTabFragment(Titles[2].toString())
+        };
+    }
+
+    /**
+     * Create a ListMoviesFragment of a type
+     * @param type
+     * @return
+     */
+    public Fragment createMovieTabFragment(String type) {
+        Fragment f = new ListMoviesFragment();
+        Bundle b = new Bundle();
+        b.putString(FRAGMENT_KEY, type);
+        f.setArguments(b);
+
+        return f;
     }
 }

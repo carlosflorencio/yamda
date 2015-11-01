@@ -11,10 +11,10 @@ public class MoviesListViewPresenter implements IPresenter {
 
     private IMoviesListView view;
 
-    public MoviesListViewPresenter(IMoviesListView v) {
+    public MoviesListViewPresenter(IMoviesListView v, String type) {
         this.view = v;
 
-        this.view.setItems(createList());
+        this.view.setItems(createList(type));
     }
 
     /** {@inheritDoc} **/
@@ -35,11 +35,11 @@ public class MoviesListViewPresenter implements IPresenter {
 
     }
 
-    private ArrayList<MovieView> createList() {
+    private ArrayList<MovieView> createList(String type) {
         Log.v("DEBUG", "createList");
         ArrayList<MovieView> list = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            list.add(new MovieView("Inception", "Released", "2010", null, new String[]{"Action", "Mystery", "Sci-Fi"}, "8.8"));
+            list.add(new MovieView(type, "Released", "2010", null, new String[]{"Action", "Mystery", "Sci-Fi"}, "8.8"));
         }
         return list;
     }
