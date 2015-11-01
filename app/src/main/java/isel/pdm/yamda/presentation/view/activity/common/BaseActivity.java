@@ -1,7 +1,6 @@
 package isel.pdm.yamda.presentation.view.activity.common;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 import isel.pdm.yamda.presentation.navigator.Navigator;
 

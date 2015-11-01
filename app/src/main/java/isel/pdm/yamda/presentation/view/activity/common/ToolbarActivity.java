@@ -34,8 +34,8 @@ public abstract class ToolbarActivity extends BaseActivity {
         //toolbar.setLogo(R.mipmap.ic_launcher);
         //toolbar.setTitle(R.string.app_name);
 
-        this.progressBar = (ProgressBar) findViewById(R.id.progress_spinner);
-        progressBar.setVisibility(View.INVISIBLE);
+        //this.progressBar = (ProgressBar) findViewById(R.id.progress_spinner);
+        //progressBar.setVisibility(View.INVISIBLE);
     }
 
     /**
