@@ -3,7 +3,6 @@ package isel.pdm.yamda.presentation.view.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,9 +21,10 @@ import isel.pdm.yamda.presentation.view.activity.MovieActivity;
 import isel.pdm.yamda.presentation.view.activity.contract.IMoviesListView;
 import isel.pdm.yamda.presentation.view.adapter.LazyAdapter;
 import isel.pdm.yamda.presentation.view.entity.MovieView;
+import isel.pdm.yamda.presentation.view.fragment.common.BaseFragment;
 
 
-public class ListMoviesFragment extends Fragment implements IMoviesListView {
+public class TabFragment extends BaseFragment {
 
     private static final String TAG = ListMoviesFragment.class.getSimpleName();
     public static final String MOVIE_TAG = MovieView.class.toString();

@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import isel.pdm.yamda.R;
 import isel.pdm.yamda.presentation.view.entity.MovieView;
@@ -20,11 +20,11 @@ import isel.pdm.yamda.presentation.view.entity.MovieView;
 public class LazyAdapter extends BaseAdapter {
 
     private Activity activity;
-    private ArrayList<MovieView> data;
+    private List<MovieView> data;
     private static LayoutInflater inflater=null;
     //public ImageLoader imageLoader;
 
-    public LazyAdapter(Activity a, ArrayList<MovieView> d) {
+    public LazyAdapter(Activity a, List<MovieView> d) {
         activity = a;
         data=d;
         inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
