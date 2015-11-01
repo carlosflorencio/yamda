@@ -1,6 +1,7 @@
 package isel.pdm.yamda.data.entity.mapper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import isel.pdm.yamda.data.entity.ConfigurationDTO;
@@ -46,5 +47,13 @@ public class MovieDataMapper {
 
     public Configuration transform(ConfigurationDTO apiConfiguration) {
         return new Configuration(apiConfiguration.getBaseUrl(), apiConfiguration.getPosterSizes());
+    }
+
+    public HashMap<String, List<Movie>> transform(HashMap<String, MovieListingDTO> listings) {
+        HashMap<String, List<Movie>> map = new HashMap<>();
+        for (String str : listings.keySet()) {
+            map.put(str, this.transform(listings.get(str)));
+        }
+        return map;
     }
 }

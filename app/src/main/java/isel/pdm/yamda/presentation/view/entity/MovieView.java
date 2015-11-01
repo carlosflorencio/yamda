@@ -18,13 +18,16 @@ public class MovieView implements Parcelable {
 
     private String overview;
 
+    private String poster;
+
     private String[] genres;
 
-    public MovieView(String title, String status, String release_date, String overview, String[] genres, String rating) {
+    public MovieView(String title, String status, String release_date, String overview, String poster, String[] genres, String rating) {
         this.title = title;
         this.status = status;
         this.release_date = release_date;
         this.overview = overview;
+        this.poster = poster;
         this.genres = genres;
         this.rating = rating;
     }
@@ -35,6 +38,7 @@ public class MovieView implements Parcelable {
         this.release_date = in.readString();
         this.rating = in.readString();
         this.overview = in.readString();
+        this.poster = in.readString();
         this.genres = in.createStringArray();
     }
 
@@ -62,6 +66,7 @@ public class MovieView implements Parcelable {
         dest.writeString(release_date);
         dest.writeString(rating);
         dest.writeString(overview);
+        dest.writeString(poster);
         dest.writeStringArray(genres);
     }
 
@@ -93,5 +98,9 @@ public class MovieView implements Parcelable {
 
     public String getRating() {
         return rating;
+    }
+
+    public String getPoster() {
+        return poster;
     }
 }

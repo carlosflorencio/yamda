@@ -1,6 +1,6 @@
 package isel.pdm.yamda.presentation.presenter;
 
-
+import android.os.AsyncTask;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -11,31 +11,33 @@ import isel.pdm.yamda.presentation.view.entity.MovieView;
 public class MoviesListViewPresenter implements IPresenter {
 
     private IMoviesListView view;
-    private String type;
 
     public MoviesListViewPresenter(String type) {
         this.type = type;
+    private MovieModelMapper mapper;
+
+    private IMovieRepository repository;
+
+    public MoviesListViewPresenter(IMoviesListView v, MovieModelMapper mapper, IMovieRepository repository, String type) {
+        this.view = v;
+        this.mapper = mapper;
+        this.repository = repository;
+        this.view.setItems(createList(type));
     }
 
-    /**
-     * {@inheritDoc}
-     **/
+    /** {@inheritDoc} **/
     @Override
     public void onResume() {
         this.view.showProgress();
     }
 
-    /**
-     * {@inheritDoc}
-     **/
+    /** {@inheritDoc} **/
     @Override
     public void onPause() {
 
     }
 
-    /**
-     * {@inheritDoc}
-     **/
+    /** {@inheritDoc} **/
     @Override
     public void onDestroy() {
 
@@ -51,10 +53,15 @@ public class MoviesListViewPresenter implements IPresenter {
     }
 
     private ArrayList<MovieView> createList(String type) {
-        ArrayList<MovieView> list = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            list.add(new MovieView(type, "Released", "2010", null, new String[]{"Action", "Mystery", "Sci-Fi"}, "8.8"));
+        try {
+            return (ArrayList<MovieView>) mapper.transform(repository.getListing(type));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return list;
+        throw new IllegalStateException();
+    }
+
+    public static MoviesListViewPresenter create(IMoviesListView v, String type) {
+        return new MoviesListViewPresenter(v, new MovieModelMapper(), MovieRepository.create(), type);
     }
 }

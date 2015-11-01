@@ -6,6 +6,7 @@ import java.util.List;
 
 import isel.pdm.yamda.data.api.TheMovieAPI;
 import isel.pdm.yamda.data.entity.ConfigurationDTO;
+import isel.pdm.yamda.data.entity.MovieListDTO;
 import isel.pdm.yamda.data.entity.MovieListingDTO;
 import isel.pdm.yamda.data.entity.mapper.MovieDataMapper;
 import isel.pdm.yamda.model.entity.Configuration;
@@ -41,7 +42,7 @@ public class MovieRepository implements IMovieRepository {
     }
 
     @Override
-    public HashMap<String, MovieListingDTO> getListings() throws IOException {
+    public HashMap<String, List<Movie>> getListings() throws IOException {
         if (listings == null) {
             listings = new HashMap<>();
             if (listings.get(MovieListingDTO.NOW_PLAYING_TAG) == null) {
@@ -54,7 +55,7 @@ public class MovieRepository implements IMovieRepository {
                 listings.put(MovieListingDTO.POPULAR_TAG, api.getMostPopular(TheMovieAPI.API_KEY, 1, "en").execute().body());
             }
         }
-        return listings;
+        return movieDataMapper.transform(listings);
     }
 
     @Override
@@ -67,14 +68,17 @@ public class MovieRepository implements IMovieRepository {
             switch (tag) {
                 case MovieListingDTO.NOW_PLAYING_TAG:
                     listing = api.getNowPlaying(TheMovieAPI.API_KEY, 1, "en").execute().body();
+                    appendImageUrl(listing);
                     listings.put(tag, listing);
                     break;
                 case MovieListingDTO.UPCOMING_TAG:
                     listing = api.getUpcoming(TheMovieAPI.API_KEY, 1, "en").execute().body();
+                    appendImageUrl(listing);
                     listings.put(tag, listing);
                     break;
                 case MovieListingDTO.POPULAR_TAG:
                     listing = api.getMostPopular(TheMovieAPI.API_KEY, 1, "en").execute().body();
+                    appendImageUrl(listing);
                     listings.put(tag, listing);
                     break;
                 default:
@@ -84,12 +88,21 @@ public class MovieRepository implements IMovieRepository {
         return movieDataMapper.transform(listings.get(tag));
     }
 
+    private void appendImageUrl(MovieListingDTO movieListingDTO) throws IOException {
+        if (apiConfiguration == null) {
+            getApiConfiguration();
+        }
+        for (MovieListDTO dto : movieListingDTO.getResults()) {
+            dto.setPoster_path(apiConfiguration.getBaseUrl() + apiConfiguration.getPosterSizes()[0] + dto.getPoster_path());
+        }
+    }
+
     @Override
     public Movie getMovie(int id) {
         return null;
     }
 
-    public static MovieRepository create() throws IOException {
+    public static MovieRepository create() {
         return new MovieRepository(new Retrofit.Builder()
                 .baseUrl(TheMovieAPI.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())

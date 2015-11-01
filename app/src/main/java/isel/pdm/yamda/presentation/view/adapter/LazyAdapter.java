@@ -6,12 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
 
 import isel.pdm.yamda.R;
+import isel.pdm.yamda.presentation.view.activity.component.LoadImageView;
 import isel.pdm.yamda.presentation.view.entity.MovieView;
 
 /**
@@ -52,8 +52,7 @@ public class LazyAdapter extends BaseAdapter {
         TextView rating = (TextView)view.findViewById(R.id.rating); // rating
         TextView genre = (TextView)view.findViewById(R.id.genre); // genre
         TextView releaseYear = (TextView)view.findViewById(R.id.release_year); // release year
-        ImageView thumb_image = (ImageView) view.findViewById(R.id.thumbnail); // thumb image
-        ImageView arrow = (ImageView) view.findViewById(R.id.arrow); // thumb image
+        LoadImageView thumb_image = (LoadImageView) view.findViewById(R.id.thumbnail); // thumb image
 
         MovieView movie = data.get(position);
 
@@ -62,8 +61,8 @@ public class LazyAdapter extends BaseAdapter {
         rating.setText("Rating: " + movie.getRating());
         genre.setText(movie.getGenres());
         releaseYear.setText(movie.getRelease_date());
-        thumb_image.setImageResource(R.drawable.placeholder2);
-        //imageLoader.DisplayImage(movie.get(ListMoviesFragment.KEY_THUMB_URL), thumb_image);
+        thumb_image.setImagePlaceHolder(R.drawable.placeholder2);
+        thumb_image.setImageUrl(movie.getPoster());
         return view;
     }
 
