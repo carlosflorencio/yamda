@@ -54,7 +54,7 @@ public class ListMoviesFragment extends PresentableFragment implements IMoviesLi
         ((MoviesListViewPresenter) this.presenter).setView(this);
 
         if (savedInstanceState != null) {
-            this.items = savedInstanceState.getParcelableArrayList(TAG);
+            this.items = savedInstanceState.getParcelableArrayList(SAVE_TAG);
         } else {
             this.presenter.initialize();
         }

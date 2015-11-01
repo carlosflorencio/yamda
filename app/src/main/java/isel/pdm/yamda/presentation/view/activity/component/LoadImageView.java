@@ -14,7 +14,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 /**
- * Created by Nuno on 01/11/2015.
+ * Class that handles the loading of images
  */
 public class LoadImageView extends ImageView {
     private int imagePlaceHolderResourceId;
