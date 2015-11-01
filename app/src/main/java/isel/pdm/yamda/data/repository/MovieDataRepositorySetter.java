@@ -11,7 +11,7 @@ import isel.pdm.yamda.data.repository.datasource.IMovieDataStore;
 import isel.pdm.yamda.data.repository.datasource.MovieDataStoreFactory;
 import isel.pdm.yamda.model.entity.Movie;
 import isel.pdm.yamda.model.repository.IMovieRepository;
-import isel.pdm.yamda.presentation.ILoadDataView;
+import isel.pdm.yamda.presentation.view.contract.ILoadDataView;
 import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;

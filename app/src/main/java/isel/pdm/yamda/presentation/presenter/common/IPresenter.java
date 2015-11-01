@@ -1,4 +1,4 @@
-package isel.pdm.yamda.presentation.presenter;
+package isel.pdm.yamda.presentation.presenter.common;
 
 import android.view.View;
 
@@ -25,4 +25,8 @@ public interface IPresenter {
      */
     void onDestroy();
 
+    /**
+     * Method that inits the presenter, should ask for data
+     */
+    void initialize();
 }

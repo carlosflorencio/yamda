@@ -1,9 +1,13 @@
-package isel.pdm.yamda.presentation.view.fragment;
+package isel.pdm.yamda.presentation.view.component;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+
+import isel.pdm.yamda.presentation.view.fragment.InTheatersMoviesListFragment;
+import isel.pdm.yamda.presentation.view.fragment.SoonMoviesListFragment;
+import isel.pdm.yamda.presentation.view.fragment.TopMoviesListFragment;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 

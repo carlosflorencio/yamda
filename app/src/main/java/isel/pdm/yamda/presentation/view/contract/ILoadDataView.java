@@ -1,4 +1,4 @@
-package isel.pdm.yamda.presentation;
+package isel.pdm.yamda.presentation.view.contract;
 
 public interface ILoadDataView<T> {
 

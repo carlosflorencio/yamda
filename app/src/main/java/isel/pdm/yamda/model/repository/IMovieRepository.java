@@ -3,7 +3,7 @@ package isel.pdm.yamda.model.repository;
 import java.util.List;
 
 import isel.pdm.yamda.model.entity.Movie;
-import isel.pdm.yamda.presentation.ILoadDataView;
+import isel.pdm.yamda.presentation.view.contract.ILoadDataView;
 
 /**
  * This interface defines the contract with the data layer for setting the data in a viewLoadData

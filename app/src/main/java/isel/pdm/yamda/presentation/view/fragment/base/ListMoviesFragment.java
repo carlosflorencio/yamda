@@ -1,8 +1,7 @@
-package isel.pdm.yamda.presentation.view.fragment;
+package isel.pdm.yamda.presentation.view.fragment.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +13,12 @@ import java.util.List;
 
 import isel.pdm.yamda.R;
 import isel.pdm.yamda.presentation.navigator.Navigator;
-import isel.pdm.yamda.presentation.presenter.MoviesListViewPresenter;
+import isel.pdm.yamda.presentation.presenter.base.MoviesListViewPresenter;
 import isel.pdm.yamda.presentation.view.activity.HomeActivity;
 import isel.pdm.yamda.presentation.view.activity.contract.IMoviesListView;
 import isel.pdm.yamda.presentation.view.adapter.LazyAdapter;
 import isel.pdm.yamda.presentation.view.entity.MovieView;
+import isel.pdm.yamda.presentation.view.component.ViewPagerAdapter;
 import isel.pdm.yamda.presentation.view.fragment.common.PresentableFragment;
 
 

@@ -1,6 +1,6 @@
 package isel.pdm.yamda.presentation.view.fragment.common;
 
-import isel.pdm.yamda.presentation.presenter.IPresenter;
+import isel.pdm.yamda.presentation.presenter.common.IPresenter;
 
 public abstract class PresentableFragment extends BaseFragment {
 
