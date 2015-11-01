@@ -6,7 +6,7 @@ package isel.pdm.yamda.data.entity;
  */
 public class MovieDTO {
 
-    private static class GenreDTO {
+    public static class GenreDTO {
         private int id;
         private String name;
 

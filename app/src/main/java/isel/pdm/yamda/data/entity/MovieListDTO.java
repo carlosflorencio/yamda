@@ -18,4 +18,27 @@ public class MovieListDTO {
 
     private float vote_average;
 
+    public String getTitle() {
+        return title;
+    }
+
+    public int[] getGenre_ids() {
+        return genre_ids;
+    }
+
+    public float getVote_average() {
+        return vote_average;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getPoster_path() {
+        return poster_path;
+    }
+
+    public String getRelease_date() {
+        return release_date;
+    }
 }
