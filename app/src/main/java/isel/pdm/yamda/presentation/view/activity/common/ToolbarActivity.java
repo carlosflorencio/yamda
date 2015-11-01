@@ -31,8 +31,8 @@ public abstract class ToolbarActivity extends BaseActivity {
         this.toolbar = (Toolbar) findViewById(R.id.home_toolbar);
         setSupportActionBar(toolbar);
 
-        toolbar.setLogo(R.mipmap.ic_launcher);
-        toolbar.setTitle(R.string.app_name);
+        //toolbar.setLogo(R.mipmap.ic_launcher);
+        //toolbar.setTitle(R.string.app_name);
 
         this.progressBar = (ProgressBar) findViewById(R.id.progress_spinner);
         progressBar.setVisibility(View.INVISIBLE);
@@ -55,6 +55,9 @@ public abstract class ToolbarActivity extends BaseActivity {
                 (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(
                 searchManager.getSearchableInfo(getComponentName()));
+
+        //Expand the search widget
+        searchView.setIconifiedByDefault(false);
         return true;
     }
 
