@@ -55,6 +55,7 @@ public class ListMoviesFragment extends PresentableFragment implements IMoviesLi
 
         if (savedInstanceState != null) {
             this.items = savedInstanceState.getParcelableArrayList(SAVE_TAG);
+            setListViewAdapter();
         } else {
             this.presenter.initialize();
         }
@@ -62,6 +63,11 @@ public class ListMoviesFragment extends PresentableFragment implements IMoviesLi
 
     @Override
     public void setItems(List<MovieView> items) {
+        this.items = (ArrayList<MovieView>) items;
+        setListViewAdapter();
+    }
+
+    private void setListViewAdapter() {
         this.listView.setAdapter(new LazyAdapter(getActivity(), items));
         this.listView.setOnItemClickListener(this);
         view.invalidate();

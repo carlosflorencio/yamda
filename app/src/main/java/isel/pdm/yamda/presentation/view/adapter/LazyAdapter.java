@@ -2,7 +2,6 @@ package isel.pdm.yamda.presentation.view.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import java.util.List;
 
 import isel.pdm.yamda.R;
 import isel.pdm.yamda.data.image.ImageLoader;
-import isel.pdm.yamda.presentation.view.activity.component.LoadImageView;
 import isel.pdm.yamda.presentation.view.entity.MovieView;
 
 /**
@@ -31,7 +29,6 @@ public class LazyAdapter extends BaseAdapter {
         activity = a;
         data=d;
         inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        //imageLoader = new ImageLoader(activity.getApplicationContext());
         imageLoader = new ImageLoader(activity.getApplicationContext());
     }
 
@@ -57,10 +54,8 @@ public class LazyAdapter extends BaseAdapter {
         TextView genre = (TextView)view.findViewById(R.id.genre); // genre
         TextView releaseYear = (TextView)view.findViewById(R.id.release_year); // release year
         ImageView thumb_image = (ImageView) view.findViewById(R.id.thumbnail); // thumb image
-        //ImageView img = (ImageView) view.findViewById(R.id.thumbnail);
 
         MovieView movie = data.get(position);
-        Log.v("DEBUG", "getView" + movie.getTitle());
 
         // Setting all values in listview
         title.setText(movie.getTitle());

@@ -20,7 +20,7 @@ import isel.pdm.yamda.R;
  */
 public class LoadImageView extends ImageView {
 
-    private static final int imagePlaceHolderResourceId = R.drawable.placeholder2;
+    private static final int imagePlaceHolderResourceId = R.drawable.placeholder;
 
     public LoadImageView(Context context) {
         super(context);
