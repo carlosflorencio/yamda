@@ -31,7 +31,7 @@ public class HomeActivity extends ToolbarActivity implements IHomeView {
         this.setUpToolbar();
         this.presenter = new HomeViewPresenter(this);
 
-        this.setTabs();
+        this.setPager();
     }
 
     @Override
@@ -60,9 +60,9 @@ public class HomeActivity extends ToolbarActivity implements IHomeView {
     }
 
     /**
-     * Setup the tabs
+     * Setup the ViewPager
      */
-    private void setTabs() {
+    private void setPager() {
         String[] titles = {
                 getResources().getString(R.string.page_theaters),
                 getResources().getString(R.string.page_soon),
@@ -76,6 +76,13 @@ public class HomeActivity extends ToolbarActivity implements IHomeView {
         pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(adapter);
 
+        this.setTabs();
+    }
+
+    /**
+     * Setup the tabs in the pager
+     */
+    private void setTabs() {
         // Assiging the Sliding Tab Layout View
         tabs = (SlidingTabLayout) findViewById(R.id.tabs);
         tabs.setDistributeEvenly(false); // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
