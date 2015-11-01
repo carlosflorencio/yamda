@@ -5,7 +5,7 @@ import android.support.v4.view.ViewPager;
 
 import isel.pdm.yamda.R;
 import isel.pdm.yamda.presentation.view.activity.common.ToolbarActivity;
-import isel.pdm.yamda.presentation.view.fragment.ViewPagerAdapter;
+import isel.pdm.yamda.presentation.view.component.ViewPagerAdapter;
 import vendor.SlidingTabLayout;
 
 public class HomeActivity extends ToolbarActivity {
