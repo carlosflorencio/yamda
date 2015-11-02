@@ -34,7 +34,8 @@ public class ModelEntitiesDataMapper {
                 dto.getGenres(),
                 dto.getRelease_date(),
                 dto.getStatus(),
-                this.createDetailPosterLink(dto.getPoster_path()));
+                this.createDetailPosterLink(dto.getPoster_path()),
+                dto.getVote_average());
     }
 
     /**
@@ -57,7 +58,14 @@ public class ModelEntitiesDataMapper {
      * @return
      */
     public Movie transform(MovieListDTO dto) {
-        return new Movie(dto.getId(), dto.getTitle(), null, null, dto.getRelease_date(), null, createListPosterLink(dto.getPoster_path()));
+        return new Movie(dto.getId(),
+                dto.getTitle(),
+                null,
+                null,
+                dto.getRelease_date(),
+                null,
+                createListPosterLink(dto.getPoster_path()),
+                dto.getVote_average());
     }
 
 
