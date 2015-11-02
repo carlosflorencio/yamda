@@ -100,8 +100,8 @@ public class MovieDataRepositorySetter implements IMovieRepository {
 
         @Override
         public void onResponse(Response<MovieListingDTO> response, Retrofit retrofit) {
-            List<Movie> list = mapper.transform(response.body());
             Log.v(TAG, "Downloading a MovieList: " + response.raw());
+            List<Movie> list = mapper.transform(response.body());
 
             presenter.hideLoading();
             presenter.setData(list);

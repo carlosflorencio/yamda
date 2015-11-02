@@ -1,23 +1,25 @@
 package isel.pdm.yamda.presentation.presenter;
 
+import java.util.List;
+
 import isel.pdm.yamda.model.entity.Movie;
 import isel.pdm.yamda.model.repository.IMovieRepository;
 import isel.pdm.yamda.presentation.creator.DataFactory;
 import isel.pdm.yamda.presentation.mapper.ViewEntitiesDataMapper;
 import isel.pdm.yamda.presentation.presenter.common.IPresenter;
-import isel.pdm.yamda.presentation.view.activity.contract.IMovieView;
 import isel.pdm.yamda.presentation.view.contract.ILoadDataView;
+import isel.pdm.yamda.presentation.view.entity.MovieView;
 
 /**
- * Moview view details presenter
+ * Search presenter
  */
-public class MovieViewPresenter implements IPresenter, ILoadDataView<Movie> {
+public class SearchMovieViewPresenter implements IPresenter, ILoadDataView<List<Movie>> {
 
-    private int id;
+    private String query;
 
-    private IMovieView view;
+    private ILoadDataView<List<MovieView>> view;
 
-    public void setView(IMovieView v) {
+    public void setView(ILoadDataView<List<MovieView>> v) {
         this.view = v;
     }
 
@@ -27,7 +29,7 @@ public class MovieViewPresenter implements IPresenter, ILoadDataView<Movie> {
         IMovieRepository repo = factory.getMoviesRepository();
 
         this.showLoading();
-        repo.setMovie(this, id);
+        repo.setMovieSearch(this, this.query, 1);
     }
 
     @Override
@@ -46,9 +48,9 @@ public class MovieViewPresenter implements IPresenter, ILoadDataView<Movie> {
     }
 
     @Override
-    public void setData(Movie data) {
+    public void setData(List<Movie> data) {
         ViewEntitiesDataMapper mapper = new ViewEntitiesDataMapper();
-        this.view.setItem(mapper.transform(data));
+        this.view.setData(mapper.transform(data));
     }
 
     @Override
@@ -66,7 +68,7 @@ public class MovieViewPresenter implements IPresenter, ILoadDataView<Movie> {
 
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setQuery(String q) {
+        this.query = q;
     }
 }

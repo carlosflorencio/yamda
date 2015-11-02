@@ -1,5 +1,7 @@
 package isel.pdm.yamda.data.api;
 
+import android.util.Log;
+
 import java.util.Locale;
 
 import isel.pdm.yamda.data.api.common.IMovieApi;
