@@ -1,30 +1,25 @@
 package isel.pdm.yamda.presentation.presenter;
 
-import java.util.List;
-
-import isel.pdm.yamda.model.entity.Movie;
 import isel.pdm.yamda.model.repository.IMovieRepository;
 import isel.pdm.yamda.presentation.creator.DataFactory;
-import isel.pdm.yamda.presentation.mapper.ViewEntitiesDataMapper;
-import isel.pdm.yamda.presentation.presenter.common.IPresenter;
-import isel.pdm.yamda.presentation.view.contract.ILoadDataView;
-import isel.pdm.yamda.presentation.view.entity.MovieView;
+import isel.pdm.yamda.presentation.presenter.common.MovieListablePresenter;
+import isel.pdm.yamda.presentation.view.activity.SearchableActivity;
 
 /**
  * Search presenter
  */
-public class SearchMovieViewPresenter implements IPresenter, ILoadDataView<List<Movie>> {
+public class SearchMovieViewPresenter extends MovieListablePresenter {
 
     private String query;
+    private SearchableActivity activity;
 
-    private ILoadDataView<List<MovieView>> view;
-
-    public void setView(ILoadDataView<List<MovieView>> v) {
-        this.view = v;
+    public SearchMovieViewPresenter(SearchableActivity activity, String query) {
+        super(activity, activity.getListView());
+        this.query = query;
+        askForData();
     }
 
-    @Override
-    public void initialize() {
+    private void askForData() {
         DataFactory factory = new DataFactory();
         IMovieRepository repo = factory.getMoviesRepository();
 
@@ -32,43 +27,6 @@ public class SearchMovieViewPresenter implements IPresenter, ILoadDataView<List<
         repo.setMovieSearch(this, this.query, 1);
     }
 
-    @Override
-    public void showLoading() {
 
-    }
 
-    @Override
-    public void hideLoading() {
-
-    }
-
-    @Override
-    public void showError(String message) {
-
-    }
-
-    @Override
-    public void setData(List<Movie> data) {
-        ViewEntitiesDataMapper mapper = new ViewEntitiesDataMapper();
-        this.view.setData(mapper.transform(data));
-    }
-
-    @Override
-    public void onResume() {
-
-    }
-
-    @Override
-    public void onPause() {
-
-    }
-
-    @Override
-    public void onDestroy() {
-
-    }
-
-    public void setQuery(String q) {
-        this.query = q;
-    }
 }

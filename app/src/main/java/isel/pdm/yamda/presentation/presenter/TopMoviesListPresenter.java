@@ -2,13 +2,18 @@ package isel.pdm.yamda.presentation.presenter;
 
 import isel.pdm.yamda.model.repository.IMovieRepository;
 import isel.pdm.yamda.presentation.creator.DataFactory;
-import isel.pdm.yamda.presentation.presenter.base.MoviesListViewPresenter;
+import isel.pdm.yamda.presentation.presenter.common.MovieListablePresenter;
+import isel.pdm.yamda.presentation.view.fragment.TopMoviesListFragment;
 
-public class TopMoviesListPresenter extends MoviesListViewPresenter {
+public class TopMoviesListPresenter extends MovieListablePresenter {
 
-    @Override
-    public void initialize() {
-        //TODO: Change this to DI
+    public TopMoviesListPresenter(TopMoviesListFragment fragment) {
+        super(fragment.getActivity(), fragment.getListView());
+
+        this.askForData();
+    }
+
+    private void askForData() {
         DataFactory factory = new DataFactory();
         IMovieRepository repo = factory.getMoviesRepository();
 
