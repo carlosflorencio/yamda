@@ -6,7 +6,7 @@ import android.view.MenuItem;
 
 import isel.pdm.yamda.R;
 import isel.pdm.yamda.presentation.presenter.MovieViewPresenter;
-import isel.pdm.yamda.presentation.view.activity.common.BaseActivity;
+import isel.pdm.yamda.presentation.view.activity.base.BaseActivity;
 
 /**
  * Activity to display the movie details

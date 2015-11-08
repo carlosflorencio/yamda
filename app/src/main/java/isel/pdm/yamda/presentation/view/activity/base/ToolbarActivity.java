@@ -1,4 +1,4 @@
-package isel.pdm.yamda.presentation.view.activity.common;
+package isel.pdm.yamda.presentation.view.activity.base;
 
 import android.app.SearchManager;
 import android.content.Context;

@@ -10,7 +10,7 @@ import android.widget.ListView;
 
 import isel.pdm.yamda.R;
 import isel.pdm.yamda.presentation.presenter.SearchMovieViewPresenter;
-import isel.pdm.yamda.presentation.view.activity.common.BaseActivity;
+import isel.pdm.yamda.presentation.view.activity.base.BaseActivity;
 
 /**
  * Activity to display the movie search results

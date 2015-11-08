@@ -1,99 +1,91 @@
 package isel.pdm.yamda.presentation.view.fragment.base;
 
+import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+/**
+ * Abstract class that extends the Fragment class and overrides lifecycle callbacks for
+ * logging various lifecycle events.
+ */
+public abstract class LoggingFragment extends Fragment {
 
-public class LoggingFragment extends Fragment {
+    /** Debugging tag used by the Android logger. */
+    protected final String TAG = getClass().getSimpleName();
 
-    protected final String TAG = "DEBUG_" + getClass().getSimpleName();
-
-    /**
-     * Helper method that produces a log message with the given method name and suffix.
-     *
-     * @param methodName The name of the method whose execution is being logged.
-     * @param suffix     The suffix to be appended to the log message.
-     * @return The log message.
-     */
-    private String createLogMessage(String methodName, String suffix) {
-        return String.format("%s() [%d] %s", methodName, hashCode(), suffix);
-    }
-
-    /**
-     * Helper method that produces a log message with the given method name.
-     *
-     * @param methodName The name of the method whose execution is being logged.
-     * @return The log message.
-     */
-    private String createLogMessage(String methodName) {
-        return createLogMessage(methodName, "");
-    }
-
+    /** {@inheritDoc} */
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        Log.d(TAG, "onAttach() - the fragment is being attached to its context");
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
-        Log.v(TAG, createLogMessage("onCreate", String.format(": savedInstanceState is%s null",
-                savedInstanceState != null ? " not" : "")));
+        if(savedInstanceState != null) {
+            // The fragment is being re-created.
+            Log.d(TAG, "onCreate(): fragment re-created");
+
+        } else {
+            // The fragment is being created anew.
+            Log.d(TAG, "onCreate(): fragment created anew");
+        }
+    }
+    /** {@inheritDoc} */
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        final View view = super.onCreateView(inflater, container, savedInstanceState);
+        Log.d(TAG, "onCreateView() - the fragment is creating its view");
+        return view;
     }
 
-    @Nullable
+    /** {@inheritDoc} */
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.v(TAG, createLogMessage("onCreateView"));
-        return super.onCreateView(inflater, container, savedInstanceState);
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        Log.v(TAG, createLogMessage("onActivityCreated"));
-    }
-
-    @Override
-    public void onStart() {
+    public void onStart(){
         super.onStart();
-        Log.v(TAG, createLogMessage("onStart"));
+        Log.d(TAG, "onStart() - the fragment is about to become visible");
     }
 
+    /** {@inheritDoc} */
     @Override
-    public void onResume() {
+    public void onResume(){
         super.onResume();
-        Log.v(TAG, createLogMessage("onResume"));
+        Log.d(TAG, "onResume() - the fragment has become visible (it is now \"resumed\")");
     }
 
+    /** {@inheritDoc} */
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        Log.v(TAG, createLogMessage("onSaveInstanceState"));
-    }
-
-    @Override
-    public void onPause() {
+    public void onPause(){
         super.onPause();
-        Log.v(TAG, createLogMessage("onPause"));
+        Log.d(TAG, "onPause() - the fragment is being hidden");
     }
 
+    /** {@inheritDoc} */
     @Override
-    public void onStop() {
+    public void onStop(){
         super.onStop();
-        Log.v(TAG, createLogMessage("onStop"));
+        Log.d(TAG, "onStop() - the fragment is no longer visible (it is now \"stopped\")");
     }
 
+    /** {@inheritDoc} */
     @Override
-    public void onDestroy() {
+    public void onDestroy(){
+        Log.d(TAG, "onDestroy() - the fragment is about to be destroyed");
         super.onDestroy();
-        Log.v(TAG, createLogMessage("onDestroy"));
     }
 
+    /** {@inheritDoc} */
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        Log.v(TAG, createLogMessage("onDestroyView"));
+    public void onDetach() {
+        super.onDetach();
+        Log.d(TAG, "onDetach() - the fragment is being detached from its context");
     }
 }

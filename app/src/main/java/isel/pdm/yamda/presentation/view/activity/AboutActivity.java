@@ -5,7 +5,7 @@ import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 
 import isel.pdm.yamda.R;
-import isel.pdm.yamda.presentation.view.activity.common.BaseActivity;
+import isel.pdm.yamda.presentation.view.activity.base.BaseActivity;
 
 /**
  * Activity to display the app credits

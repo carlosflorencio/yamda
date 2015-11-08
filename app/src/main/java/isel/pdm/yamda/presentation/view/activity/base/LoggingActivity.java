@@ -1,13 +1,14 @@
-package isel.pdm.yamda.presentation.view.activity.common;
+package isel.pdm.yamda.presentation.view.activity.base;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 /**
- * Base class for activities that perform logging of lifecycle callbacks.
+ * Abstract class that extends the AppCompatActivity class and overrides lifecycle callbacks for
+ * logging various lifecycle events.
  */
-public class LoggingActivity extends AppCompatActivity {
+public abstract class LoggingActivity extends AppCompatActivity {
 
     protected final String TAG = "DEBUG_" + getClass().getSimpleName();
 
