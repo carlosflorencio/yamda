@@ -4,10 +4,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import isel.pdm.yamda.R;
+import isel.pdm.yamda.YamdaApplication;
 import isel.pdm.yamda.data.image.ImageLoader;
 import isel.pdm.yamda.model.entity.Movie;
 import isel.pdm.yamda.model.repository.IMovieRepository;
-import isel.pdm.yamda.presentation.creator.DataFactory;
 import isel.pdm.yamda.presentation.mapper.ViewEntitiesDataMapper;
 import isel.pdm.yamda.presentation.presenter.base.IPresenter;
 import isel.pdm.yamda.presentation.view.activity.MovieActivity;
@@ -32,8 +32,7 @@ public class MovieViewPresenter implements IPresenter, ILoadDataView<Movie> {
     }
 
     private void askForData() {
-        DataFactory factory = new DataFactory();
-        IMovieRepository repo = factory.getMoviesRepository();
+        IMovieRepository repo = ((YamdaApplication)this.activity.getApplication()).getMovieRepository();
 
         this.showLoading();
         repo.setMovie(this, id);

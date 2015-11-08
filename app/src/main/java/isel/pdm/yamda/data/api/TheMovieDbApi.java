@@ -1,9 +1,11 @@
 package isel.pdm.yamda.data.api;
 
+import android.app.Application;
 import android.util.Log;
 
 import java.util.Locale;
 
+import isel.pdm.yamda.YamdaApplication;
 import isel.pdm.yamda.data.api.common.IMovieApi;
 import isel.pdm.yamda.data.entity.tmdb.ConfigurationDTO;
 import isel.pdm.yamda.data.entity.tmdb.MovieDTO;
@@ -21,14 +23,14 @@ public class TheMovieDbApi implements IMovieApi {
     private ITheMovieDbServiceAPI api;
     private String language;
 
-    public TheMovieDbApi() {
+    public TheMovieDbApi(String language) {
         //TODO: DI ?
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ITheMovieDbServiceAPI.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         this.api = retrofit.create(ITheMovieDbServiceAPI.class);
-        this.language = Locale.getDefault().getLanguage();
+        this.language = language;
     }
 
     /** {@inheritDoc} **/

@@ -1,7 +1,7 @@
 package isel.pdm.yamda.presentation.presenter;
 
+import isel.pdm.yamda.YamdaApplication;
 import isel.pdm.yamda.model.repository.IMovieRepository;
-import isel.pdm.yamda.presentation.creator.DataFactory;
 import isel.pdm.yamda.presentation.presenter.common.MovieListablePresenter;
 import isel.pdm.yamda.presentation.view.fragment.SoonMoviesListFragment;
 
@@ -14,8 +14,7 @@ public class SoonMoviesListPresenter extends MovieListablePresenter {
     }
 
     private void askForData() {
-        DataFactory factory = new DataFactory();
-        IMovieRepository repo = factory.getMoviesRepository();
+        IMovieRepository repo = ((YamdaApplication)this.activity.getApplication()).getMovieRepository();
 
         this.showLoading();
         repo.setSoonMovies(this, 1);
