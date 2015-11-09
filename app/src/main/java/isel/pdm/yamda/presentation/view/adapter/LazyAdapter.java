@@ -62,7 +62,7 @@ public class LazyAdapter extends BaseAdapter {
         // Setting all values in listview
         title.setText(movie.getTitle());
         rating.setText("Rating: " + movie.getRating());
-        genre.setText("sad");
+        genre.setText(movie.getGenresTogether());
         releaseYear.setText(movie.getReleaseDate());
 
         if(movie.getPoster() == null) {
