@@ -18,11 +18,13 @@ public abstract class MovieListablePresenter implements IPresenter, ILoadDataVie
         AdapterView.OnItemClickListener {
 
     protected ListView listView;
+    protected View loadingView;
     protected Activity activity;
 
-    public MovieListablePresenter(Activity activity, ListView listView) {
+    public MovieListablePresenter(Activity activity, ListView listView, View loading) {
         this.listView = listView;
         this.activity = activity;
+        this.loadingView = loading;
     }
 
     /*
@@ -32,12 +34,14 @@ public abstract class MovieListablePresenter implements IPresenter, ILoadDataVie
     */
     @Override
     public void showLoading() {
-
+        this.listView.setVisibility(View.GONE);
+        this.loadingView.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoading() {
-
+        this.loadingView.setVisibility(View.GONE);
+        this.listView.setVisibility(View.VISIBLE);
     }
 
     @Override

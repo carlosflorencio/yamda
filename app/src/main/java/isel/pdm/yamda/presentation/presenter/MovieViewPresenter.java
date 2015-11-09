@@ -1,5 +1,7 @@
 package isel.pdm.yamda.presentation.presenter;
 
+import android.os.Handler;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,10 +32,14 @@ public class MovieViewPresenter implements IPresenter, ILoadDataView<MovieDetail
     }
 
     private void askForData() {
-        IMovieRepository repo = ((YamdaApplication)this.activity.getApplication()).getMovieRepository();
+        final IMovieRepository repo = ((YamdaApplication)this.activity.getApplication()).getMovieRepository();
 
         this.showLoading();
-        repo.setMovie(this, id);
+        new Handler().postDelayed(new Runnable() { //ONLY FOR TESTING, SHOWING THE LOADER
+            public void run() {
+                repo.setMovie(MovieViewPresenter.this, id);
+            }
+        }, 1000);
     }
 
     /*
@@ -42,10 +48,16 @@ public class MovieViewPresenter implements IPresenter, ILoadDataView<MovieDetail
     |--------------------------------------------------------------------------
     */
     @Override
-    public void showLoading() {}
+    public void showLoading() {
+        this.activity.getMovieView().setVisibility(View.INVISIBLE);
+        this.activity.getLoadingView().setVisibility(View.VISIBLE);
+    }
 
     @Override
-    public void hideLoading() {}
+    public void hideLoading() {
+        this.activity.getLoadingView().setVisibility(View.INVISIBLE);
+        this.activity.getMovieView().setVisibility(View.VISIBLE);
+    }
 
     @Override
     public void showError(String message) {

@@ -7,8 +7,37 @@
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/list_view_search">
+        android:id="@+id/list_view_search"
+        android:visibility="gone"
+        >
 
     </ListView>
+
+    <LinearLayout
+        android:id="@+id/loading_search"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:gravity="center_vertical">
+
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar"
+            android:layout_gravity="center_horizontal"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/loading"
+            android:id="@+id/textView"
+            android:layout_gravity="center_horizontal"/>
+    </LinearLayout>
 
 </RelativeLayout>

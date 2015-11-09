@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 
 import isel.pdm.yamda.R;
@@ -18,6 +19,7 @@ import isel.pdm.yamda.presentation.view.activity.base.BaseActivity;
 public class SearchableActivity extends BaseActivity {
 
     private ListView listView;
+    private View loadingView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,7 @@ public class SearchableActivity extends BaseActivity {
 
         setContentView(R.layout.search_movies);
         this.listView = ((ListView) this.findViewById(R.id.list_view_search));
+        this.loadingView = this.findViewById(R.id.loading_search);
 
         setUpSupportActionBar();
 
@@ -78,5 +81,9 @@ public class SearchableActivity extends BaseActivity {
 
     public ListView getListView() {
         return listView;
+    }
+
+    public View getLoadingView() {
+        return loadingView;
     }
 }
