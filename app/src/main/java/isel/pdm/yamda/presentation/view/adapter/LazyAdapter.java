@@ -14,7 +14,7 @@ import java.util.List;
 
 import isel.pdm.yamda.R;
 import isel.pdm.yamda.data.image.ImageLoader;
-import isel.pdm.yamda.presentation.view.entity.MovieView;
+import isel.pdm.yamda.model.entity.MovieListDetails;
 
 /**
  * Adapter that displays the movies list with images
@@ -23,11 +23,11 @@ public class LazyAdapter extends BaseAdapter {
 
     private static final String TAG = "LazyAdapter";
     private Activity activity;
-    private List<MovieView> data;
+    private List<MovieListDetails> data;
     private static LayoutInflater inflater=null;
     public ImageLoader imageLoader;
 
-    public LazyAdapter(Activity a, List<MovieView> d) {
+    public LazyAdapter(Activity a, List<MovieListDetails> d) {
         activity = a;
         data=d;
         inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -57,13 +57,13 @@ public class LazyAdapter extends BaseAdapter {
         TextView releaseYear = (TextView)view.findViewById(R.id.release_year); // release year
         ImageView thumb_image = (ImageView) view.findViewById(R.id.thumbnail); // thumb image
 
-        MovieView movie = data.get(position);
+        MovieListDetails movie = data.get(position);
 
         // Setting all values in listview
         title.setText(movie.getTitle());
         rating.setText("Rating: " + movie.getRating());
-        genre.setText(movie.getGenres());
-        releaseYear.setText(movie.getRelease_date());
+        genre.setText("sad");
+        releaseYear.setText(movie.getReleaseDate());
 
         if(movie.getPoster() == null) {
             Log.v(TAG, "Movie without image: " + movie.getTitle());

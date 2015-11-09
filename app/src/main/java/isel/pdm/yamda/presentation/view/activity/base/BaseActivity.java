@@ -11,23 +11,12 @@ import isel.pdm.yamda.presentation.presenter.base.IPresenter;
 public abstract class BaseActivity extends LoggingActivity {
 
     /**
-     * Manage navigation between Activities
-     */
-    protected Navigator navigator;
-
-    /**
      * The Activity presenter who should manage the display
      */
     protected IPresenter presenter;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        this.navigator = new Navigator(); //make singleton? What about DI?
-    }
-
-    public Navigator getNavigator() {
-        return this.navigator;
     }
 
     /*

@@ -2,7 +2,7 @@ package isel.pdm.yamda.presentation.presenter;
 
 
 import isel.pdm.yamda.YamdaApplication;
-import isel.pdm.yamda.model.repository.IMovieRepository;
+import isel.pdm.yamda.data.repository.IMovieRepository;
 import isel.pdm.yamda.presentation.presenter.common.MovieListablePresenter;
 import isel.pdm.yamda.presentation.view.fragment.InTheatersMoviesListFragment;
 

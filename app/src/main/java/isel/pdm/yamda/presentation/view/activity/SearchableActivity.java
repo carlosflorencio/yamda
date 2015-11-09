@@ -22,8 +22,9 @@ public class SearchableActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.search_movies);
-        this.listView = ((ListView) this.findViewById(R.id.list_view));
+        this.listView = ((ListView) this.findViewById(R.id.list_view_search));
 
         setUpSupportActionBar();
 

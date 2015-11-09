@@ -7,16 +7,15 @@ import android.widget.ListView;
 
 import java.util.List;
 
-import isel.pdm.yamda.model.entity.Movie;
-import isel.pdm.yamda.presentation.mapper.ViewEntitiesDataMapper;
+import isel.pdm.yamda.YamdaApplication;
+import isel.pdm.yamda.model.entity.MovieListDetails;
 import isel.pdm.yamda.presentation.navigator.Navigator;
 import isel.pdm.yamda.presentation.presenter.base.IPresenter;
-import isel.pdm.yamda.presentation.view.activity.HomeActivity;
 import isel.pdm.yamda.presentation.view.adapter.LazyAdapter;
 import isel.pdm.yamda.presentation.view.contract.ILoadDataView;
-import isel.pdm.yamda.presentation.view.entity.MovieView;
 
-public abstract class MovieListablePresenter implements IPresenter, ILoadDataView<List<Movie>>, AdapterView.OnItemClickListener {
+public abstract class MovieListablePresenter implements IPresenter, ILoadDataView<List<MovieListDetails>>,
+        AdapterView.OnItemClickListener {
 
     protected ListView listView;
     protected Activity activity;
@@ -27,10 +26,10 @@ public abstract class MovieListablePresenter implements IPresenter, ILoadDataVie
     }
 
     /*
-        |--------------------------------------------------------------------------
-        | DataView Methods
-        |--------------------------------------------------------------------------
-        */
+    |--------------------------------------------------------------------------
+    | DataView Methods
+    |--------------------------------------------------------------------------
+    */
     @Override
     public void showLoading() {
 
@@ -43,13 +42,13 @@ public abstract class MovieListablePresenter implements IPresenter, ILoadDataVie
 
     @Override
     public void showError(String message) {
-
+        this.hideLoading();
     }
 
     @Override
-    public void setData(List<Movie> data) {
-        ViewEntitiesDataMapper mapper = new ViewEntitiesDataMapper();
-        this.setListViewAdapter(mapper.transform(data));
+    public void setData(List<MovieListDetails> data) {
+        this.hideLoading();
+        this.setListViewAdapter(data);
     }
 
     /*
@@ -77,7 +76,7 @@ public abstract class MovieListablePresenter implements IPresenter, ILoadDataVie
     | Modify the view
     |--------------------------------------------------------------------------
     */
-    private void setListViewAdapter(List<MovieView> list) {
+    private void setListViewAdapter(List<MovieListDetails> list) {
         this.listView.setAdapter(new LazyAdapter(this.activity, list));
         this.listView.setOnItemClickListener(this);
         //this.fragment.getViewContainer().invalidate();
@@ -85,8 +84,8 @@ public abstract class MovieListablePresenter implements IPresenter, ILoadDataVie
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        MovieView movie = ((MovieView) parent.getAdapter().getItem(position));
-        Navigator nav = ((HomeActivity) this.activity).getNavigator();
+        MovieListDetails movie = ((MovieListDetails) parent.getAdapter().getItem(position));
+        Navigator nav = ((YamdaApplication) this.activity.getApplication()).getNavigator();
 
         nav.navigateToMovieDetails(this.activity, movie);
     }
