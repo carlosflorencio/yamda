@@ -7,3 +7,9 @@
 ###### Project Info
 - Min API Level: 15
 
+###### TODO:
+- Tests and more tests
+- Make a request for api configuration and genres list
+- Cache requests
+- Improve images loader
+- Improve ui design
