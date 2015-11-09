@@ -2,18 +2,6 @@ package isel.pdm.yamda.data.entity.mapper;
 
 import junit.framework.TestCase;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.List;
-
-import isel.pdm.yamda.data.api.ITheMovieDbServiceAPI;
-import isel.pdm.yamda.data.entity.tmdb.MovieDTO;
-import isel.pdm.yamda.data.entity.tmdb.MovieListingDTO;
-import isel.pdm.yamda.model.entity.Movie;
-import retrofit.GsonConverterFactory;
-import retrofit.Retrofit;
-
 /**
  * Created by Nuno on 31/10/2015.
  */
