@@ -1,4 +1,4 @@
-package isel.pdm.yamda.data.api.common;
+package isel.pdm.yamda.data.providers;
 
 
 import isel.pdm.yamda.data.entity.tmdb.ConfigurationDTO;
@@ -7,7 +7,8 @@ import isel.pdm.yamda.data.entity.tmdb.MovieListingDTO;
 import retrofit.Call;
 
 /**
- * The contract that all apis must obey
+ * The contract that all apis providers must obey
+ * *Warning* Dependency: Retrofit!
  */
 public interface IMovieApi {
 

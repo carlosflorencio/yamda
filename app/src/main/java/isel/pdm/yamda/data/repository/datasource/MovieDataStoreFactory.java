@@ -1,8 +1,8 @@
 package isel.pdm.yamda.data.repository.datasource;
 
 
-import isel.pdm.yamda.data.api.TheMovieDbApi;
-import isel.pdm.yamda.data.api.common.IMovieApi;
+import isel.pdm.yamda.data.providers.tmdb.TheMovieDbApi;
+import isel.pdm.yamda.data.providers.IMovieApi;
 
 public class MovieDataStoreFactory {
 

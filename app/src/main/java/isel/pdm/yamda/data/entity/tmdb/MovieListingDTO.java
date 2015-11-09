@@ -8,8 +8,8 @@ import java.util.List;
  */
 public class MovieListingDTO {
 
-    public int page;
-    public List<MovieListDTO> results;
+    private int page;
+    private List<MovieListDTO> results;
 
     public int getPage() {
         return page;

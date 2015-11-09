@@ -6,10 +6,77 @@ package isel.pdm.yamda.data.entity.tmdb;
  */
 public class MovieDTO {
 
+    private GenreDTO[] genres;
+    private int id;
+    private String imdb_id;
+    private String poster_path;
+    private String release_date;
+    private String status;
+    private String title;
+    private float vote_average;
+    private String overview;
+    private String original_language;
+    private String original_title;
+    private String homepage;
+    private CreditsDTO credits;
+
+    public GenreDTO[] getGenres() {
+        return genres;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getImdbId() {
+        return imdb_id;
+    }
+
+    public String getPosterPath() {
+        return poster_path;
+    }
+
+    public String getReleaseDate() {
+        return release_date;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public float getVoteAverage() {
+        return vote_average;
+    }
+
     public String getOverview() {
         return overview;
     }
 
+    public String getOriginalLanguage() {
+        return original_language;
+    }
+
+    public String getOriginalTitle() {
+        return original_title;
+    }
+
+    public CreditsDTO getCredits() {
+        return credits;
+    }
+
+    public String getHomepage() {
+        return homepage;
+    }
+
+    /*
+        |--------------------------------------------------------------------------
+        | Inner classes
+        |--------------------------------------------------------------------------
+        */
     public static class GenreDTO {
         private int id;
         private String name;
@@ -23,58 +90,84 @@ public class MovieDTO {
         }
     }
 
-    private GenreDTO[] genres;
+    public static class CreditsDTO {
+        private ActorDTO[] cast;
+        private CrewDTO[] crew;
 
-    private int id;
 
-    private String imdb_id;
-
-    private String poster_path;
-
-    private String release_date;
-
-    private String status;
-
-    private String title;
-
-    private float vote_average;
-
-    private String overview;
-
-    public String[] getGenres() {
-        String[] strings = new String[genres.length];
-        for (int i = 0; i < genres.length; i++) {
-            strings[i] = genres[i].name;
+        public ActorDTO[] getActors() {
+            return cast;
         }
-        return strings;
+
+        public CrewDTO[] getCrew() {
+            return crew;
+        }
     }
 
-    public int getId() {
-        return id;
+
+    public static class CrewDTO {
+        private String credit_id;
+        private String department;
+        private int id;
+        private String job;
+        private String name;
+        private String profile_path;
+
+        public String getCreditId() {
+            return credit_id;
+        }
+
+        public String getDepartment() {
+            return department;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public String getJob() {
+            return job;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getProfilePath() {
+            return profile_path;
+        }
     }
 
-    public String getImdb_id() {
-        return imdb_id;
-    }
+    public static class ActorDTO {
+        private String cast_id;
+        private String character;
+        private int id;
+        private String name;
+        private int order;
+        private String profile_path;
 
-    public String getPoster_path() {
-        return poster_path;
-    }
+        public String getCast_id() {
+            return cast_id;
+        }
 
-    public String getRelease_date() {
-        return release_date;
-    }
+        public String getCharacter() {
+            return character;
+        }
 
-    public String getStatus() {
-        return status;
-    }
+        public int getId() {
+            return id;
+        }
 
-    public String getTitle() {
-        return title;
-    }
+        public String getName() {
+            return name;
+        }
 
-    public float getVote_average() {
-        return vote_average;
-    }
+        public int getOrder() {
+            return order;
+        }
 
+        public String getProfilePath() {
+            return profile_path;
+        }
+    }
 }

@@ -1,7 +1,6 @@
-package isel.pdm.yamda.data.api;
+package isel.pdm.yamda.data.providers.tmdb;
 
 import isel.pdm.yamda.data.entity.tmdb.ConfigurationDTO;
-import isel.pdm.yamda.data.entity.tmdb.ImagesDTO;
 import isel.pdm.yamda.data.entity.tmdb.MovieDTO;
 import isel.pdm.yamda.data.entity.tmdb.MovieListingDTO;
 import retrofit.Call;
@@ -33,12 +32,14 @@ public interface ITheMovieDbServiceAPI {
      * @param id         movie id
      * @param api_key    api_key used to retrieve information
      * @param lang       to retrieve in this language (ISO 639-1 code)
+     * @param append what to append to the movie info, like credits and so..
      * @return
      */
     @GET("/3/movie/{id}")
     Call<MovieDTO> getMovie(@Path("id") int id,
                          @Query("api_key") String api_key,
-                            @Query("language") String lang);
+                            @Query("language") String lang,
+                            @Query("append_to_response") String append);
 
     /**
      *  Retrieves a list of movies that are now on cinema.
@@ -94,20 +95,4 @@ public interface ITheMovieDbServiceAPI {
                                                @Query("page") int page,
                                                @Query("language") String lang);
 
-    /**
-     *  Retrieves a list of images of a specific movie.
-     *
-     * @param id                 movie id
-     * @param api_key            api_key used to retrieve information
-     * @param lang               to retrieve in this language (ISO 639-1 code)
-     * @param response_append
-     * @param img_lang
-     * @return
-     */
-    @GET("/3/movie/{id}/images")
-    Call<ImagesDTO> getMovieImages(@Path("id") int id,
-                                   @Query("api_key") String api_key,
-                                   @Query("language") String lang,
-                                   @Query("append_to_response") String response_append,
-                                   @Query("include_image_language") String img_lang);
 }

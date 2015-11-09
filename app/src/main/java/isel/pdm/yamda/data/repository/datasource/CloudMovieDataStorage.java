@@ -1,7 +1,7 @@
 package isel.pdm.yamda.data.repository.datasource;
 
 
-import isel.pdm.yamda.data.api.common.IMovieApi;
+import isel.pdm.yamda.data.providers.IMovieApi;
 import isel.pdm.yamda.data.entity.tmdb.ConfigurationDTO;
 import isel.pdm.yamda.data.entity.tmdb.MovieDTO;
 import isel.pdm.yamda.data.entity.tmdb.MovieListingDTO;

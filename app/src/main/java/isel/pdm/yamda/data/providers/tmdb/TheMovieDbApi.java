@@ -1,16 +1,9 @@
-package isel.pdm.yamda.data.api;
+package isel.pdm.yamda.data.providers.tmdb;
 
-import android.app.Application;
-import android.util.Log;
-
-import java.util.Locale;
-
-import isel.pdm.yamda.YamdaApplication;
-import isel.pdm.yamda.data.api.common.IMovieApi;
+import isel.pdm.yamda.data.providers.IMovieApi;
 import isel.pdm.yamda.data.entity.tmdb.ConfigurationDTO;
 import isel.pdm.yamda.data.entity.tmdb.MovieDTO;
 import isel.pdm.yamda.data.entity.tmdb.MovieListingDTO;
-import isel.pdm.yamda.data.exception.ApiFailedGettingDataException;
 import retrofit.Call;
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
@@ -33,38 +26,50 @@ public class TheMovieDbApi implements IMovieApi {
         this.language = language;
     }
 
-    /** {@inheritDoc} **/
+    /**
+     * {@inheritDoc}
+     **/
     @Override
     public Call<ConfigurationDTO> getApiConfiguration() {
         return this.api.getConfig(ITheMovieDbServiceAPI.API_KEY);
     }
 
-    /** {@inheritDoc} **/
+    /**
+     * {@inheritDoc}
+     **/
     @Override
     public Call<MovieListingDTO> getTheatersMovies(int page) {
-       return this.api.getNowPlaying(ITheMovieDbServiceAPI.API_KEY, page, this.language);
+        return this.api.getNowPlaying(ITheMovieDbServiceAPI.API_KEY, page, this.language);
     }
 
-    /** {@inheritDoc} **/
+    /**
+     * {@inheritDoc}
+     **/
     @Override
     public Call<MovieListingDTO> getSoonMovies(int page) {
         return this.api.getUpcoming(ITheMovieDbServiceAPI.API_KEY, page, this.language);
     }
 
-    /** {@inheritDoc} **/
+    /**
+     * {@inheritDoc}
+     **/
     @Override
     public Call<MovieListingDTO> getTopMovies(int page) {
         return this.api.getMostPopular(ITheMovieDbServiceAPI.API_KEY, page, this.language);
     }
 
-    /** {@inheritDoc} **/
+    /**
+     * {@inheritDoc}
+     **/
     @Override
     public Call<MovieDTO> getMovie(int id) {
-        return this.api.getMovie(id, ITheMovieDbServiceAPI.API_KEY,  this.language);
+        return this.api.getMovie(id, ITheMovieDbServiceAPI.API_KEY, this.language,
+                                 "credits"); //Append credits (crew and actors)
     }
 
     @Override
     public Call<MovieListingDTO> getMoviesSearch(String search, int page) {
-        return this.api.getSearchedMovies(ITheMovieDbServiceAPI.API_KEY, search, page, this.language);
+        return this.api
+                .getSearchedMovies(ITheMovieDbServiceAPI.API_KEY, search, page, this.language);
     }
 }

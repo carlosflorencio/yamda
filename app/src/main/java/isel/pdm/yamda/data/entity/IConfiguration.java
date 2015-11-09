@@ -10,4 +10,6 @@ public interface IConfiguration {
     String getListPosterSize();
 
     String getDetailPosterSize();
+
+    String getGenre(int id);
 }
