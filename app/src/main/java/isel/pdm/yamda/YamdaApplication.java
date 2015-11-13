@@ -52,7 +52,7 @@ public class YamdaApplication extends Application {
     |--------------------------------------------------------------------------
     */
     /**
-     * Constructs the movie repostory setter
+     * Constructs the movie repository setter
      */
     private void initMovieRepository() {
         ModelEntitiesDataMapper dataMapper = new ModelEntitiesDataMapper();
