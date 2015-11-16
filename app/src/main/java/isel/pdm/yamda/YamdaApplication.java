@@ -3,10 +3,10 @@ package isel.pdm.yamda;
 import android.app.Application;
 import android.content.res.Configuration;
 
-import isel.pdm.yamda.data.repository.MovieDataRepositorySetter;
+import isel.pdm.yamda.data.repository.MovieDataRepositoryAsyncSetter;
 import isel.pdm.yamda.data.repository.datasource.MovieDataStoreFactory;
 import isel.pdm.yamda.model.mapper.ModelEntitiesDataMapper;
-import isel.pdm.yamda.data.repository.IMovieRepository;
+import isel.pdm.yamda.data.repository.IMovieRepositoryAsync;
 import isel.pdm.yamda.presentation.navigator.Navigator;
 
 /**
@@ -23,7 +23,7 @@ public class YamdaApplication extends Application {
     /**
      * Instance of movie repository
      */
-    private IMovieRepository movieRepository;
+    private IMovieRepositoryAsync movieRepository;
 
     /**
      * Manage navigation between Activities
@@ -58,7 +58,7 @@ public class YamdaApplication extends Application {
         ModelEntitiesDataMapper dataMapper = new ModelEntitiesDataMapper();
         MovieDataStoreFactory dataFactory = new MovieDataStoreFactory(language);
 
-        this.movieRepository = new MovieDataRepositorySetter(dataFactory, dataMapper);
+        this.movieRepository = new MovieDataRepositoryAsyncSetter(dataFactory, dataMapper);
     }
 
     /**
@@ -73,7 +73,7 @@ public class YamdaApplication extends Application {
         return language;
     }
 
-    public IMovieRepository getMovieRepository() {
+    public IMovieRepositoryAsync getMovieRepository() {
         return movieRepository;
     }
 

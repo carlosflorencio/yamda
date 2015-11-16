@@ -10,7 +10,7 @@ import isel.pdm.yamda.presentation.view.contract.ILoadDataView;
  * This interface defines the contract with the data layer
  * and the presentation layer for requesting data
  */
-public interface IMovieRepository {
+public interface IMovieRepositoryAsync {
 
     /**
      * Set the movies in the theaters right now

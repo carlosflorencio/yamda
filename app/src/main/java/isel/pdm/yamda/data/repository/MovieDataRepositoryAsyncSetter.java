@@ -19,15 +19,15 @@ import retrofit.Retrofit;
 /**
  * This class uses a factory and a mapper to retrieve the data to the model layer
  */
-public class MovieDataRepositorySetter implements IMovieRepository {
+public class MovieDataRepositoryAsyncSetter implements IMovieRepositoryAsync {
 
     protected final String TAG = "DEBUG_" + getClass().getSimpleName();
 
     private final MovieDataStoreFactory factory;
     private final ModelEntitiesDataMapper mapper;
 
-    public MovieDataRepositorySetter(MovieDataStoreFactory factory,
-                                     ModelEntitiesDataMapper mapper) {
+    public MovieDataRepositoryAsyncSetter(MovieDataStoreFactory factory,
+                                          ModelEntitiesDataMapper mapper) {
         this.factory = factory;
         this.mapper = mapper;
     }

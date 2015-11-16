@@ -9,7 +9,7 @@ public class MovieRepositoryTest extends TestCase{
 
 //    @Test
 //    public void testApiConfigurationNotNull() throws Exception {
-//        IMovieRepository repo = MovieDataRepository3.create();
+//        IMovieRepositoryAsync repo = MovieDataRepository3.create();
 //        TMDbConfiguration configuration = repo.getApiConfiguration();
 //
 //        assertNotNull(configuration);
@@ -17,7 +17,7 @@ public class MovieRepositoryTest extends TestCase{
 //
 //    @Test
 //    public void testApiConfigurationResponse() throws Exception {
-//        IMovieRepository repo = MovieDataRepository3.create();
+//        IMovieRepositoryAsync repo = MovieDataRepository3.create();
 //        TMDbConfiguration configuration = repo.getApiConfiguration();
 //
 //        assertEquals("http://image.tmdb.org/t/p/", configuration.getBaseUrl());
@@ -26,7 +26,7 @@ public class MovieRepositoryTest extends TestCase{
 //
 //    @Test
 //    public void testGetListingsSize() throws Exception {
-//        IMovieRepository repo = MovieDataRepository3.create();
+//        IMovieRepositoryAsync repo = MovieDataRepository3.create();
 //        HashMap<String, List<Movie>> map = repo.getListings();
 //
 //        assertEquals(3, map.size());
@@ -34,7 +34,7 @@ public class MovieRepositoryTest extends TestCase{
 //
 //    @Test
 //    public void testGetListingsNotNull() throws Exception {
-//        IMovieRepository repo = MovieDataRepository3.create();
+//        IMovieRepositoryAsync repo = MovieDataRepository3.create();
 //        HashMap<String, List<Movie>> map = repo.getListings();
 //
 //        assertNotNull(map.get(MovieListingDTO.POPULAR_TAG));
@@ -44,7 +44,7 @@ public class MovieRepositoryTest extends TestCase{
 //
 //    @Test
 //    public void testGetListingsResponse() throws Exception {
-//        IMovieRepository repo = MovieDataRepository3.create();
+//        IMovieRepositoryAsync repo = MovieDataRepository3.create();
 //        HashMap<String, List<Movie>> map = repo.getListings();
 //
 //        List<Movie> listing = map.get(MovieListingDTO.POPULAR_TAG);
@@ -56,7 +56,7 @@ public class MovieRepositoryTest extends TestCase{
 //
 //    @Test
 //    public void testGetListingPopular() throws Exception {
-//        IMovieRepository repo = MovieDataRepository3.create();
+//        IMovieRepositoryAsync repo = MovieDataRepository3.create();
 //        List<Movie> listing = repo.getListing(MovieListingDTO.POPULAR_TAG);
 //
 //        assertNotNull(listing);

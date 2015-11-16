@@ -8,7 +8,7 @@ import android.widget.TextView;
 import isel.pdm.yamda.R;
 import isel.pdm.yamda.YamdaApplication;
 import isel.pdm.yamda.data.image.ImageLoader;
-import isel.pdm.yamda.data.repository.IMovieRepository;
+import isel.pdm.yamda.data.repository.IMovieRepositoryAsync;
 import isel.pdm.yamda.model.entity.MovieDetails;
 import isel.pdm.yamda.presentation.presenter.base.IPresenter;
 import isel.pdm.yamda.presentation.view.activity.MovieActivity;
@@ -32,7 +32,7 @@ public class MovieViewPresenter implements IPresenter, ILoadDataView<MovieDetail
     }
 
     private void askForData() {
-        final IMovieRepository repo = ((YamdaApplication)this.activity.getApplication()).getMovieRepository();
+        final IMovieRepositoryAsync repo = ((YamdaApplication)this.activity.getApplication()).getMovieRepository();
 
         this.showLoading();
         new Handler().postDelayed(new Runnable() { //ONLY FOR TESTING, SHOWING THE LOADER
