@@ -6,7 +6,6 @@ import java.util.List;
 import isel.pdm.yamda.data.entity.IConfiguration;
 import isel.pdm.yamda.data.entity.TMDbConfiguration;
 import isel.pdm.yamda.data.entity.tmdb.MovieDTO;
-import isel.pdm.yamda.data.entity.tmdb.MovieListDTO;
 import isel.pdm.yamda.data.entity.tmdb.MovieListingDTO;
 import isel.pdm.yamda.model.entity.Actor;
 import isel.pdm.yamda.model.entity.Crew;
@@ -56,7 +55,7 @@ public class ModelEntitiesDataMapper {
      * @param dto
      * @return
      */
-    public MovieListDetails transform(MovieListDTO dto) {
+    public MovieListDetails transform(MovieListingDTO.MovieListDTO dto) {
         Genre[] genres = this.createGenres(dto.getGenreIds());
 
         return new MovieListDetails(dto.getId(),
@@ -76,8 +75,8 @@ public class ModelEntitiesDataMapper {
      */
     public List<MovieListDetails> transform(MovieListingDTO dto) {
         List<MovieListDetails> movies = new ArrayList<>();
-        List<MovieListDTO> dtoList = dto.getResults();
-        for (MovieListDTO movie : dtoList) {
+        List<MovieListingDTO.MovieListDTO> dtoList = dto.getResults();
+        for (MovieListingDTO.MovieListDTO movie : dtoList) {
             movies.add(transform(movie));
         }
         return movies;

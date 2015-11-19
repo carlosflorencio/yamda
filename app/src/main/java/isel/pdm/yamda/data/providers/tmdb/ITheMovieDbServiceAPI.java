@@ -9,7 +9,7 @@ import retrofit.http.Path;
 import retrofit.http.Query;
 
 /**
- * Restrives information from online database through {@code Retrofit}.
+ * Retrieves information from online database through {@code Retrofit}.
  */
 public interface ITheMovieDbServiceAPI {
 
