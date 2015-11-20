@@ -1,31 +1,51 @@
 package isel.pdm.yamda.presentation.presenter;
 
-import android.os.Handler;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 
-import isel.pdm.yamda.YamdaApplication;
-import isel.pdm.yamda.data.repository.IMovieRepository;
+import java.util.List;
+
+import isel.pdm.yamda.data.handlers.MovieListService;
+import isel.pdm.yamda.model.entity.MovieListDetails;
 import isel.pdm.yamda.presentation.presenter.common.MovieListablePresenter;
 import isel.pdm.yamda.presentation.view.fragment.SoonMoviesListFragment;
 
 public class SoonMoviesListPresenter extends MovieListablePresenter {
 
+    public static final String SOON_MOVIE_LIST_TAG = SoonMoviesListPresenter.class.getSimpleName();
+
+    private final BroadcastReceiver receiver;
+
     public SoonMoviesListPresenter(SoonMoviesListFragment fragment) {
         super(fragment.getActivity(), fragment.getListView(), fragment.getLoadingView());
+
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                setData((List<MovieListDetails>) intent.getSerializableExtra(MovieListService.MOVIES_PARAM));
+            }
+        };
 
         this.askForData();
     }
 
     private void askForData() {
-        final IMovieRepository repo = ((YamdaApplication)this.activity.getApplication()).getMovieRepository();
-
         this.showLoading();
 
+        Intent intent = new Intent(activity, MovieListService.class);
+        intent.putExtra(MovieListService.ID, SOON_MOVIE_LIST_TAG);
+        activity.startService(intent);
+    }
 
-        new Handler().postDelayed(new Runnable() { //ONLY FOR TESTING, SHOWING THE LOADER
-            public void run() {
-               // repo.setSoonMovies(SoonMoviesListPresenter.this, 1);
-            }
-        }, 1000);
+    @Override
+    public void onResume() {
+        activity.registerReceiver(receiver, new IntentFilter(MovieListService.NOTIFICATION));
+    }
 
+    @Override
+    public void onPause() {
+        activity.unregisterReceiver(receiver);
     }
 }

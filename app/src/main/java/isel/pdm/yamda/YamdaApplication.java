@@ -44,6 +44,7 @@ public class YamdaApplication extends Application {
         super.onConfigurationChanged(newConfig);
 
         initLocaleConfiguration(newConfig);
+        initMovieRepository();
     }
 
     /*
@@ -66,7 +67,6 @@ public class YamdaApplication extends Application {
      */
     private void initLocaleConfiguration(Configuration config) {
         language = config.locale.getLanguage();
-        initMovieRepository(); //Language changed? yes? create a new repo.. no? create anyway :D
     }
 
     public String getLanguage() {
