@@ -7,19 +7,31 @@ import isel.pdm.yamda.data.providers.IMovieApi;
 
 public class DiskMovieDataStore implements IMovieApi {
 
+    private MovieListingDTO theatersMovies;
+
+    private MovieListingDTO soonMovies;
+
+    private ConfigurationDTO configuration;
+
+    private MovieDTO movie;
+
+    private DiskMovieDataStore() {
+
+    }
+
     @Override
     public ConfigurationDTO getApiConfiguration() {
-         throw new UnsupportedOperationException("Operation is not available yet!!!");
+        return this.configuration;
     }
 
     @Override
     public MovieListingDTO getTheatersMovies(int page) {
-         throw new UnsupportedOperationException("Operation is not available yet!!!");
+        return this.theatersMovies;
     }
 
     @Override
     public MovieListingDTO getSoonMovies(int page) {
-         throw new UnsupportedOperationException("Operation is not available yet!!!");
+        return this.soonMovies;
     }
 
     @Override
@@ -29,11 +41,35 @@ public class DiskMovieDataStore implements IMovieApi {
 
     @Override
     public MovieDTO getMovie(int id) {
-         throw new UnsupportedOperationException("Operation is not available yet!!!");
+        if (this.movie.getId() != id) {
+            this.movie = null;
+            return null;
+        }
+        return this.movie;
     }
 
     @Override
     public MovieListingDTO getMoviesSearch(String search, int page) {
          throw new UnsupportedOperationException("Operation is not available yet!!!");
+    }
+
+    public void setTheatersMovies(MovieListingDTO theatersMovies) {
+        this.theatersMovies = theatersMovies;
+    }
+
+    public void setSoonMovies(MovieListingDTO soonMovies) {
+        this.soonMovies = soonMovies;
+    }
+
+    public void setConfiguration(ConfigurationDTO configuration) {
+        this.configuration = configuration;
+    }
+
+    public void setMovie(MovieDTO movie) {
+        this.movie = movie;
+    }
+
+    public static DiskMovieDataStore create() {
+        return new DiskMovieDataStore();
     }
 }

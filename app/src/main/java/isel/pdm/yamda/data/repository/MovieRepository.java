@@ -6,6 +6,7 @@ import java.util.List;
 import isel.pdm.yamda.data.entity.tmdb.MovieDTO;
 import isel.pdm.yamda.data.entity.tmdb.MovieListingDTO;
 import isel.pdm.yamda.data.exception.ApiFailedGettingDataException;
+import isel.pdm.yamda.data.repository.datasource.DiskMovieDataStore;
 import isel.pdm.yamda.data.repository.datasource.MovieDataStoreFactory;
 import isel.pdm.yamda.model.entity.MovieDetails;
 import isel.pdm.yamda.model.entity.MovieListDetails;
@@ -23,10 +24,13 @@ public class MovieRepository implements IMovieRepository {
     private final MovieDataStoreFactory factory;
     private final ModelEntitiesDataMapper mapper;
 
+    private final DiskMovieDataStore cache;
+
     public MovieRepository(MovieDataStoreFactory factory,
                            ModelEntitiesDataMapper mapper) {
         this.factory = factory;
         this.mapper = mapper;
+        this.cache = DiskMovieDataStore.create();
     }
 
     /**
@@ -40,7 +44,11 @@ public class MovieRepository implements IMovieRepository {
     @Override
     public List<MovieListDetails> getTheatersMovies(int page) throws ApiFailedGettingDataException {
         try {
-            MovieListingDTO data = this.factory.createCloudDataStore().getTheatersMovies(page);
+            MovieListingDTO data = cache.getTheatersMovies(page);
+            if (data == null) {
+                data = this.factory.createCloudDataStore().getTheatersMovies(page);
+                cache.setTheatersMovies(data);
+            }
 
             return this.mapper.transform(data);
         } catch (IOException e) {
@@ -59,7 +67,11 @@ public class MovieRepository implements IMovieRepository {
     @Override
     public List<MovieListDetails> getSoonMovies(int page) throws ApiFailedGettingDataException {
         try {
-            MovieListingDTO data = this.factory.createCloudDataStore().getSoonMovies(page);
+            MovieListingDTO data = cache.getSoonMovies(page);
+            if (data == null) {
+                data = this.factory.createCloudDataStore().getSoonMovies(page);
+                cache.setSoonMovies(data);
+            }
 
             return this.mapper.transform(data);
         } catch (IOException e) {
@@ -117,7 +129,11 @@ public class MovieRepository implements IMovieRepository {
     @Override
     public MovieDetails getMovieById(int id) throws ApiFailedGettingDataException {
         try {
-            MovieDTO data = this.factory.createCloudDataStore().getMovie(id);
+            MovieDTO data = cache.getMovie(id);
+            if (data == null) {
+                data = this.factory.createCloudDataStore().getMovie(id);
+                cache.setMovie(data);
+            }
 
             return this.mapper.transform(data);
         } catch (IOException e) {
