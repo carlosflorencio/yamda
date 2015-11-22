@@ -1,10 +1,11 @@
 package isel.pdm.yamda.data.providers.tmdb;
 
-import isel.pdm.yamda.data.providers.IMovieApi;
+import java.io.IOException;
+
 import isel.pdm.yamda.data.entity.tmdb.ConfigurationDTO;
 import isel.pdm.yamda.data.entity.tmdb.MovieDTO;
 import isel.pdm.yamda.data.entity.tmdb.MovieListingDTO;
-import retrofit.Call;
+import isel.pdm.yamda.data.providers.IMovieApi;
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 
@@ -30,46 +31,47 @@ public class TheMovieDbApi implements IMovieApi {
      * {@inheritDoc}
      **/
     @Override
-    public Call<ConfigurationDTO> getApiConfiguration() {
-        return this.api.getConfig(ITheMovieDbServiceAPI.API_KEY);
+    public ConfigurationDTO getApiConfiguration() throws IOException {
+        return this.api.getConfig(ITheMovieDbServiceAPI.API_KEY).execute().body();
     }
 
     /**
      * {@inheritDoc}
      **/
     @Override
-    public Call<MovieListingDTO> getTheatersMovies(int page) {
-        return this.api.getNowPlaying(ITheMovieDbServiceAPI.API_KEY, page, this.language);
+    public MovieListingDTO getTheatersMovies(int page) throws IOException {
+        return this.api.getNowPlaying(ITheMovieDbServiceAPI.API_KEY, page, this.language).execute().body();
     }
 
     /**
      * {@inheritDoc}
      **/
     @Override
-    public Call<MovieListingDTO> getSoonMovies(int page) {
-        return this.api.getUpcoming(ITheMovieDbServiceAPI.API_KEY, page, this.language);
+    public MovieListingDTO getSoonMovies(int page) throws IOException {
+        return this.api.getUpcoming(ITheMovieDbServiceAPI.API_KEY, page, this.language).execute().body();
     }
 
     /**
      * {@inheritDoc}
      **/
     @Override
-    public Call<MovieListingDTO> getTopMovies(int page) {
-        return this.api.getMostPopular(ITheMovieDbServiceAPI.API_KEY, page, this.language);
+    public MovieListingDTO getTopMovies(int page) throws IOException {
+        return this.api.getMostPopular(ITheMovieDbServiceAPI.API_KEY, page, this.language).execute().body();
     }
 
     /**
      * {@inheritDoc}
      **/
     @Override
-    public Call<MovieDTO> getMovie(int id) {
+    public MovieDTO getMovie(int id) throws IOException {
         return this.api.getMovie(id, ITheMovieDbServiceAPI.API_KEY, this.language,
-                                 "credits"); //Append credits (crew and actors)
+                "credits") //Append credits (crew and actors)
+                .execute().body();
     }
 
     @Override
-    public Call<MovieListingDTO> getMoviesSearch(String search, int page) {
+    public MovieListingDTO getMoviesSearch(String search, int page) throws IOException {
         return this.api
-                .getSearchedMovies(ITheMovieDbServiceAPI.API_KEY, search, page, this.language);
+                .getSearchedMovies(ITheMovieDbServiceAPI.API_KEY, search, page, this.language).execute().body();
     }
 }
