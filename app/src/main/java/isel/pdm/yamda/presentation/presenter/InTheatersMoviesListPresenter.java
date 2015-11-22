@@ -42,7 +42,7 @@ public class InTheatersMoviesListPresenter extends MovieListablePresenter {
 
     @Override
     public void onResume() {
-        activity.registerReceiver(receiver, new IntentFilter(MovieListService.NOTIFICATION));
+        activity.registerReceiver(receiver, new IntentFilter(MovieListService.THEATERS_NOTIFICATION));
     }
 
     @Override

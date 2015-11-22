@@ -41,7 +41,7 @@ public class SoonMoviesListPresenter extends MovieListablePresenter {
 
     @Override
     public void onResume() {
-        activity.registerReceiver(receiver, new IntentFilter(MovieListService.NOTIFICATION));
+        activity.registerReceiver(receiver, new IntentFilter(MovieListService.SOON_NOTIFICATION));
     }
 
     @Override

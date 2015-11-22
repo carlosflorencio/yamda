@@ -25,7 +25,11 @@ public class MovieListService extends IntentService {
 
     public static final String MOVIES_PARAM = "movies_parameter";
 
-    public static final String NOTIFICATION = "isel.pdm.yamda.data.handlers.MovieListService";
+    public static final String THEATERS_NOTIFICATION = "isel.pdm.yamda.data.handlers.MovieListService.theaters";
+
+    public static final String SOON_NOTIFICATION = "isel.pdm.yamda.data.handlers.MovieListService.soon";
+
+    public static final String TOP_NOTIFICATION = "isel.pdm.yamda.data.handlers.MovieListService.top";
 
     public MovieListService() {
         super("MovieListService");
@@ -38,17 +42,19 @@ public class MovieListService extends IntentService {
                 String id = intent.getStringExtra(ID);
                 int page = intent.getIntExtra(PAGE, 1);
 
-                List<MovieListDetails> movies;
+                List<MovieListDetails> movies = null;
+                Intent newIntent = null;
                 if (id.equals(InTheatersMoviesListPresenter.THEATERS_MOVIE_LIST_TAG)) {
                     movies = ((YamdaApplication) getApplication()).getMovieRepository().getTheatersMovies(page);
+                    newIntent = new Intent(THEATERS_NOTIFICATION);
                 } else if (id.equals(SoonMoviesListPresenter.SOON_MOVIE_LIST_TAG)) {
                     movies = ((YamdaApplication) getApplication()).getMovieRepository().getSoonMovies(page);
+                    newIntent = new Intent(SOON_NOTIFICATION);
                 } else if (id.equals(TopMoviesListPresenter.TOP_MOVIE_LIST_TAG)) {
                     movies = ((YamdaApplication) getApplication()).getMovieRepository().getTopMovies(page);
-                } else {
-                    movies = null;
+                    newIntent = new Intent(TOP_NOTIFICATION);
                 }
-                handleAction(movies);
+                handleAction(newIntent, movies);
             } catch (ApiFailedGettingDataException e) {
                 e.printStackTrace();
             }
@@ -59,8 +65,7 @@ public class MovieListService extends IntentService {
      * Handle action in the provided background thread with the provided
      * parameters.
      */
-    private void handleAction(List<MovieListDetails> movies) {
-        Intent intent = new Intent(NOTIFICATION);
+    private void handleAction(Intent intent, List<MovieListDetails> movies) {
         intent.putExtra(MOVIES_PARAM, (Serializable) movies);
         sendBroadcast(intent);
     }
