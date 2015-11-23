@@ -124,7 +124,7 @@ public class MovieViewPresenter implements IPresenter, ILoadDataView<MovieDetail
 
         genre.setText(createGenreText(movieView.getGenres()));
         rating.setText(String.valueOf(movieView.getRating()));
-        //voteCount.setText(movieView.getVoteCount());
+        voteCount.setText(String.valueOf(movieView.getVoteCount()));
         runtime.setText(createRuntimeText(movieView.getRuntime()));
 
         releaseYear.setText(movieView.getRelease_date());

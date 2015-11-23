@@ -19,13 +19,44 @@
             android:layout_height="wrap_content">
 
             <RelativeLayout
+                android:id="@+id/cover_release"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignBottom="@+id/minor_info">
+
+                <ImageView
+                    android:id="@+id/cover"
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="8dp" />
+
+                <TextView
+                    android:id="@+id/release_year"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/cover"
+                    android:textSize="15dp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/minor_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
                 android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_toRightOf="@+id/cover_release">
+                android:layout_toRightOf="@id/cover_release">
 
                 <TextView
                     android:id="@+id/title"
@@ -92,38 +123,6 @@
                     android:layout_marginTop="10dp"
 
                     android:src="@android:drawable/btn_star" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/cover_release"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignBottom="@id/minor_info"
-
-                android:background="@android:color/holo_blue_dark">
-
-                <ImageView
-                    android:id="@+id/cover"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:layout_alignParentTop="true"
-                    android:layout_above="@+id/release_year"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginTop="8dp" />
-
-                <TextView
-                    android:id="@+id/release_year"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:layout_centerHorizontal="true"
-                    android:layout_alignParentBottom="true"
-                    android:textSize="15dp" />
 
             </RelativeLayout>
 
