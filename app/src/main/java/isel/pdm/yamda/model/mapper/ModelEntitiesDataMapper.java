@@ -39,6 +39,8 @@ public class ModelEntitiesDataMapper {
                                 dto.getTitle(),
                                 dto.getReleaseDate(),
                                 dto.getVoteAverage(),
+                dto.getVoteCount(),
+                dto.getRuntime(),
                                 dto.getOverview(),
                                 createPosterLink(dto.getPosterPath()),
                 createBackdropLink(dto.getBackdrop_path()),

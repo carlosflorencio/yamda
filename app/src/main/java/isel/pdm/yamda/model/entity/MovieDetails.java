@@ -23,6 +23,14 @@ public final class MovieDetails implements Parcelable {
     private final String release_date;
     /** The movie rating **/
     private final float rating;
+    /**
+     * The movie number of votes
+     **/
+    private final int voteCount;
+    /**
+     * The movie run time
+     **/
+    private final int runtime;
     /** The movie overview description **/
     private final String overview;
     /** The movie poster image **/
@@ -44,13 +52,15 @@ public final class MovieDetails implements Parcelable {
      **/
     private final String backdrop;
 
-    public MovieDetails(int id, String title, String release_date, float rating, String overview,
+    public MovieDetails(int id, String title, String release_date, float rating, int voteCount, int runtime, String overview,
                         String poster, String backdrop, Genre[] genres, String homepage, String original_language,
                         String original_title, Crew[] crew, Actor[] actors) {
         this.id = id;
         this.title = title;
         this.release_date = release_date;
         this.rating = rating;
+        this.voteCount = voteCount;
+        this.runtime = runtime;
         this.overview = overview;
         this.poster = poster;
         this.backdrop = backdrop;
@@ -77,6 +87,14 @@ public final class MovieDetails implements Parcelable {
 
     public float getRating() {
         return rating;
+    }
+
+    public int getVoteCount() {
+        return voteCount;
+    }
+
+    public int getRuntime() {
+        return runtime;
     }
 
     public String getOverview() {
@@ -125,6 +143,8 @@ public final class MovieDetails implements Parcelable {
         title = in.readString();
         release_date = in.readString();
         rating = in.readFloat();
+        voteCount = in.readInt();
+        runtime = in.readInt();
         overview = in.readString();
         poster = in.readString();
         backdrop = in.readString();
@@ -159,9 +179,11 @@ public final class MovieDetails implements Parcelable {
         dest.writeString(title);
         dest.writeString(release_date);
         dest.writeFloat(rating);
+        dest.writeInt(voteCount);
+        dest.writeInt(runtime);
         dest.writeString(overview);
-        dest.writeString(backdrop);
         dest.writeString(poster);
+        dest.writeString(backdrop);
         dest.writeTypedArray(genres, 0);
         dest.writeString(homepage);
         dest.writeString(original_language);

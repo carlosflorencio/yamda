@@ -15,6 +15,8 @@ public class MovieDTO {
     private String status;
     private String title;
     private float vote_average;
+    private int vote_count;
+    private int runtime;
     private String overview;
     private String original_language;
     private String original_title;
@@ -75,6 +77,14 @@ public class MovieDTO {
 
     public String getBackdrop_path() {
         return backdrop_path;
+    }
+
+    public int getRuntime() {
+        return runtime;
+    }
+
+    public int getVoteCount() {
+        return vote_count;
     }
 
     /*
