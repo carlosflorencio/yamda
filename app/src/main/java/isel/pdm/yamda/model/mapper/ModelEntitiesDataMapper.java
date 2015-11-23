@@ -41,6 +41,7 @@ public class ModelEntitiesDataMapper {
                                 dto.getVoteAverage(),
                                 dto.getOverview(),
                                 createPosterLink(dto.getPosterPath()),
+                createBackdropLink(dto.getBackdrop_path()),
                                 genres,
                                 dto.getHomepage(),
                                 dto.getOriginalLanguage(),
@@ -167,6 +168,18 @@ public class ModelEntitiesDataMapper {
 
         string.append(this.configuration.getImagesURI());
         string.append(this.configuration.getListPosterSize());
+        string.append(path);
+
+        return string.toString();
+    }
+
+    private String createBackdropLink(String path) {
+        if (path == null) return null;
+
+        StringBuffer string = new StringBuffer();
+
+        string.append(this.configuration.getImagesURI());
+        string.append(this.configuration.getBackdropSize());
         string.append(path);
 
         return string.toString();

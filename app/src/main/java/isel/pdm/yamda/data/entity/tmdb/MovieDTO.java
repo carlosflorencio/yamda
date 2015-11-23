@@ -10,6 +10,7 @@ public class MovieDTO {
     private int id;
     private String imdb_id;
     private String poster_path;
+    private String backdrop_path;
     private String release_date;
     private String status;
     private String title;
@@ -72,11 +73,15 @@ public class MovieDTO {
         return homepage;
     }
 
+    public String getBackdrop_path() {
+        return backdrop_path;
+    }
+
     /*
-    |--------------------------------------------------------------------------
-    | Inner classes
-    |--------------------------------------------------------------------------
-    */
+        |--------------------------------------------------------------------------
+        | Inner classes
+        |--------------------------------------------------------------------------
+        */
     public static class GenreDTO {
         private int id;
         private String name;

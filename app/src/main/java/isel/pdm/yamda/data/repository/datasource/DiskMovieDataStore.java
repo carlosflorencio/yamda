@@ -41,7 +41,7 @@ public class DiskMovieDataStore implements IMovieApi {
 
     @Override
     public MovieDTO getMovie(int id) {
-        if (this.movie.getId() != id) {
+        if (this.movie != null && this.movie.getId() != id) {
             this.movie = null;
             return null;
         }
