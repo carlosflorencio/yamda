@@ -30,7 +30,6 @@ public class MovieActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.movie_layout2);
 
-
         this.imageLoader = new ImageLoader(getApplicationContext());
         this.movieView = this.findViewById(R.id.movie_view);
         this.loadingView = this.findViewById(R.id.loading_movie);
@@ -65,6 +64,7 @@ public class MovieActivity extends BaseActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     public View getMovieView() {
         return movieView;
