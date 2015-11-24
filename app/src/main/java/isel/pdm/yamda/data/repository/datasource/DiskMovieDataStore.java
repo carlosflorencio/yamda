@@ -1,5 +1,8 @@
 package isel.pdm.yamda.data.repository.datasource;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import isel.pdm.yamda.data.entity.tmdb.ConfigurationDTO;
 import isel.pdm.yamda.data.entity.tmdb.MovieDTO;
 import isel.pdm.yamda.data.entity.tmdb.MovieListingDTO;
@@ -13,10 +16,10 @@ public class DiskMovieDataStore implements IMovieApi {
 
     private ConfigurationDTO configuration;
 
-    private MovieDTO movie;
+    private Map<Integer, MovieDTO> movie;
 
     private DiskMovieDataStore() {
-
+        movie = new HashMap<>();
     }
 
     @Override
@@ -41,11 +44,10 @@ public class DiskMovieDataStore implements IMovieApi {
 
     @Override
     public MovieDTO getMovie(int id) {
-        if (this.movie != null && this.movie.getId() != id) {
-            this.movie = null;
+        if (this.movie.get(id) == null) {
             return null;
         }
-        return this.movie;
+        return this.movie.get(id);
     }
 
     @Override
@@ -66,7 +68,9 @@ public class DiskMovieDataStore implements IMovieApi {
     }
 
     public void setMovie(MovieDTO movie) {
-        this.movie = movie;
+        if (this.movie.get(movie.getId()) == null) {
+            this.movie.put(movie.getId(), movie);
+        }
     }
 
     public static DiskMovieDataStore create() {
