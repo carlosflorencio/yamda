@@ -1,4 +1,4 @@
-package isel.pdm.yamda.data.handlers;
+package isel.pdm.yamda.data.handlers.service;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -18,7 +18,7 @@ public class MovieDetailsService extends IntentService {
 
     public static final String MOVIE_PARAM = "movie_parameter";
 
-    public static final String NOTIFICATION = "isel.pdm.yamda.data.handlers.MovieDetailsService";
+    public static final String NOTIFICATION = "isel.pdm.yamda.data.handlers.service.MovieDetailsService";
 
 
     public MovieDetailsService() {

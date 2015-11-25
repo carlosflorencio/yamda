@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.view.View;
 
-import isel.pdm.yamda.data.handlers.MovieDetailsService;
+import isel.pdm.yamda.data.handlers.service.MovieDetailsService;
 import isel.pdm.yamda.model.entity.MovieDetails;
 import isel.pdm.yamda.presentation.presenter.base.IPresenter;
 import isel.pdm.yamda.presentation.view.activity.MovieActivity;
@@ -70,7 +70,7 @@ public class MovieViewPresenter implements IPresenter, ILoadDataView<MovieDetail
     @Override
     public void setData(MovieDetails data) {
         this.hideLoading();
-        this.activity.updateView(data);
+        this.activity.update(data);
     }
 
     /*

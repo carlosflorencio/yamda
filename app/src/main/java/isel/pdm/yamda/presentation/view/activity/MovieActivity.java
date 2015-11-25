@@ -1,13 +1,14 @@
 package isel.pdm.yamda.presentation.view.activity;
 
 import android.annotation.TargetApi;
+import android.app.AlarmManager;
 import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import isel.pdm.yamda.R;
+import isel.pdm.yamda.data.handlers.receiver.NotificationPublisher;
 import isel.pdm.yamda.data.image.ImageLoader;
 import isel.pdm.yamda.model.entity.Genre;
 import isel.pdm.yamda.model.entity.MovieDetails;
@@ -34,6 +36,10 @@ public class MovieActivity extends BaseActivity {
     private View movieView;
     private View loadingView;
 
+    private MovieDetails movie;
+
+    private PendingIntent pendingIntent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,46 +49,63 @@ public class MovieActivity extends BaseActivity {
         this.movieView = this.findViewById(R.id.movie_view);
         this.loadingView = this.findViewById(R.id.loading_movie);
 
-        final int movieId = getIntent().getExtras().getInt(ID_TAG);
+        int movieId = getIntent().getExtras().getInt(ID_TAG);
         this.presenter = new MovieViewPresenter(this, movieId);
-        findViewById(R.id.follow).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (following) {
-                    MovieActivity.this.showToastMessage("You are no longer following this movie");
-                    following = false;
-                } else {
-                    MovieActivity.this.showToastMessage("You are now following this movie");
-                    following = true;
-                    MovieActivity.this.setPendingIntent(movieId);
-                }
-                v.setSelected(true);
-            }
-        });
+
+        checkFollow(findViewById(R.id.follow));
 
         setUpSupportActionBar();
     }
 
+    private void checkFollow(View view) {
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                if (following) {
+                    MovieActivity.this.showToastMessage("You are no longer following this movie");
+                    cancelNotification();
+                } else {
+                    MovieActivity.this.showToastMessage("You are now following this movie");
+                    MovieActivity.this.scheduleNotification(getNotification());
+                }
+                following = !following;
+            }
+        });
+    }
+
+    private void cancelNotification() {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmManager.cancel(pendingIntent);
+        pendingIntent.cancel();
+    }
+
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    private void setPendingIntent(int id) {
-        Intent intent = new Intent(this, MovieActivity.class);
-        intent.putExtra(MovieActivity.ID_TAG, id);
+    private Notification getNotification() {
+        Intent intent = new Intent(this, MovieActivity.class);      // Activity instantiated after clicking notification
+        intent.putExtra(MovieActivity.ID_TAG, movie.getId());       // id of movie
+        PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
 
-        PendingIntent pIntent = PendingIntent.getActivity(this,
-                (int) System.currentTimeMillis(),
-                intent,
-                PendingIntent.FLAG_ONE_SHOT);
+        return new Notification.Builder(this)
+                .setContentTitle(movie.getTitle())                              // Title of notification
+                .setContentText("You clicked on movie id: " + movie.getId())    // Text of notification
+                .setSmallIcon(R.drawable.yamda)                                 // Icon of notification
+                .setContentIntent(pIntent).build();
+    }
 
-        Notification n = new Notification.Builder(this)
-                .setContentTitle("Test Notification")
-                .setContentText("You clicked on movie id: " + id)
-                .setSmallIcon(R.drawable.yamda)
-                .setContentIntent(pIntent)
-                .setAutoCancel(true).build();
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    private void scheduleNotification(Notification notification) {
+        // Receiver to be activated after a certain time to instantiate notification in argument
+        Intent notificationIntent = new Intent(this, NotificationPublisher.class);
 
-        NotificationManager notificationManager = ((NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE));
+        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, movie.getId());  // Movie id
+        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification);      // Notification (argument)
 
-        notificationManager.notify(id, n);
+        pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_ONE_SHOT);
+
+        //TODO: time to release date in millis
+        long futureInMillis = SystemClock.elapsedRealtime() + 5000;
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);  // Set an alarm to tick at x time
     }
 
     /**
@@ -119,7 +142,12 @@ public class MovieActivity extends BaseActivity {
         return loadingView;
     }
 
-    public void updateView(MovieDetails movieView) {
+    public void update(MovieDetails data) {
+        this.movie = data;
+        updateView();
+    }
+
+    private void updateView() {
         ImageView imageView = (ImageView) findViewById(R.id.cover);
         TextView title = (TextView) findViewById(R.id.title);
         TextView genre = (TextView) findViewById(R.id.genre);
@@ -130,14 +158,14 @@ public class MovieActivity extends BaseActivity {
         TextView overview = (TextView) findViewById(R.id.overview);
 
 
-        imageLoader.DisplayImage(movieView.getPoster(), imageView);
-        title.setText(movieView.getTitle());
-        genre.setText(createGenreText(movieView.getGenres()));
-        rating.setText(String.valueOf(movieView.getRating()));
-        voteCount.setText(String.valueOf(movieView.getVoteCount()));
-        runtime.setText(createRuntimeText(movieView.getRuntime()));
-        releaseYear.setText(movieView.getRelease_date());
-        overview.setText(movieView.getOverview());
+        imageLoader.DisplayImage(movie.getPoster(), imageView);
+        title.setText(movie.getTitle());
+        genre.setText(createGenreText(movie.getGenres()));
+        rating.setText(String.valueOf(movie.getRating()));
+        voteCount.setText(String.valueOf(movie.getVoteCount()));
+        runtime.setText(createRuntimeText(movie.getRuntime()));
+        releaseYear.setText(movie.getRelease_date());
+        overview.setText(movie.getOverview());
     }
 
     /**

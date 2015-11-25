@@ -43,15 +43,17 @@
             android:name=".presentation.view.activity.AboutActivity"
             android:label="@string/about" />
 
+        <receiver android:name=".data.handlers.receiver.NotificationPublisher" />
+
         <service
-            android:name=".data.handlers.MovieDetailsService"
+            android:name=".data.handlers.service.MovieDetailsService"
             android:exported="false" />
         <service
-            android:name=".data.handlers.MovieListService"
+            android:name=".data.handlers.service.MovieListService"
             android:exported="false" />
         <service
-            android:name=".data.handlers.MovieSearchService"
-            android:exported="false"></service>
+            android:name=".data.handlers.service.MovieSearchService"
+            android:exported="false" />
     </application>
 
 </manifest>

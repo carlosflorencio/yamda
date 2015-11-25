@@ -1,4 +1,4 @@
-package isel.pdm.yamda.data.handlers;
+package isel.pdm.yamda.data.handlers.service;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -23,7 +23,7 @@ public class MovieSearchService extends IntentService {
 
     public static final String SEARCH_RESULTS = "search_results";
 
-    public static final String NOTIFICATION = "isel.pdm.yamda.data.handlers.MovieSearchService";
+    public static final String NOTIFICATION = "isel.pdm.yamda.data.handlers.service.MovieSearchService";
 
     public MovieSearchService() {
         super("MovieSearchService");
