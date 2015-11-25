@@ -122,7 +122,8 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
 
-                    android:src="@android:drawable/btn_star" />
+                    android:src="@android:drawable/btn_star"
+                    android:background="?android:selectableItemBackground" />
 
             </RelativeLayout>
 

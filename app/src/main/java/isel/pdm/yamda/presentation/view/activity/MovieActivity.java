@@ -1,5 +1,12 @@
 package isel.pdm.yamda.presentation.view.activity;
 
+import android.annotation.TargetApi;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
@@ -21,6 +28,8 @@ public class MovieActivity extends BaseActivity {
 
     public static final String ID_TAG = "movie_id";
 
+    private boolean following = false;
+
     private ImageLoader imageLoader;
     private View movieView;
     private View loadingView;
@@ -34,10 +43,46 @@ public class MovieActivity extends BaseActivity {
         this.movieView = this.findViewById(R.id.movie_view);
         this.loadingView = this.findViewById(R.id.loading_movie);
 
-        int movieId = getIntent().getExtras().getInt(ID_TAG);
+        final int movieId = getIntent().getExtras().getInt(ID_TAG);
         this.presenter = new MovieViewPresenter(this, movieId);
+        findViewById(R.id.follow).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (following) {
+                    MovieActivity.this.showToastMessage("You are no longer following this movie");
+                    following = false;
+                } else {
+                    MovieActivity.this.showToastMessage("You are now following this movie");
+                    following = true;
+                    MovieActivity.this.setPendingIntent(movieId);
+                }
+                v.setSelected(true);
+            }
+        });
 
         setUpSupportActionBar();
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    private void setPendingIntent(int id) {
+        Intent intent = new Intent(this, MovieActivity.class);
+        intent.putExtra(MovieActivity.ID_TAG, id);
+
+        PendingIntent pIntent = PendingIntent.getActivity(this,
+                (int) System.currentTimeMillis(),
+                intent,
+                PendingIntent.FLAG_ONE_SHOT);
+
+        Notification n = new Notification.Builder(this)
+                .setContentTitle("Test Notification")
+                .setContentText("You clicked on movie id: " + id)
+                .setSmallIcon(R.drawable.yamda)
+                .setContentIntent(pIntent)
+                .setAutoCancel(true).build();
+
+        NotificationManager notificationManager = ((NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE));
+
+        notificationManager.notify(id, n);
     }
 
     /**

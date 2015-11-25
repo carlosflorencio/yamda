@@ -1,8 +1,8 @@
 package isel.pdm.yamda.presentation.view.activity.base;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
-import isel.pdm.yamda.presentation.navigator.Navigator;
 import isel.pdm.yamda.presentation.presenter.base.IPresenter;
 
 /**
@@ -17,6 +17,15 @@ public abstract class BaseActivity extends LoggingActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    /**
+     * Shows a {@link android.widget.Toast} message.
+     *
+     * @param message An string representing a message to be shown.
+     */
+    protected void showToastMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     /*
