@@ -15,6 +15,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import isel.pdm.yamda.R;
 import isel.pdm.yamda.data.handlers.receiver.NotificationPublisher;
 import isel.pdm.yamda.data.image.ImageLoader;
@@ -30,15 +35,15 @@ public class MovieActivity extends BaseActivity {
 
     public static final String ID_TAG = "movie_id";
 
-    private boolean following = false;
-
     private ImageLoader imageLoader;
     private View movieView;
     private View loadingView;
 
-    private MovieDetails movie;
-
+    private boolean following = false;
+    private AlarmManager alarmManager;
     private PendingIntent pendingIntent;
+
+    private MovieDetails movie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,11 +53,12 @@ public class MovieActivity extends BaseActivity {
         this.imageLoader = new ImageLoader(getApplicationContext());
         this.movieView = this.findViewById(R.id.movie_view);
         this.loadingView = this.findViewById(R.id.loading_movie);
+        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
         int movieId = getIntent().getExtras().getInt(ID_TAG);
         this.presenter = new MovieViewPresenter(this, movieId);
 
-        checkFollow(findViewById(R.id.follow));
+        this.checkFollow(findViewById(R.id.follow));
 
         setUpSupportActionBar();
     }
@@ -62,11 +68,11 @@ public class MovieActivity extends BaseActivity {
             @Override
             public void onClick(final View v) {
                 if (following) {
-                    MovieActivity.this.showToastMessage("You are no longer following this movie");
+                    showToastMessage("You are no longer following this movie");
                     cancelNotification();
                 } else {
-                    MovieActivity.this.showToastMessage("You are now following this movie");
-                    MovieActivity.this.scheduleNotification(getNotification());
+                    showToastMessage("You are now following this movie");
+                    scheduleNotification(getNotificationReleased());
                 }
                 following = !following;
             }
@@ -74,22 +80,8 @@ public class MovieActivity extends BaseActivity {
     }
 
     private void cancelNotification() {
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
         pendingIntent.cancel();
-    }
-
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    private Notification getNotification() {
-        Intent intent = new Intent(this, MovieActivity.class);      // Activity instantiated after clicking notification
-        intent.putExtra(MovieActivity.ID_TAG, movie.getId());       // id of movie
-        PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
-
-        return new Notification.Builder(this)
-                .setContentTitle(movie.getTitle())                              // Title of notification
-                .setContentText("You clicked on movie id: " + movie.getId())    // Text of notification
-                .setSmallIcon(R.drawable.yamda)                                 // Icon of notification
-                .setContentIntent(pIntent).build();
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -104,8 +96,20 @@ public class MovieActivity extends BaseActivity {
 
         //TODO: time to release date in millis
         long futureInMillis = SystemClock.elapsedRealtime() + 5000;
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);  // Set an alarm to tick at x time
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    private Notification getNotificationReleased() {
+        Intent intent = new Intent(this, MovieActivity.class);      // Activity instantiated after clicking notification
+        intent.putExtra(MovieActivity.ID_TAG, movie.getId());       // id of movie
+        PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+
+        return new Notification.Builder(this)
+                .setContentTitle(movie.getTitle())                              // Title of notification
+                .setContentText(getResources().getString(R.string.movie_released))    // Text of notification
+                .setSmallIcon(R.drawable.yamda)                                 // Icon of notification
+                .setContentIntent(pIntent).build();
     }
 
     /**
@@ -124,7 +128,6 @@ public class MovieActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            // Back Button
             case android.R.id.home:
                 finish();
                 break;
@@ -166,6 +169,19 @@ public class MovieActivity extends BaseActivity {
         runtime.setText(createRuntimeText(movie.getRuntime()));
         releaseYear.setText(movie.getRelease_date());
         overview.setText(movie.getOverview());
+
+        findViewById(R.id.follow).setVisibility(movieIsAlreadyReleased(movie.getRelease_date()) ? View.INVISIBLE : View.VISIBLE);
+    }
+
+    private boolean movieIsAlreadyReleased(String release_date) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = sdf.parse(release_date);
+            return Calendar.getInstance().getTime().compareTo(date) < 0 ? false : true;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     /**
