@@ -59,4 +59,9 @@ public final class Genre implements Parcelable {
         dest.writeInt(this.id);
         dest.writeString(this.name);
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

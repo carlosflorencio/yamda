@@ -13,4 +13,5 @@
     <string name="movie_button_more">Mais</string>
     <string name="search_results_title">Resultados da Procura</string>
     <string name="loading">A Carregar..</string>
+    <string name="movie_released">Chegou!</string>
 </resources>

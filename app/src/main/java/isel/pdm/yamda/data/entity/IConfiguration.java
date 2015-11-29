@@ -9,6 +9,8 @@ public interface IConfiguration {
 
     String getListPosterSize();
 
+    String getBackdropSize();
+
     String getDetailPosterSize();
 
     String getGenre(int id);
