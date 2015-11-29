@@ -60,7 +60,7 @@ sonarqube {
         property "sonar.projectVersion", "1.0"
 
         property "sonar.sources", "src/main"
-        property "sonar.tests", "src/androidTest/java"
+        property "sonar.tests", "src/test/java"
         property "sonar.profile", "PDM"
         property "sonar.java.source", "1.7"
 

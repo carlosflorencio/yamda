@@ -7,7 +7,7 @@ import android.content.IntentFilter;
 
 import java.util.List;
 
-import isel.pdm.yamda.data.handlers.MovieListService;
+import isel.pdm.yamda.data.handlers.service.MovieListService;
 import isel.pdm.yamda.model.entity.MovieListDetails;
 import isel.pdm.yamda.presentation.presenter.common.MovieListablePresenter;
 import isel.pdm.yamda.presentation.view.fragment.SoonMoviesListFragment;

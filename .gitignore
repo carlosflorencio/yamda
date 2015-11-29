@@ -1,4 +1,3 @@
-.gradle
 .DS_Store
 /build
 /captures
@@ -18,6 +17,9 @@ build/
 
 # Java class files
 *.class
+
+# Sonar
+.sonar
 
 # generated files
 bin/

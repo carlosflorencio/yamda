@@ -10,10 +10,13 @@ public class MovieDTO {
     private int id;
     private String imdb_id;
     private String poster_path;
+    private String backdrop_path;
     private String release_date;
     private String status;
     private String title;
     private float vote_average;
+    private int vote_count;
+    private int runtime;
     private String overview;
     private String original_language;
     private String original_title;
@@ -72,11 +75,23 @@ public class MovieDTO {
         return homepage;
     }
 
+    public String getBackdrop_path() {
+        return backdrop_path;
+    }
+
+    public int getRuntime() {
+        return runtime;
+    }
+
+    public int getVoteCount() {
+        return vote_count;
+    }
+
     /*
-    |--------------------------------------------------------------------------
-    | Inner classes
-    |--------------------------------------------------------------------------
-    */
+        |--------------------------------------------------------------------------
+        | Inner classes
+        |--------------------------------------------------------------------------
+        */
     public static class GenreDTO {
         private int id;
         private String name;

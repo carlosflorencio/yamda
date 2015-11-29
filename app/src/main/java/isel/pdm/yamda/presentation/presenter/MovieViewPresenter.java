@@ -5,12 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import isel.pdm.yamda.R;
-import isel.pdm.yamda.data.handlers.MovieDetailsService;
-import isel.pdm.yamda.data.image.ImageLoader;
+import isel.pdm.yamda.data.handlers.service.MovieDetailsService;
 import isel.pdm.yamda.model.entity.MovieDetails;
 import isel.pdm.yamda.presentation.presenter.base.IPresenter;
 import isel.pdm.yamda.presentation.view.activity.MovieActivity;
@@ -25,12 +21,10 @@ public class MovieViewPresenter implements IPresenter, ILoadDataView<MovieDetail
     private final BroadcastReceiver receiver;
     private int id;
     private MovieActivity activity;
-    private ImageLoader imageLoader;
 
     public MovieViewPresenter(MovieActivity activity, int movieId) {
         this.activity = activity;
         this.id = movieId;
-        this.imageLoader = new ImageLoader(this.activity.getApplicationContext());
 
         receiver = new BroadcastReceiver() {
             @Override
@@ -47,6 +41,7 @@ public class MovieViewPresenter implements IPresenter, ILoadDataView<MovieDetail
 
         Intent intent = new Intent(this.activity, MovieDetailsService.class);
         intent.putExtra(MovieDetailsService.ID_PARAM, id);
+
         activity.startService(intent);
     }
 
@@ -75,7 +70,7 @@ public class MovieViewPresenter implements IPresenter, ILoadDataView<MovieDetail
     @Override
     public void setData(MovieDetails data) {
         this.hideLoading();
-        this.updateView(data);
+        this.activity.update(data);
     }
 
     /*
@@ -96,25 +91,6 @@ public class MovieViewPresenter implements IPresenter, ILoadDataView<MovieDetail
     @Override
     public void onDestroy() {
 
-    }
-
-    /*
-    |--------------------------------------------------------------------------
-    | Modify the activity
-    |--------------------------------------------------------------------------
-    */
-    private void updateView(MovieDetails movieView) {
-        ImageView imageView = (ImageView) this.activity.findViewById(R.id.cover);
-        TextView title = (TextView) this.activity.findViewById(R.id.title);
-        TextView overview = (TextView) this.activity.findViewById(R.id.overview);
-        TextView releaseYear = (TextView) this.activity.findViewById(R.id.release_year);
-
-        title.setText(movieView.getTitle());
-        overview.setText(movieView.getOverview());
-        //rating.setText("Rating: " + movieView.getRating());
-        //genre.setText(movieView.getGenres());
-        releaseYear.setText(movieView.getRelease_date());
-        imageLoader.DisplayImage(movieView.getPoster(), imageView);
     }
 
 }
