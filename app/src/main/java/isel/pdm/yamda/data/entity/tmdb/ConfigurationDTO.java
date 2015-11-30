@@ -6,14 +6,41 @@ package isel.pdm.yamda.data.entity.tmdb;
  */
 public class ConfigurationDTO {
 
-    public class ImageConfigurationsDTO {
+    /**
+     * This DTO contains the information about the images urls from the API
+     */
+    public static class ImageConfigurationsDTO {
         private String base_url;
         private String[] backdrop_sizes;
         private String[] logo_sizes;
         private String[] poster_sizes;
         private String[] change_keys;
+
+        public String getBaseUrl() {
+            return base_url;
+        }
+
+        public String[] getBackdropSizes() {
+            return backdrop_sizes.clone();
+        }
+
+        public String[] getLogoSizes() {
+            return logo_sizes.clone();
+        }
+
+        public String[] getPosterSizes() {
+            return poster_sizes.clone();
+        }
+
+        public String[] getChangeKeys() {
+            return change_keys.clone();
+        }
     }
 
     private ImageConfigurationsDTO images;
+
+    public ImageConfigurationsDTO getImages() {
+        return images;
+    }
 
 }

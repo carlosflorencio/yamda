@@ -11,12 +11,12 @@ import android.widget.ListView;
 
 import isel.pdm.yamda.R;
 import isel.pdm.yamda.presentation.presenter.SearchMovieViewPresenter;
-import isel.pdm.yamda.presentation.view.activity.base.BaseActivity;
+import isel.pdm.yamda.presentation.view.activity.base.AbstractBaseActivity;
 
 /**
  * Activity to display the movie search results
  */
-public class SearchableActivity extends BaseActivity {
+public class SearchableActivity extends AbstractBaseActivity {
 
     private ListView listView;
     private View loadingView;

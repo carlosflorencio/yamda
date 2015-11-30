@@ -13,6 +13,11 @@ public final class Genre implements Parcelable {
     private final int id;
     private final String name;
 
+    /**
+     * Constructs a new Genre with the specified id and name
+     * @param id
+     * @param name
+     */
     public Genre(int id, String name) {
         this.id = id;
 

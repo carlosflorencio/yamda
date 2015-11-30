@@ -24,7 +24,7 @@ public class MovieDTO {
     private CreditsDTO credits;
 
     public GenreDTO[] getGenres() {
-        return genres;
+        return genres.clone();
     }
 
     public int getId() {
@@ -75,7 +75,7 @@ public class MovieDTO {
         return homepage;
     }
 
-    public String getBackdrop_path() {
+    public String getBackdropPath() {
         return backdrop_path;
     }
 
@@ -88,10 +88,14 @@ public class MovieDTO {
     }
 
     /*
-        |--------------------------------------------------------------------------
-        | Inner classes
-        |--------------------------------------------------------------------------
-        */
+    |--------------------------------------------------------------------------
+    | Inner classes
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * Genre DTO class
+     */
     public static class GenreDTO {
         private int id;
         private String name;
@@ -105,21 +109,26 @@ public class MovieDTO {
         }
     }
 
+    /**
+     * Credits DTO class
+     */
     public static class CreditsDTO {
         private ActorDTO[] cast;
         private CrewDTO[] crew;
 
 
         public ActorDTO[] getActors() {
-            return cast;
+            return cast.clone();
         }
 
         public CrewDTO[] getCrew() {
-            return crew;
+            return crew.clone();
         }
     }
 
-
+    /**
+     * Crew DTO class
+     */
     public static class CrewDTO {
         private String credit_id;
         private String department;
@@ -153,6 +162,9 @@ public class MovieDTO {
         }
     }
 
+    /**
+     * Actor DTO Class
+     */
     public static class ActorDTO {
         private String cast_id;
         private String character;
@@ -161,7 +173,7 @@ public class MovieDTO {
         private int order;
         private String profile_path;
 
-        public String getCast_id() {
+        public String getCastId() {
             return cast_id;
         }
 

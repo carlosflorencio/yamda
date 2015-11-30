@@ -27,6 +27,15 @@ public final class Crew implements Parcelable {
     /** The crew profile **/
     private final String profile_path;
 
+    /**
+     * Constructs a new Crew Object with the specified fields
+     * @param credit_id
+     * @param department
+     * @param id
+     * @param job
+     * @param name
+     * @param profile_path
+     */
     public Crew(String credit_id, String department, int id, String job, String name,
                 String profile_path) {
         this.credit_id = credit_id;
@@ -37,7 +46,7 @@ public final class Crew implements Parcelable {
         this.profile_path = profile_path;
     }
 
-    public String getCredit_id() {
+    public String getCreditId() {
         return credit_id;
     }
 
@@ -57,7 +66,7 @@ public final class Crew implements Parcelable {
         return name;
     }
 
-    public String getProfile_path() {
+    public String getProfilePath() {
         return profile_path;
     }
 

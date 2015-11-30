@@ -13,7 +13,7 @@ import android.widget.SearchView;
 import isel.pdm.yamda.R;
 import isel.pdm.yamda.presentation.view.activity.AboutActivity;
 
-public abstract class ToolbarActivity extends BaseActivity {
+public abstract class ToolbarActivity extends AbstractBaseActivity {
 
     protected Toolbar toolbar;
     protected ProgressBar progressBar;

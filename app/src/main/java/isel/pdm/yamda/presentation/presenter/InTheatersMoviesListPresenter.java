@@ -13,12 +13,19 @@ import isel.pdm.yamda.model.entity.MovieListDetails;
 import isel.pdm.yamda.presentation.presenter.common.MovieListablePresenter;
 import isel.pdm.yamda.presentation.view.fragment.InTheatersMoviesListFragment;
 
+/**
+ * Presenter class for the InTheatersFragment
+ */
 public class InTheatersMoviesListPresenter extends MovieListablePresenter {
 
     public static final String THEATERS_MOVIE_LIST_TAG = InTheatersMoviesListPresenter.class.getSimpleName();
 
     private final BroadcastReceiver receiver;
 
+    /**
+     * Constructs a new instance of InTheatersMoviesListPresenter given the fragment
+     * @param fragment
+     */
     public InTheatersMoviesListPresenter(InTheatersMoviesListFragment fragment) {
         super(fragment.getActivity(), fragment.getListView(), fragment.getLoadingView());
 

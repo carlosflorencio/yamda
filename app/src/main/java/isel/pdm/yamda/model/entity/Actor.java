@@ -27,6 +27,15 @@ public final class Actor implements Parcelable {
     /** The actor order **/
     private final int order;
 
+    /**
+     * Create an Actor model with the given parameters
+     * @param cast_id
+     * @param character
+     * @param id
+     * @param name
+     * @param profile_path
+     * @param order
+     */
     public Actor(String cast_id, String character, int id, String name,
                  String profile_path, int order) {
         this.cast_id = cast_id;

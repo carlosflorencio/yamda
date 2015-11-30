@@ -1,6 +1,5 @@
 package isel.pdm.yamda.presentation.view.activity.base;
 
-import android.os.Bundle;
 import android.widget.Toast;
 
 import isel.pdm.yamda.presentation.presenter.base.IPresenter;
@@ -8,16 +7,12 @@ import isel.pdm.yamda.presentation.presenter.base.IPresenter;
 /**
  * Base Activity class for every class in this Application
  */
-public abstract class BaseActivity extends LoggingActivity {
+public abstract class AbstractBaseActivity extends LoggingActivity {
 
     /**
      * The Activity presenter who should manage the display
      */
     protected IPresenter presenter;
-
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     /**
      * Shows a {@link android.widget.Toast} message.
@@ -37,14 +32,17 @@ public abstract class BaseActivity extends LoggingActivity {
     public void onResume() {
         super.onResume();
 
-        if(this.presenter != null) //Activity may not have a presenter
+        //Activity may not have a presenter
+        if(this.presenter != null)
             this.presenter.onResume();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        if(this.presenter != null) //Activity may not have a presenter
+
+        //Activity may not have a presenter
+        if(this.presenter != null)
             this.presenter.onPause();
     }
 
@@ -52,7 +50,8 @@ public abstract class BaseActivity extends LoggingActivity {
     public void onDestroy() {
         super.onDestroy();
 
-        if(this.presenter != null) //Activity may not have a presenter
+        //Activity may not have a presenter
+        if(this.presenter != null)
             this.presenter.onDestroy();
     }
 }

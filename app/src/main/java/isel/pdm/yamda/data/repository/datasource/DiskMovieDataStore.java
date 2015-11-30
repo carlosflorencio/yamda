@@ -8,6 +8,9 @@ import isel.pdm.yamda.data.entity.tmdb.MovieDTO;
 import isel.pdm.yamda.data.entity.tmdb.MovieListingDTO;
 import isel.pdm.yamda.data.providers.IMovieApi;
 
+/**
+ * This class should get all the movies information stored elsewhere in the memory
+ */
 public class DiskMovieDataStore implements IMovieApi {
 
     private MovieListingDTO theatersMovies;
@@ -18,7 +21,10 @@ public class DiskMovieDataStore implements IMovieApi {
 
     private Map<Integer, MovieDTO> movie;
 
-    private DiskMovieDataStore() {
+    /**
+     * Constructs a new DiskMovieDataStore instance
+     */
+    public DiskMovieDataStore() {
         movie = new HashMap<>();
     }
 
@@ -73,6 +79,10 @@ public class DiskMovieDataStore implements IMovieApi {
         }
     }
 
+    /**
+     * Create a new instance of DiskMovieDataStore and returns it
+     * @return A new Instance
+     */
     public static DiskMovieDataStore create() {
         return new DiskMovieDataStore();
     }

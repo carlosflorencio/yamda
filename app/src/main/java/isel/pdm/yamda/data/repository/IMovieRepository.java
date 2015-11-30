@@ -58,6 +58,7 @@ public interface IMovieRepository {
      * Get movie by id synchronously
      * And convert to a model entity
      *
+     * @param id
      * @return Entity model
      * @throws ApiFailedGettingDataException
      */

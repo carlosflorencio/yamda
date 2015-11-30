@@ -5,12 +5,12 @@ import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 
 import isel.pdm.yamda.R;
-import isel.pdm.yamda.presentation.view.activity.base.BaseActivity;
+import isel.pdm.yamda.presentation.view.activity.base.AbstractBaseActivity;
 
 /**
  * Activity to display the app credits
  */
-public class AboutActivity extends BaseActivity {
+public class AboutActivity extends AbstractBaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,18 +21,19 @@ public class AboutActivity extends BaseActivity {
 
     private void setUpSupportActionBar() {
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            // Back Button
-            case android.R.id.home:
-                finish();
-                break;
-
+        // Back Button
+        if (item.getItemId() == android.R.id.home) {
+            finish();
         }
+
         return super.onOptionsItemSelected(item);
     }
 

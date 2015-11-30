@@ -15,6 +15,10 @@ public class CloudMovieDataStorage implements IMovieApi {
 
     private final IMovieApi api;
 
+    /**
+     * Constructs a new CloudMovieDataStorage with the specified api
+     * @param api
+     */
     public CloudMovieDataStorage(IMovieApi api) {
         this.api = api;
     }

@@ -43,7 +43,7 @@ public class ModelEntitiesDataMapper {
                 dto.getRuntime(),
                                 dto.getOverview(),
                                 createPosterLink(dto.getPosterPath()),
-                createBackdropLink(dto.getBackdrop_path()),
+                createBackdropLink(dto.getBackdropPath()),
                                 genres,
                                 dto.getHomepage(),
                                 dto.getOriginalLanguage(),
@@ -115,7 +115,7 @@ public class ModelEntitiesDataMapper {
         Actor[] res = new Actor[actors.length];
 
         for (int i = 0; i < actors.length; i++) {
-            res[i] = new Actor(actors[i].getCast_id(),
+            res[i] = new Actor(actors[i].getCastId(),
                                actors[i].getCharacter(),
                                actors[i].getId(),
                                actors[i].getName(),

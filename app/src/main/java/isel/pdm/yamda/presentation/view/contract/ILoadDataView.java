@@ -1,5 +1,9 @@
 package isel.pdm.yamda.presentation.view.contract;
 
+/**
+ * This interface is a contract for representing a loading data view
+ * @param <T>
+ */
 public interface ILoadDataView<T> {
 
     /**

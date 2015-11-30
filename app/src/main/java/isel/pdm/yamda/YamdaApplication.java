@@ -36,7 +36,9 @@ public class YamdaApplication extends Application {
 
         initLocaleConfiguration(getResources().getConfiguration());
         initMovieRepository();
-        this.navigator = new Navigator(); //make singleton?
+
+        //make singleton?
+        this.navigator = new Navigator();
     }
 
     @Override

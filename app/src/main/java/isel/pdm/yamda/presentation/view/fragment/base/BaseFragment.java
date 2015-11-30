@@ -31,7 +31,8 @@ public class BaseFragment extends LoggingFragment {
     public void onResume() {
         super.onResume();
 
-        if(this.presenter != null) //Fragment may not have a presenter
+        //Fragment may not have a presenter
+        if(this.presenter != null)
             this.presenter.onResume();
     }
 
@@ -39,7 +40,8 @@ public class BaseFragment extends LoggingFragment {
     public void onPause() {
         super.onResume();
 
-        if(this.presenter != null) //Fragment may not have a presenter
+        //Fragment may not have a presenter
+        if(this.presenter != null)
             this.presenter.onPause();
     }
 
@@ -47,7 +49,8 @@ public class BaseFragment extends LoggingFragment {
     public void onDestroy() {
         super.onResume();
 
-        if(this.presenter != null) //Fragment may not have a presenter
+        //Fragment may not have a presenter
+        if(this.presenter != null)
             this.presenter.onDestroy();
     }
 }

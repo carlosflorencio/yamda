@@ -16,6 +16,7 @@ public interface IMovieApi {
     /**
      * Get the api configuration if present
      * @return
+     * @throws IOException
      */
     ConfigurationDTO getApiConfiguration() throws IOException;
 
@@ -23,6 +24,7 @@ public interface IMovieApi {
      * Get the movies in the theaters right now
      * @param page
      * @return
+     * @throws IOException
      */
     MovieListingDTO getTheatersMovies(int page) throws IOException;
 
@@ -30,6 +32,7 @@ public interface IMovieApi {
      * Get next movies getting into theaters
      * @param page
      * @return
+     * @throws IOException
      */
     MovieListingDTO getSoonMovies(int page) throws IOException;
 
@@ -37,6 +40,7 @@ public interface IMovieApi {
      * Get the top movies in theaters
      * @param page
      * @return
+     * @throws IOException
      */
     MovieListingDTO getTopMovies(int page) throws IOException;
 
@@ -44,13 +48,16 @@ public interface IMovieApi {
      * Get a movie details
      * @param id
      * @return
+     * @throws IOException
      */
     MovieDTO getMovie(int id) throws IOException;
 
     /**
-     * Get the top movies in theaters
+     * Get the search result from the api given a search query and page
      * @param search
+     * @param page
      * @return
+     * @throws IOException
      */
     MovieListingDTO getMoviesSearch(String search, int page) throws IOException;
 }

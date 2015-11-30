@@ -26,12 +26,12 @@ import isel.pdm.yamda.data.image.ImageLoader;
 import isel.pdm.yamda.model.entity.Genre;
 import isel.pdm.yamda.model.entity.MovieDetails;
 import isel.pdm.yamda.presentation.presenter.MovieViewPresenter;
-import isel.pdm.yamda.presentation.view.activity.base.BaseActivity;
+import isel.pdm.yamda.presentation.view.activity.base.AbstractBaseActivity;
 
 /**
  * Activity to display the movie details
  */
-public class MovieActivity extends BaseActivity {
+public class MovieActivity extends AbstractBaseActivity {
 
     public static final String ID_TAG = "movie_id";
 

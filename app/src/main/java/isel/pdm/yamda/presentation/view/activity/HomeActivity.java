@@ -8,6 +8,9 @@ import isel.pdm.yamda.presentation.view.activity.base.ToolbarActivity;
 import isel.pdm.yamda.presentation.view.component.ViewPagerAdapter;
 import vendor.SlidingTabLayout;
 
+/**
+ * Launcher activity that displays the tabs and fragments containing the movies lists
+ */
 public class HomeActivity extends ToolbarActivity {
 
     private ViewPager pager;
@@ -48,7 +51,9 @@ public class HomeActivity extends ToolbarActivity {
     private void setTabs() {
         // Assiging the Sliding Tab Layout View
         SlidingTabLayout tabs = (SlidingTabLayout) findViewById(R.id.tabs);
-        tabs.setDistributeEvenly(false); // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
+
+        // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
+        tabs.setDistributeEvenly(false);
 
         // Setting Custom Color for the Scroll bar indicator of the Tab View
         tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
