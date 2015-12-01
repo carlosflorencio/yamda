@@ -15,6 +15,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -22,7 +24,6 @@ import java.util.Date;
 
 import isel.pdm.yamda.R;
 import isel.pdm.yamda.data.handlers.receiver.NotificationPublisher;
-import isel.pdm.yamda.data.image.ImageLoader;
 import isel.pdm.yamda.model.entity.Genre;
 import isel.pdm.yamda.model.entity.MovieDetails;
 import isel.pdm.yamda.presentation.presenter.MovieViewPresenter;
@@ -35,7 +36,6 @@ public class MovieActivity extends AbstractBaseActivity {
 
     public static final String ID_TAG = "movie_id";
 
-    private ImageLoader imageLoader;
     private View movieView;
     private View loadingView;
 
@@ -50,7 +50,6 @@ public class MovieActivity extends AbstractBaseActivity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.movie_layout2);
 
-        this.imageLoader = new ImageLoader(getApplicationContext());
         this.movieView = this.findViewById(R.id.movie_view);
         this.loadingView = this.findViewById(R.id.loading_movie);
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
@@ -161,7 +160,7 @@ public class MovieActivity extends AbstractBaseActivity {
         TextView overview = (TextView) findViewById(R.id.overview);
 
 
-        imageLoader.DisplayImage(movie.getPoster(), imageView);
+        Picasso.with(this).load(movie.getPoster()).into(imageView);
         title.setText(movie.getTitle());
         genre.setText(createGenreText(movie.getGenres()));
         rating.setText(String.valueOf(movie.getRating()));
