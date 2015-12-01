@@ -2,6 +2,7 @@ package isel.pdm.yamda.data.handlers.service;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.util.Log;
 
 import java.io.Serializable;
 import java.util.List;
@@ -18,6 +19,8 @@ import isel.pdm.yamda.presentation.presenter.TopMoviesListPresenter;
  * a service on a separate handler thread.
  */
 public class MovieListService extends IntentService {
+
+    public final String TAG = "DEBUG_" + getClass().getSimpleName();
 
     public static final String ID = MovieListService.class.getName();
 
@@ -56,7 +59,7 @@ public class MovieListService extends IntentService {
                 }
                 handleAction(newIntent, movies);
             } catch (ApiFailedGettingDataException e) {
-                e.printStackTrace();
+                Log.v(TAG, "Exception! Message: " + e.getMessage());
             }
         }
     }

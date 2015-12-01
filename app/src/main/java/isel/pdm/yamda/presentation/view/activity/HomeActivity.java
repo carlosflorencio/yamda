@@ -31,19 +31,25 @@ public class HomeActivity extends ToolbarActivity {
     }
 
     /**
-     * Setup the ViewPager with tabs
+     * Setup the ViewPager with tabs using SmartTabs Lib
      */
     private void setPager() {
         FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
-                getSupportFragmentManager(), FragmentPagerItems.with(this)
-                                                               .add(R.string.page_theaters, InTheatersMoviesListFragment.class)
-                                                               .add(R.string.page_soon, SoonMoviesListFragment.class)
-                                                               .add(R.string.page_top, TopMoviesListFragment.class)
-                                                               .create());
+                getSupportFragmentManager(),
+                FragmentPagerItems.with(this)
+                                  .add(R.string.page_theaters,
+                                       InTheatersMoviesListFragment.class)
+                                  .add(R.string.page_soon,
+                                       SoonMoviesListFragment.class)
+                                  .add(R.string.page_top,
+                                       TopMoviesListFragment.class)
+                                  .create());
 
+        //Set the fragments pager
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(adapter);
 
+        //Set the tabs names pager
         SmartTabLayout viewPagerTab = (SmartTabLayout) findViewById(R.id.tabs);
         viewPagerTab.setViewPager(viewPager);
     }

@@ -24,7 +24,7 @@ public class MovieDTO {
     private CreditsDTO credits;
 
     public GenreDTO[] getGenres() {
-        return genres.clone();
+        return genres;
     }
 
     public int getId() {
@@ -118,11 +118,11 @@ public class MovieDTO {
 
 
         public ActorDTO[] getActors() {
-            return cast.clone();
+            return cast;
         }
 
         public CrewDTO[] getCrew() {
-            return crew.clone();
+            return crew;
         }
     }
 

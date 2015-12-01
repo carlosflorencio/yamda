@@ -2,6 +2,7 @@ package isel.pdm.yamda.data.handlers.service;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.util.Log;
 
 import isel.pdm.yamda.YamdaApplication;
 import isel.pdm.yamda.data.exception.ApiFailedGettingDataException;
@@ -35,7 +36,7 @@ public class MovieDetailsService extends IntentService {
             intent1.putExtra(MOVIE_PARAM, movie);
             sendBroadcast(intent1);
         } catch (ApiFailedGettingDataException e) {
-            e.printStackTrace();
+            Log.v(TAG, "Exception! Message: " + e.getMessage());
         }
     }
 

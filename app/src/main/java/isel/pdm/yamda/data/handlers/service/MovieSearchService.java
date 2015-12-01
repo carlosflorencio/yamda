@@ -2,6 +2,7 @@ package isel.pdm.yamda.data.handlers.service;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.util.Log;
 
 import java.io.Serializable;
 import java.util.List;
@@ -16,6 +17,8 @@ import isel.pdm.yamda.model.entity.MovieListDetails;
  * a service on a separate handler thread.
  */
 public class MovieSearchService extends IntentService {
+
+    public final String TAG = "DEBUG_" + getClass().getSimpleName();
 
     public static final String SEARCH_PARAM = "movie_search";
 
@@ -38,7 +41,7 @@ public class MovieSearchService extends IntentService {
                 List<MovieListDetails> movies = ((YamdaApplication) getApplication()).getMovieRepository().getMovieSearch(search, page);
                 handleAction(movies);
             } catch (ApiFailedGettingDataException e) {
-                e.printStackTrace();
+                Log.v(TAG, "Exception! Message: " + e.getMessage());
             }
         }
     }

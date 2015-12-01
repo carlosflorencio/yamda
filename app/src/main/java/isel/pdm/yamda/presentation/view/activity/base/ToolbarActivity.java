@@ -32,9 +32,6 @@ public abstract class ToolbarActivity extends AbstractBaseActivity {
 
         //toolbar.setLogo(R.mipmap.ic_launcher);
         //toolbar.setTitle(R.string.app_name);
-
-        //this.progressBar = (ProgressBar) findViewById(R.id.progress_spinner);
-        //progressBar.setVisibility(View.INVISIBLE);
     }
 
     /**
@@ -68,18 +65,12 @@ public abstract class ToolbarActivity extends AbstractBaseActivity {
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        switch (id) {   // New options to menu
-            case R.id.action_about:
-                Intent intent = new Intent(this, AboutActivity.class);
-                startActivity(intent);
-            default:
-                return super.onOptionsItemSelected(item);
+        if(item.getItemId() == R.id.action_about) {
+            Intent intent = new Intent(this, AboutActivity.class);
+            startActivity(intent);
         }
+
+        return super.onOptionsItemSelected(item);
     }
 
 

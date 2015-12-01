@@ -29,6 +29,7 @@ public class LazyAdapter extends BaseAdapter {
     public LazyAdapter(Activity a, List<MovieListDetails> d) {
         activity = a;
         data=d;
+        // FIXME: 01/12/2015 Change this to be thread safe
         inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 

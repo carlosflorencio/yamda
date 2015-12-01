@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v7.app.ActionBar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -178,7 +179,7 @@ public class MovieActivity extends AbstractBaseActivity {
             Date date = sdf.parse(release_date);
             return Calendar.getInstance().getTime().compareTo(date) < 0 ? false : true;
         } catch (ParseException e) {
-            e.printStackTrace();
+            Log.v(TAG, "Failed to create a date! Message: " + e.getMessage());
         }
         return false;
     }

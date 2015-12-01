@@ -21,15 +21,15 @@ public class ConfigurationDTO {
         }
 
         public String[] getBackdropSizes() {
-            return backdrop_sizes.clone();
+            return backdrop_sizes;
         }
 
         public String[] getLogoSizes() {
-            return logo_sizes.clone();
+            return logo_sizes;
         }
 
         public String[] getPosterSizes() {
-            return poster_sizes.clone();
+            return poster_sizes;
         }
 
         public String[] getChangeKeys() {
