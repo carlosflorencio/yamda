@@ -3,10 +3,15 @@ package isel.pdm.yamda.presentation.view.activity;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 
+import com.ogaclejapan.smarttablayout.SmartTabLayout;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
+
 import isel.pdm.yamda.R;
 import isel.pdm.yamda.presentation.view.activity.base.ToolbarActivity;
-import isel.pdm.yamda.presentation.view.component.ViewPagerAdapter;
-import vendor.SlidingTabLayout;
+import isel.pdm.yamda.presentation.view.fragment.InTheatersMoviesListFragment;
+import isel.pdm.yamda.presentation.view.fragment.SoonMoviesListFragment;
+import isel.pdm.yamda.presentation.view.fragment.TopMoviesListFragment;
 
 /**
  * Launcher activity that displays the tabs and fragments containing the movies lists
@@ -26,44 +31,21 @@ public class HomeActivity extends ToolbarActivity {
     }
 
     /**
-     * Setup the ViewPager
+     * Setup the ViewPager with tabs
      */
     private void setPager() {
-        String[] titles = {
-                getResources().getString(R.string.page_theaters),
-                getResources().getString(R.string.page_soon),
-                getResources().getString(R.string.page_top)
-        };
+        FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
+                getSupportFragmentManager(), FragmentPagerItems.with(this)
+                                                               .add(R.string.page_theaters, InTheatersMoviesListFragment.class)
+                                                               .add(R.string.page_soon, SoonMoviesListFragment.class)
+                                                               .add(R.string.page_top, TopMoviesListFragment.class)
+                                                               .create());
 
-        // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles for the Tabs.
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), titles);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager.setAdapter(adapter);
 
-        // Assigning ViewPager View and setting the adapter
-        pager = (ViewPager) findViewById(R.id.pager);
-        pager.setAdapter(adapter);
-
-        this.setTabs();
+        SmartTabLayout viewPagerTab = (SmartTabLayout) findViewById(R.id.tabs);
+        viewPagerTab.setViewPager(viewPager);
     }
 
-    /**
-     * Setup the tabs in the pager-
-     */
-    private void setTabs() {
-        // Assiging the Sliding Tab Layout View
-        SlidingTabLayout tabs = (SlidingTabLayout) findViewById(R.id.tabs);
-
-        // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
-        tabs.setDistributeEvenly(false);
-
-        // Setting Custom Color for the Scroll bar indicator of the Tab View
-        tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
-            @Override
-            public int getIndicatorColor(int position) {
-                return getResources().getColor(R.color.colorAccent);
-            }
-        });
-
-        // Setting the ViewPager For the SlidingTabsLayout
-        tabs.setViewPager(pager);
-    }
 }
