@@ -2,7 +2,6 @@ package isel.pdm.yamda.presentation.view.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,12 +63,17 @@ public class LazyAdapter extends BaseAdapter {
         genre.setText(movie.getGenresTogether());
         releaseYear.setText(movie.getReleaseDate());
 
-        if(movie.getPoster() == null) {
-            Log.v(TAG, "Movie without image: " + movie.getTitle());
-            thumb_image.setImageResource(R.drawable.placeholder);
-        } else {
-            Picasso.with(activity).load(movie.getPoster()).into(thumb_image);
-        }
+        //Debug only
+        Picasso.with(activity).setIndicatorsEnabled(true);
+        Picasso.with(activity).load(movie.getPoster()).placeholder(R.drawable.placeholder)
+               .into(thumb_image);
+
+//        if(movie.getPoster() == null) {
+//            Log.v(TAG, "Movie without image: " + movie.getTitle());
+//            thumb_image.setImageResource(R.drawable.placeholder);
+//        } else {
+//            Picasso.with(activity).load(movie.getPoster()).into(thumb_image);
+//        }
 
         return view;
     }
