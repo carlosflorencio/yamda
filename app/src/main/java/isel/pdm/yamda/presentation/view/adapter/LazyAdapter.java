@@ -10,10 +10,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import isel.pdm.yamda.R;
-import isel.pdm.yamda.data.image.ImageLoader;
 import isel.pdm.yamda.model.entity.MovieListDetails;
 
 /**
@@ -25,13 +26,11 @@ public class LazyAdapter extends BaseAdapter {
     private Activity activity;
     private List<MovieListDetails> data;
     private static LayoutInflater inflater=null;
-    public ImageLoader imageLoader;
 
     public LazyAdapter(Activity a, List<MovieListDetails> d) {
         activity = a;
         data=d;
         inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        imageLoader = new ImageLoader(activity.getApplicationContext());
     }
 
     public int getCount() {
@@ -69,7 +68,7 @@ public class LazyAdapter extends BaseAdapter {
             Log.v(TAG, "Movie without image: " + movie.getTitle());
             thumb_image.setImageResource(R.drawable.placeholder);
         } else {
-            imageLoader.DisplayImage(movie.getPoster(), thumb_image);
+            Picasso.with(activity).load(movie.getPoster()).into(thumb_image);
         }
 
         return view;

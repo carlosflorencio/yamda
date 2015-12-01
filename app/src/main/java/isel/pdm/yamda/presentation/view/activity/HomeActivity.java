@@ -46,7 +46,7 @@ public class HomeActivity extends ToolbarActivity {
     }
 
     /**
-     * Setup the tabs in the pager
+     * Setup the tabs in the pager-
      */
     private void setTabs() {
         // Assiging the Sliding Tab Layout View
