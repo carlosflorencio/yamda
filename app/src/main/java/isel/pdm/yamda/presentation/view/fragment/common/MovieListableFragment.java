@@ -23,7 +23,7 @@ public abstract class MovieListableFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         this.viewContainer = inflater.inflate(R.layout.home_tab, container, false);
-        this.listView = ((ListView) this.viewContainer.findViewById(R.id.list_view));
+        this.listView = (ListView) this.viewContainer.findViewById(R.id.list_view);
         this.loadingView = this.viewContainer.findViewById(R.id.loading_tab);
         this.presenter = this.createPresenter();
 

@@ -88,7 +88,7 @@ public abstract class MovieListablePresenter implements IPresenter, ILoadDataVie
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        MovieListDetails movie = ((MovieListDetails) parent.getAdapter().getItem(position));
+        MovieListDetails movie = (MovieListDetails) parent.getAdapter().getItem(position);
         Navigator nav = ((YamdaApplication) this.activity.getApplication()).getNavigator();
 
         nav.navigateToMovieDetails(this.activity, movie);

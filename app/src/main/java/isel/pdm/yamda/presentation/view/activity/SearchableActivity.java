@@ -26,7 +26,7 @@ public class SearchableActivity extends AbstractBaseActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.search_movies);
-        this.listView = ((ListView) this.findViewById(R.id.list_view_search));
+        this.listView = (ListView) this.findViewById(R.id.list_view_search);
         this.loadingView = this.findViewById(R.id.loading_search);
 
         setUpSupportActionBar();

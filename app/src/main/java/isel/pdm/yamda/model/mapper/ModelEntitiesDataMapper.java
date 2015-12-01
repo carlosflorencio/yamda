@@ -166,7 +166,7 @@ public class ModelEntitiesDataMapper {
     private String createPosterLink(String path) {
         if(path == null) return null;
 
-        StringBuffer string = new StringBuffer();
+        StringBuilder string = new StringBuilder();
 
         string.append(this.configuration.getImagesURI());
         string.append(this.configuration.getListPosterSize());
@@ -178,7 +178,7 @@ public class ModelEntitiesDataMapper {
     private String createBackdropLink(String path) {
         if (path == null) return null;
 
-        StringBuffer string = new StringBuffer();
+        StringBuilder string = new StringBuilder();
 
         string.append(this.configuration.getImagesURI());
         string.append(this.configuration.getBackdropSize());

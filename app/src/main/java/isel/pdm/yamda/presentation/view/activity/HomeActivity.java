@@ -18,8 +18,6 @@ import isel.pdm.yamda.presentation.view.fragment.TopMoviesListFragment;
  */
 public class HomeActivity extends ToolbarActivity {
 
-    private ViewPager pager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

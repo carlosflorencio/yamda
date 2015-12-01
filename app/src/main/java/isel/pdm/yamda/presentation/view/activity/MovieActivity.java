@@ -170,14 +170,17 @@ public class MovieActivity extends AbstractBaseActivity {
         releaseYear.setText(movie.getRelease_date());
         overview.setText(movie.getOverview());
 
-        findViewById(R.id.follow).setVisibility(movieIsAlreadyReleased(movie.getRelease_date()) ? View.INVISIBLE : View.VISIBLE);
+        if (movieIsAlreadyReleased(movie.getRelease_date()))
+            findViewById(R.id.follow).setVisibility(View.INVISIBLE);
+        else
+            findViewById(R.id.follow).setVisibility(View.VISIBLE);
     }
 
     private boolean movieIsAlreadyReleased(String release_date) {
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date date = sdf.parse(release_date);
-            return Calendar.getInstance().getTime().compareTo(date) < 0 ? false : true;
+            return Calendar.getInstance().getTime().compareTo(date) >= 0;
         } catch (ParseException e) {
             Log.v(TAG, "Failed to create a date! Message: " + e.getMessage());
         }
@@ -195,13 +198,13 @@ public class MovieActivity extends AbstractBaseActivity {
     }
 
     private String createGenreText(Genre[] genres) {
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder stringbuilder = new StringBuilder();
         for (int i = 0; i < genres.length; i++) {
-            stringBuffer.append(genres[i].getName());
+            stringbuilder.append(genres[i].getName());
             if (i < genres.length - 1) {
-                stringBuffer.append(", ");
+                stringbuilder.append(", ");
             }
         }
-        return stringBuffer.toString();
+        return stringbuilder.toString();
     }
 }
