@@ -7,7 +7,6 @@ import isel.pdm.yamda.data.repository.IMovieRepository;
 import isel.pdm.yamda.data.repository.MovieRepository;
 import isel.pdm.yamda.data.repository.datasource.MovieDataStoreFactory;
 import isel.pdm.yamda.model.mapper.ModelEntitiesDataMapper;
-import isel.pdm.yamda.presentation.navigator.Navigator;
 
 /**
  * Singleton class (note that we have one instance per application process) that plays the role
@@ -25,20 +24,12 @@ public class YamdaApplication extends Application {
      */
     private IMovieRepository movieRepository;
 
-    /**
-     * Manage navigation between Activities
-     */
-    protected Navigator navigator;
-
     @Override
     public void onCreate() {
         super.onCreate();
 
         initLocaleConfiguration(getResources().getConfiguration());
         initMovieRepository();
-
-        //make singleton?
-        this.navigator = new Navigator();
     }
 
     @Override
@@ -77,9 +68,5 @@ public class YamdaApplication extends Application {
 
     public IMovieRepository getMovieRepository() {
         return movieRepository;
-    }
-
-    public Navigator getNavigator() {
-        return this.navigator;
     }
 }

@@ -4,6 +4,7 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,15 +19,15 @@ import isel.pdm.yamda.presentation.view.activity.base.AbstractBaseActivity;
  */
 public class SearchableActivity extends AbstractBaseActivity {
 
-    private ListView listView;
-    private View loadingView;
+    private RecyclerView listView;
+    private View         loadingView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.search_movies);
-        this.listView = (ListView) this.findViewById(R.id.list_view_search);
+        this.listView = (RecyclerView) this.findViewById(R.id.list_view_search);
         this.loadingView = this.findViewById(R.id.loading_search);
 
         setUpSupportActionBar();
@@ -79,7 +80,7 @@ public class SearchableActivity extends AbstractBaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public ListView getListView() {
+    public RecyclerView getListView() {
         return listView;
     }
 

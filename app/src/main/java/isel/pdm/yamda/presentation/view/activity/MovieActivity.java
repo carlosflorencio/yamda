@@ -207,4 +207,11 @@ public class MovieActivity extends AbstractBaseActivity {
         }
         return stringbuilder.toString();
     }
+
+    public static Intent createIntent(Context context, int id) {
+        Intent intent = new Intent(context, MovieActivity.class);
+        intent.putExtra(ID_TAG, id);
+
+        return intent;
+    }
 }

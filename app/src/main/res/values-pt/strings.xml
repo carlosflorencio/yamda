@@ -14,4 +14,5 @@
     <string name="search_results_title">Resultados da Procura</string>
     <string name="loading">A Carregar..</string>
     <string name="movie_released">Chegou!</string>
+    <string name="row_rating">Pontuação</string>
 </resources>

@@ -2,6 +2,8 @@ package isel.pdm.yamda.presentation.view.fragment.common;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,16 +18,27 @@ public abstract class MovieListableFragment extends BaseFragment {
     /** View Container for holding the view components **/
     protected View viewContainer;
     /** List view for holding the list **/
-    protected ListView listView;
+    protected RecyclerView listView;
     /** Loading view showing the progress bar **/
     protected View loadingView;
+
+    private RecyclerView.Adapter       mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         this.viewContainer = inflater.inflate(R.layout.home_tab, container, false);
-        this.listView = (ListView) this.viewContainer.findViewById(R.id.list_view);
+        this.listView = (RecyclerView) this.viewContainer.findViewById(R.id.list_view);
         this.loadingView = this.viewContainer.findViewById(R.id.loading_tab);
         this.presenter = this.createPresenter();
+
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        listView.setHasFixedSize(true);
+
+        // use a linear layout manager
+        mLayoutManager = new LinearLayoutManager(getContext());
+        listView.setLayoutManager(mLayoutManager);
 
         return viewContainer;
     }
@@ -48,7 +61,7 @@ public abstract class MovieListableFragment extends BaseFragment {
      * Return the list view
      * @return
      */
-    public ListView getListView() {
+    public RecyclerView getListView() {
         return this.listView;
     }
 

@@ -1,27 +1,25 @@
 package isel.pdm.yamda.presentation.presenter.common;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import java.util.List;
 
-import isel.pdm.yamda.YamdaApplication;
 import isel.pdm.yamda.model.entity.MovieListDetails;
-import isel.pdm.yamda.presentation.navigator.Navigator;
 import isel.pdm.yamda.presentation.presenter.base.IPresenter;
-import isel.pdm.yamda.presentation.view.adapter.LazyAdapter;
+import isel.pdm.yamda.presentation.view.activity.MovieActivity;
+import isel.pdm.yamda.presentation.view.adapter.MovieRecyclerAdapter;
 import isel.pdm.yamda.presentation.view.contract.ILoadDataView;
 
-public abstract class MovieListablePresenter implements IPresenter, ILoadDataView<List<MovieListDetails>>,
-        AdapterView.OnItemClickListener {
+public abstract class MovieListablePresenter implements IPresenter, ILoadDataView<List<MovieListDetails>>{
 
-    protected ListView listView;
-    protected View loadingView;
-    protected Activity activity;
+    protected RecyclerView listView;
+    protected View         loadingView;
+    protected Activity     activity;
 
-    public MovieListablePresenter(Activity activity, ListView listView, View loading) {
+    public MovieListablePresenter(Activity activity, RecyclerView listView, View loading) {
         this.listView = listView;
         this.activity = activity;
         this.loadingView = loading;
@@ -81,17 +79,18 @@ public abstract class MovieListablePresenter implements IPresenter, ILoadDataVie
     |--------------------------------------------------------------------------
     */
     private void setListViewAdapter(List<MovieListDetails> list) {
-        this.listView.setAdapter(new LazyAdapter(this.activity, list));
-        this.listView.setOnItemClickListener(this);
-        //this.fragment.getViewContainer().invalidate();
+        MovieRecyclerAdapter adapter = new MovieRecyclerAdapter(activity);
+        adapter.setData(list);
+        adapter.setListener(new MovieRecyclerAdapter.IClickListener() {
+            @Override
+            public void onItemClick(MovieListDetails movie) {
+                Intent i = MovieActivity.createIntent(activity, movie.getId());
+                activity.startActivity(i);
+            }
+        });
+        this.listView.setAdapter(adapter);
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        MovieListDetails movie = (MovieListDetails) parent.getAdapter().getItem(position);
-        Navigator nav = ((YamdaApplication) this.activity.getApplication()).getNavigator();
 
-        nav.navigateToMovieDetails(this.activity, movie);
-    }
 
 }
