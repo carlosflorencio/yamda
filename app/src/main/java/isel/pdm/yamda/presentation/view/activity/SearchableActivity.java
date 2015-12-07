@@ -4,11 +4,11 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListView;
 
 import isel.pdm.yamda.R;
 import isel.pdm.yamda.presentation.presenter.SearchMovieViewPresenter;
@@ -26,9 +26,17 @@ public class SearchableActivity extends AbstractBaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.search_movies);
-        this.listView = (RecyclerView) this.findViewById(R.id.list_view_search);
-        this.loadingView = this.findViewById(R.id.loading_search);
+        setContentView(R.layout.home_tab);
+        this.listView = (RecyclerView) this.findViewById(R.id.list_view);
+        this.loadingView = this.findViewById(R.id.loading_tab);
+
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        listView.setHasFixedSize(true);
+
+        // use a linear layout manager
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+        listView.setLayoutManager(mLayoutManager);
 
         setUpSupportActionBar();
 

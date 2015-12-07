@@ -72,13 +72,14 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
         MovieListDetails movie = data.get(position);
 
         holder.title.setText(movie.getTitle());
+        holder.title_original.setText(movie.getOriginalTitle());
         holder.rating.setText(context.getString(R.string.row_rating) + ": " + movie.getRating());
-        holder.genre.setText(movie.getGenresTogether());
         holder.releaseYear.setText(movie.getReleaseDate());
 
         //Debug only
-        Picasso.with(context).setIndicatorsEnabled(true);
-        Picasso.with(context).load(movie.getPoster()).placeholder(R.drawable.placeholder)
+        //Picasso.with(context).setIndicatorsEnabled(true);
+        //Picasso.with(context).setLoggingEnabled(true);
+        Picasso.with(context).load(movie.getPoster()).placeholder(R.drawable.placeholder2)
                .into(holder.thumb_image);
     }
 
@@ -92,16 +93,16 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
      */
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView  title;
+        public TextView  title_original;
         public TextView  rating;
-        public TextView  genre;
         public TextView  releaseYear;
         public ImageView thumb_image;
 
         public ViewHolder(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.title);
+            title_original = (TextView) itemView.findViewById(R.id.title_original);
             rating = (TextView) itemView.findViewById(R.id.rating);
-            genre = (TextView) itemView.findViewById(R.id.genre);
             releaseYear = (TextView) itemView.findViewById(R.id.release_year);
             thumb_image = (ImageView) itemView.findViewById(R.id.thumbnail);
             itemView.setOnClickListener(this);

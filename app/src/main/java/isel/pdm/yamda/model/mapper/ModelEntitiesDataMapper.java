@@ -63,6 +63,7 @@ public class ModelEntitiesDataMapper {
 
         return new MovieListDetails(dto.getId(),
                                     dto.getTitle(),
+                                    dto.getOriginalTitle(),
                                     dto.getReleaseDate(),
                                     dto.getOverview(),
                                     createPosterLink(dto.getPosterPath()),

@@ -52,4 +52,12 @@ public class HomeActivity extends ToolbarActivity {
         viewPagerTab.setViewPager(viewPager);
     }
 
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        //Clear the search query and remove keyboard on back from the search activity
+        searchView.setQuery("", false);
+        searchView.clearFocus();
+    }
+
 }

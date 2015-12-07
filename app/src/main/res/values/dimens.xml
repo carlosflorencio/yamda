@@ -5,10 +5,11 @@
     <dimen name="fab_margin">16dp</dimen>
 
     <!-- Dimensions of List View Row-->
-    <dimen name="title">17dp</dimen>
-    <dimen name="rating">15dip</dimen>
-    <dimen name="genre">13dip</dimen>
-    <dimen name="year">12dip</dimen>
+    <dimen name="title">14sp</dimen>
+    <dimen name="title_original">12sp</dimen>
+    <dimen name="rating">12sp</dimen>
+    <dimen name="genre">12sp</dimen>
+    <dimen name="year">12sp</dimen>
 
     <!-- Dimensions of Movie View-->
     <dimen name="movie_view_title">25dp</dimen>

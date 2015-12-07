@@ -21,8 +21,7 @@ public abstract class MovieListableFragment extends BaseFragment {
     protected RecyclerView listView;
     /** Loading view showing the progress bar **/
     protected View loadingView;
-
-    private RecyclerView.Adapter       mAdapter;
+    /** RecyclerView Layout manager for displaying the movies list **/
     private RecyclerView.LayoutManager mLayoutManager;
 
     @Override

@@ -17,6 +17,7 @@ public abstract class ToolbarActivity extends AbstractBaseActivity {
 
     protected Toolbar toolbar;
     protected ProgressBar progressBar;
+    protected SearchView searchView;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +48,7 @@ public abstract class ToolbarActivity extends AbstractBaseActivity {
         // Set a call to Searchable activity from the search widget
         SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView =
+        searchView =
                 (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(
                 searchManager.getSearchableInfo(getComponentName()));

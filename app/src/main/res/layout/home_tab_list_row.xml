@@ -1,66 +1,80 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<android.support.v7.widget.CardView
+    android:id="@+id/card_view"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="5dp"
+    card_view:cardCornerRadius="0dp"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!--Thumbnail Image-->
-    <ImageView
-        android:id="@+id/thumbnail"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginRight="8dp" />
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-
-    <!-- Movie Title -->
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/thumbnail"
-        android:layout_toRightOf="@+id/thumbnail"
-        android:textSize="@dimen/title"
-        android:textStyle="bold" />
-
-    <!-- Rating -->
-    <TextView
-        android:id="@+id/rating"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/title"
-        android:layout_marginTop="1dip"
-        android:layout_toRightOf="@+id/thumbnail"
-        android:textSize="@dimen/rating" />
-
-    <!-- Genre -->
-    <TextView
-        android:id="@+id/genre"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/rating"
-        android:layout_marginTop="5dp"
-        android:layout_toRightOf="@+id/thumbnail"
-        android:textColor="@color/genre"
-        android:textSize="@dimen/genre" />
-
-    <!-- Release Year -->
-    <TextView
-        android:id="@+id/release_year"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:textColor="@color/year"
-        android:textSize="@dimen/year"
-        android:layout_marginRight="5dp" />
-
-    <!-- Rightend Arrow -->
-    <ImageView android:id="@+id/arrow"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:src="@drawable/arrow"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="8dp"/>
+        <!--Thumbnail Image-->
+        <ImageView
+            android:id="@+id/thumbnail"
+            android:layout_width="55dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            tools:src="@drawable/placeholder"
+            android:layout_marginRight="10dp"/>
 
 
-</RelativeLayout>
+        <!-- Movie Title -->
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/title"
+            android:textStyle="bold"
+            tools:text="A Viagem de Arlo"
+            android:layout_toRightOf="@+id/thumbnail"/>
+
+        <!-- Movie Original Title -->
+        <TextView
+            android:id="@+id/title_original"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/title_original"
+            tools:text="A Viagem de Arlo"
+            android:layout_below="@+id/title"
+            android:layout_toRightOf="@+id/thumbnail"
+            android:textStyle="italic"/>
+
+        <!-- Rating -->
+        <TextView
+            android:id="@+id/rating"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/rating"
+            tools:text="Pontuação: 6.08"
+            android:layout_marginTop="4dp"
+            android:layout_below="@+id/title_original"
+            android:layout_alignLeft="@+id/title_original"
+            android:layout_alignStart="@+id/title_original"/>
+
+
+        <!-- Release Year -->
+        <TextView
+            android:id="@+id/release_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rating"
+            android:layout_toRightOf="@+id/thumbnail"
+            android:textColor="@color/year"
+            android:textSize="@dimen/year"
+            tools:text="2015-11-01"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="false"
+            android:layout_alignParentTop="false"
+            android:layout_alignParentLeft="false"
+            android:layout_alignWithParentIfMissing="false"
+            android:gravity="bottom"/>
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
