@@ -73,8 +73,8 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
 
         holder.title.setText(movie.getTitle());
         holder.title_original.setText(movie.getOriginalTitle());
-        holder.rating.setText(context.getString(R.string.row_rating) + ": " + movie.getRating());
-        holder.releaseYear.setText(movie.getReleaseDate());
+        holder.rating.setText(context.getString(R.string.row_rating, movie.getRating()));
+        holder.releaseYear.setText(context.getString(R.string.row_released, movie.getReleaseDate()));
 
         //Debug only
         //Picasso.with(context).setIndicatorsEnabled(true);

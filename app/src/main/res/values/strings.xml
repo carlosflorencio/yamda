@@ -14,5 +14,6 @@
     <string name="search_results_title">Search Results</string>
     <string name="loading">Loading..</string>
     <string name="movie_released">It\'s arrived!</string>
-    <string name="row_rating">Rating</string>
+    <string name="row_rating">Rating: %1$s</string>
+    <string name="row_released">Released: %1$s</string>
 </resources>

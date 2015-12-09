@@ -91,6 +91,4 @@ public abstract class MovieListablePresenter implements IPresenter, ILoadDataVie
         this.listView.setAdapter(adapter);
     }
 
-
-
 }

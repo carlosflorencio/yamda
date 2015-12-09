@@ -22,15 +22,21 @@ public class TMDbConfiguration implements IConfiguration {
 
     @Override
     public String getListPosterSize() {
-        return "w92";
+//        return "w92";
+//        return "w154";
+        return "w185";
+//        return "w342";
+//        return "w500";
+//        return "w780";
+//        return "original";
     }
 
     @Override
     public String getBackdropSize() {
         //return "w300";
-        //return "w780";
+        return "w780";
         //return "w1280";
-        return "original";
+        //return "original";
     }
 
     @Override

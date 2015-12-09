@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import isel.pdm.yamda.R;
 import isel.pdm.yamda.presentation.presenter.base.IPresenter;
