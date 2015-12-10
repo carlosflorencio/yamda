@@ -49,7 +49,6 @@ public class MovieRepository implements IMovieRepository {
                 data = this.factory.createCloudDataStore().getTheatersMovies(page);
                 cache.setTheatersMovies(data);
             }
-
             return this.mapper.transform(data);
         } catch (IOException e) {
             throw new ApiFailedGettingDataException(e);
@@ -72,7 +71,6 @@ public class MovieRepository implements IMovieRepository {
                 data = this.factory.createCloudDataStore().getSoonMovies(page);
                 cache.setSoonMovies(data);
             }
-
             return this.mapper.transform(data);
         } catch (IOException e) {
             throw new ApiFailedGettingDataException(e);
@@ -91,7 +89,6 @@ public class MovieRepository implements IMovieRepository {
     public List<MovieListDetails> getTopMovies(int page) throws ApiFailedGettingDataException {
         try {
             MovieListingDTO data = this.factory.createCloudDataStore().getTopMovies(page);
-
             return this.mapper.transform(data);
         } catch (IOException e) {
             throw new ApiFailedGettingDataException(e);
@@ -112,7 +109,6 @@ public class MovieRepository implements IMovieRepository {
             throws ApiFailedGettingDataException {
         try {
             MovieListingDTO data = this.factory.createCloudDataStore().getMoviesSearch(search, page);
-
             return this.mapper.transform(data);
         } catch (IOException e) {
             throw new ApiFailedGettingDataException(e);
@@ -134,7 +130,6 @@ public class MovieRepository implements IMovieRepository {
                 data = this.factory.createCloudDataStore().getMovie(id);
                 cache.setMovie(data);
             }
-
             return this.mapper.transform(data);
         } catch (IOException e) {
             throw new ApiFailedGettingDataException(e);

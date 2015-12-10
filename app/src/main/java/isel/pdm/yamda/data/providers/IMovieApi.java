@@ -9,7 +9,6 @@ import isel.pdm.yamda.data.entity.tmdb.MovieListingDTO;
 
 /**
  * The contract that all apis providers must obey
- * *Warning* Dependency: Retrofit!
  */
 public interface IMovieApi {
 

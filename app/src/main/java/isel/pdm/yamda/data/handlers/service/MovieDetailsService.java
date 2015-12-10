@@ -15,6 +15,8 @@ public class MovieDetailsService extends IntentService {
 
     public final String TAG = "DEBUG_" + getClass().getSimpleName();
 
+    public static final String DATA = "data_ok";
+
     public static final String ID_PARAM = "id_parameter";
 
     public static final String MOVIE_PARAM = "movie_parameter";
@@ -28,16 +30,17 @@ public class MovieDetailsService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        Intent intent1 = new Intent(NOTIFICATION);
         try {
             int id = intent.getIntExtra(ID_PARAM, -1);
             MovieDetails movie = ((YamdaApplication) getApplication()).getMovieRepository().getMovieById(id);
-
-            Intent intent1 = new Intent(NOTIFICATION);
+            intent1.putExtra(DATA, true);
             intent1.putExtra(MOVIE_PARAM, movie);
-            sendBroadcast(intent1);
         } catch (ApiFailedGettingDataException e) {
+            intent1.putExtra(DATA, false);
             Log.v(TAG, "Exception! Message: " + e.getMessage());
         }
+        sendBroadcast(intent1);
     }
 
 }

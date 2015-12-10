@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -45,6 +46,7 @@ public abstract class MovieListablePresenter implements IPresenter, ILoadDataVie
     @Override
     public void showError(String message) {
         this.hideLoading();
+        Toast.makeText(this.activity, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
