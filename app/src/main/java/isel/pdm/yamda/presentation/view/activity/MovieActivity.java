@@ -151,24 +151,6 @@ public class MovieActivity extends AbstractBaseActivity {
     }
 
     private void updateView() {
-//        ImageView imageView = (ImageView) findViewById(R.id.cover);
-//        TextView title = (TextView) findViewById(R.id.title);
-//        TextView genre = (TextView) findViewById(R.id.genre);
-//        TextView rating = (TextView) findViewById(R.id.rating);
-//        TextView voteCount = (TextView) findViewById(R.id.vote_count);
-//        TextView runtime = (TextView) findViewById(R.id.runtime);
-//        TextView releaseYear = (TextView) findViewById(R.id.release_date);
-//        TextView overview = (TextView) findViewById(R.id.overview);
-
-//        Picasso.with(this).load(movie.getPoster()).into(imageView);
-//        title.setText(movie.getTitle());
-//        genre.setText(createGenreText(movie.getGenres()));
-//        rating.setText(String.valueOf(movie.getRating()));
-//        voteCount.setText(String.valueOf(movie.getVoteCount()));
-//        runtime.setText(createRuntimeText(movie.getRuntime()));
-//        releaseYear.setText(this.getString(R.string.row_released, movie.getRelease_date()));
-//        overview.setText(movie.getOverview());
-
         ImageView backdropView = (ImageView) findViewById(R.id.backDropPath);
         ImageView imageView = (ImageView) findViewById(R.id.cover);
         TextView title = (TextView) findViewById(R.id.title);
@@ -184,7 +166,6 @@ public class MovieActivity extends AbstractBaseActivity {
         Picasso.with(this).load(movie.getPoster()).into(imageView);
         title.setText(movie.getTitle());
         genre.setText(createGenreText(movie.getGenres()));
-//        rating.setText(String.valueOf(movie.getRating()));
         rating.setText(this.getString(R.string.row_rating, movie.getRating()));
 //        voteCount.setText(String.valueOf(movie.getVoteCount()));
         runtime.setText(createRuntimeText(movie.getRuntime()));

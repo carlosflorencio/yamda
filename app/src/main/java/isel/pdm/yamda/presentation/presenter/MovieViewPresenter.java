@@ -92,5 +92,4 @@ public class MovieViewPresenter implements IPresenter, ILoadDataView<MovieDetail
     public void onDestroy() {
 
     }
-
 }
