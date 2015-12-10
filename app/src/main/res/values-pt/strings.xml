@@ -16,4 +16,6 @@
     <string name="movie_released">Chegou!</string>
     <string name="row_rating">Pontuação: %1$s</string>
     <string name="row_released">Lançado: %1$s</string>
+
+    <string name="no_connection">Sem conecção à internet</string>
 </resources>

@@ -20,6 +20,8 @@ public class MovieSearchService extends IntentService {
 
     public final String TAG = "DEBUG_" + getClass().getSimpleName();
 
+    public static final String DATA = "data_ok";
+
     public static final String SEARCH_PARAM = "movie_search";
 
     public static final String PAGE = "search_page";
@@ -34,21 +36,17 @@ public class MovieSearchService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if (intent != null) {
-            try {
-                String search = intent.getStringExtra(SEARCH_PARAM);
-                int page = intent.getIntExtra(PAGE, 1);
-                List<MovieListDetails> movies = ((YamdaApplication) getApplication()).getMovieRepository().getMovieSearch(search, page);
-                handleAction(movies);
-            } catch (ApiFailedGettingDataException e) {
-                Log.v(TAG, "Exception! Message: " + e.getMessage());
-            }
+        Intent intent1 = new Intent(NOTIFICATION);
+        try {
+            String search = intent.getStringExtra(SEARCH_PARAM);
+            int page = intent.getIntExtra(PAGE, 1);
+            List<MovieListDetails> movies = ((YamdaApplication) getApplication()).getMovieRepository().getMovieSearch(search, page);
+            intent1.putExtra(DATA, true);
+            intent1.putExtra(SEARCH_RESULTS, (Serializable) movies);
+        } catch (ApiFailedGettingDataException e) {
+            intent1.putExtra(DATA, false);
+            Log.v(TAG, "Exception! Message: " + e.getMessage());
         }
-    }
-
-    private void handleAction(List<MovieListDetails> movies) {
-        Intent intent = new Intent(NOTIFICATION);
-        intent.putExtra(SEARCH_RESULTS, (Serializable) movies);
-        sendBroadcast(intent);
+        sendBroadcast(intent1);
     }
 }

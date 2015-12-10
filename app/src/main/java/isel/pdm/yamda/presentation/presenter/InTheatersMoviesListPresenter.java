@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 
 import java.util.List;
 
+import isel.pdm.yamda.R;
 import isel.pdm.yamda.data.handlers.service.MovieListService;
 import isel.pdm.yamda.model.entity.MovieListDetails;
 import isel.pdm.yamda.presentation.presenter.common.MovieListablePresenter;
@@ -32,7 +33,11 @@ public class InTheatersMoviesListPresenter extends MovieListablePresenter {
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                setData((List<MovieListDetails>) intent.getSerializableExtra(MovieListService.MOVIES_PARAM));
+                if (intent.getBooleanExtra(MovieListService.DATA, false)) {
+                    setData((List<MovieListDetails>) intent.getSerializableExtra(MovieListService.MOVIES_PARAM));
+                } else {
+                    InTheatersMoviesListPresenter.this.showError(InTheatersMoviesListPresenter.this.activity.getResources().getString(R.string.no_connection));
+                }
             }
         };
 

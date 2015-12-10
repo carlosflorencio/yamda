@@ -15,4 +15,8 @@ public class ApiFailedGettingDataException extends Exception {
     public ApiFailedGettingDataException(IOException ex) {
         super(ex.getMessage());
     }
+
+    public ApiFailedGettingDataException(String detailMessage) {
+        super(detailMessage);
+    }
 }

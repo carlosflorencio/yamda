@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.view.View;
 import android.widget.Toast;
 
+import isel.pdm.yamda.R;
 import isel.pdm.yamda.data.handlers.service.MovieDetailsService;
 import isel.pdm.yamda.model.entity.MovieDetails;
 import isel.pdm.yamda.presentation.presenter.base.IPresenter;
@@ -33,7 +34,7 @@ public class MovieViewPresenter implements IPresenter, ILoadDataView<MovieDetail
                 if (intent.getBooleanExtra(MovieDetailsService.DATA, false)) {
                     setData((MovieDetails) intent.getParcelableExtra(MovieDetailsService.MOVIE_PARAM));
                 } else {
-                    MovieViewPresenter.this.showError("No Internet Connection");
+                    MovieViewPresenter.this.showError(MovieViewPresenter.this.activity.getResources().getString(R.string.no_connection));
                 }
             }
         };
@@ -70,7 +71,7 @@ public class MovieViewPresenter implements IPresenter, ILoadDataView<MovieDetail
     @Override
     public void showError(String message) {
         this.hideLoading();
-        Toast.makeText(this.activity, "No Internet Connection", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this.activity, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override

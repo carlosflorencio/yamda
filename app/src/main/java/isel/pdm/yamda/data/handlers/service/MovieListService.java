@@ -26,6 +26,8 @@ public class MovieListService extends IntentService {
 
     private static final String PAGE = MovieListService.class.getName() + ".id";
 
+    public static final String DATA = "data_ok";
+
     public static final String MOVIES_PARAM = "movies_parameter";
 
     public static final String THEATERS_NOTIFICATION = "isel.pdm.yamda.data.handlers.service.MovieListService.theaters";
@@ -40,37 +42,33 @@ public class MovieListService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if (intent != null) {
-            try {
-                String id = intent.getStringExtra(ID);
-                int page = intent.getIntExtra(PAGE, 1);
+        Intent newIntent = null;
+        try {
+            String id = intent.getStringExtra(ID);
+            int page = intent.getIntExtra(PAGE, 1);
 
-                List<MovieListDetails> movies = null;
-                Intent newIntent = null;
-                if (id.equals(InTheatersMoviesListPresenter.THEATERS_MOVIE_LIST_TAG)) {
-                    movies = ((YamdaApplication) getApplication()).getMovieRepository().getTheatersMovies(page);
-                    newIntent = new Intent(THEATERS_NOTIFICATION);
-                } else if (id.equals(SoonMoviesListPresenter.SOON_MOVIE_LIST_TAG)) {
-                    movies = ((YamdaApplication) getApplication()).getMovieRepository().getSoonMovies(page);
-                    newIntent = new Intent(SOON_NOTIFICATION);
-                } else if (id.equals(TopMoviesListPresenter.TOP_MOVIE_LIST_TAG)) {
-                    movies = ((YamdaApplication) getApplication()).getMovieRepository().getTopMovies(page);
-                    newIntent = new Intent(TOP_NOTIFICATION);
-                }
-                handleAction(newIntent, movies);
-            } catch (ApiFailedGettingDataException e) {
-                Log.v(TAG, "Exception! Message: " + e.getMessage());
+            List<MovieListDetails> movies = null;
+            if (id.equals(InTheatersMoviesListPresenter.THEATERS_MOVIE_LIST_TAG)) {
+                newIntent = new Intent(THEATERS_NOTIFICATION);
+                movies = ((YamdaApplication) getApplication()).getMovieRepository().getTheatersMovies(page);
+            } else if (id.equals(SoonMoviesListPresenter.SOON_MOVIE_LIST_TAG)) {
+                newIntent = new Intent(SOON_NOTIFICATION);
+                movies = ((YamdaApplication) getApplication()).getMovieRepository().getSoonMovies(page);
+            } else if (id.equals(TopMoviesListPresenter.TOP_MOVIE_LIST_TAG)) {
+                newIntent = new Intent(TOP_NOTIFICATION);
+                movies = ((YamdaApplication) getApplication()).getMovieRepository().getTopMovies(page);
+            } else {
+                throw new ApiFailedGettingDataException("Error getting data");
             }
+            newIntent.putExtra(DATA, true);
+            newIntent.putExtra(MOVIES_PARAM, (Serializable) movies);
+        } catch (ApiFailedGettingDataException e) {
+            if (newIntent != null) {
+                newIntent.putExtra(DATA, false);
+            }
+            Log.v(TAG, "Exception! Message: " + e.getMessage());
         }
-    }
-
-    /**
-     * Handle action in the provided background thread with the provided
-     * parameters.
-     */
-    private void handleAction(Intent intent, List<MovieListDetails> movies) {
-        intent.putExtra(MOVIES_PARAM, (Serializable) movies);
-        sendBroadcast(intent);
+        sendBroadcast(newIntent);
     }
 
 }
