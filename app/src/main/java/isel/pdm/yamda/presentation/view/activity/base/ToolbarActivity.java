@@ -12,6 +12,7 @@ import android.widget.SearchView;
 
 import isel.pdm.yamda.R;
 import isel.pdm.yamda.presentation.view.activity.AboutActivity;
+import isel.pdm.yamda.presentation.view.activity.PreferencesActivity;
 
 public abstract class ToolbarActivity extends AbstractBaseActivity {
 
@@ -66,11 +67,17 @@ public abstract class ToolbarActivity extends AbstractBaseActivity {
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.action_about) {
-            Intent intent = new Intent(this, AboutActivity.class);
-            startActivity(intent);
+        Intent intent;
+        switch (item.getItemId()) {
+            case R.id.action_about:
+                intent = new Intent(this, AboutActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.preferences:
+                intent = new Intent(this, PreferencesActivity.class);
+                startActivity(intent);
+                break;
         }
-
         return super.onOptionsItemSelected(item);
     }
 

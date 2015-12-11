@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="list">
+        <item>@string/once_a_week</item>
+        <item>@string/twice_a_month</item>
+        <item>@string/once_a_month</item>
+    </string-array>
+
+    <string-array name="list_values">
+        <item>7</item>
+        <item>14</item>
+        <item>28</item>
+    </string-array>
+
+
+</resources>

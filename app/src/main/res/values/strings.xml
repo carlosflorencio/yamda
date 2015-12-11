@@ -18,4 +18,14 @@
     <string name="row_released">Released: %1$s</string>
 
     <string name="no_connection">No Internet Connection</string>
+
+    <!-- PREFERENCES -->
+    <string name="preferences">Preferences</string>
+    <string name="to_follow">Folow day view of movies?</string>
+    <string name="actualizations">Actualizations periodicity</string>
+
+    <string name="once_a_week">Once a Week</string>
+    <string name="twice_a_month">Twice a Month</string>
+    <string name="once_a_month">Once a Month</string>
+    <string name="follow_movies_summary">Yes/No</string>
 </resources>
