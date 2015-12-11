@@ -85,7 +85,7 @@ public class MovieViewPresenter implements IPresenter, ILoadDataView<MovieDetail
     @Override
     public void setData(MovieDetails data) {
         this.hideLoading();
-        this.activity.update(data);
+        this.activity.updateView(data);
     }
 
     /*

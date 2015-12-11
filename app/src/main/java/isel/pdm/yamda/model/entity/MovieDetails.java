@@ -3,6 +3,11 @@ package isel.pdm.yamda.model.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * This class is used for representing a Movie obtained from the data layer
  * by a movie request.
@@ -142,6 +147,16 @@ public final class MovieDetails implements Parcelable {
 
     public boolean isBeingFollowed() {
         return isBeingFollowed;
+    }
+
+    public long whenIsBeingReleased() {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = sdf.parse(release_date);
+            return date.getTime() - Calendar.getInstance().getTime().getTime();
+        } catch (ParseException e) {
+            return 0;
+        }
     }
 
     /*

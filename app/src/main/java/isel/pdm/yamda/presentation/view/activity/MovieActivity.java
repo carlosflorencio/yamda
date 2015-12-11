@@ -8,8 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.SystemClock;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,11 +16,6 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.squareup.picasso.Picasso;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
 import isel.pdm.yamda.R;
 import isel.pdm.yamda.data.handlers.receiver.NotificationPublisher;
@@ -39,8 +32,6 @@ public class MovieActivity extends AbstractBaseActivity {
     public interface FollowListener {
         void setFollow(int movieId, boolean value);
     }
-
-    public static final String PENDING_INTENT = "pending_intent_follow_notification";
 
     public static final String ID_TAG = "movie_id";
 
@@ -121,9 +112,9 @@ public class MovieActivity extends AbstractBaseActivity {
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_ONE_SHOT);
 
-        //TODO: time to release date in millis
-        long futureInMillis = SystemClock.elapsedRealtime() + 10000;
+        long futureInMillis = movie.whenIsBeingReleased();
         alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);  // Set an alarm to tick at x time
+        //        Log.v("DEBUG", String.valueOf(new Date(Calendar.getInstance().getTime().getTime() + futureInMillis)));
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -156,18 +147,14 @@ public class MovieActivity extends AbstractBaseActivity {
         this.followListener = followListener;
     }
 
-    public void update(MovieDetails data) {
+    public void updateView(MovieDetails data) {
         this.movie = data;
-        updateView();
-    }
 
-    private void updateView() {
         ImageView backdropView = (ImageView) findViewById(R.id.backDropPath);
         ImageView imageView = (ImageView) findViewById(R.id.cover);
         TextView title = (TextView) findViewById(R.id.title);
         TextView genre = (TextView) findViewById(R.id.genre);
         TextView rating = (TextView) findViewById(R.id.tagline);
-        //TextView voteCount = (TextView) findViewById(R.id.vote_count);
         TextView runtime = (TextView) findViewById(R.id.runtime);
         TextView releaseYear = (TextView) findViewById(R.id.release_date);
         TextView overview = (TextView) findViewById(R.id.overview);
@@ -178,26 +165,13 @@ public class MovieActivity extends AbstractBaseActivity {
         title.setText(movie.getTitle());
         genre.setText(createGenreText(movie.getGenres()));
         rating.setText(this.getString(R.string.row_rating, movie.getRating()));
-//        voteCount.setText(String.valueOf(movie.getVoteCount()));
         runtime.setText(createRuntimeText(movie.getRuntime()));
         releaseYear.setText(this.getString(R.string.row_released, movie.getRelease_date()));
         overview.setText(movie.getOverview());
-
-        if (!movieIsAlreadyReleased(movie.getRelease_date())) {
+        if (movie.whenIsBeingReleased() > 0) {
             findViewById(R.id.follow).setVisibility(View.VISIBLE);
             ((ToggleButton) findViewById(R.id.follow)).setChecked(isBeingFollowed);
         }
-    }
-
-    private boolean movieIsAlreadyReleased(String release_date) {
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date date = sdf.parse(release_date);
-            return Calendar.getInstance().getTime().compareTo(date) >= 0;
-        } catch (ParseException e) {
-            Log.v(TAG, "Failed to create a date! Message: " + e.getMessage());
-        }
-        return false;
     }
 
     /**
