@@ -9,11 +9,14 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.squareup.picasso.Picasso;
 
@@ -39,7 +42,6 @@ public class MovieActivity extends AbstractBaseActivity {
     private View movieView;
     private View loadingView;
 
-    private boolean following = false;
     private AlarmManager alarmManager;
     private PendingIntent pendingIntent;
 
@@ -57,7 +59,7 @@ public class MovieActivity extends AbstractBaseActivity {
         int movieId = getIntent().getExtras().getInt(ID_TAG);
         this.presenter = new MovieViewPresenter(this, movieId);
 
-//        this.checkFollow(findViewById(R.id.follow));
+        this.checkFollow((ToggleButton) findViewById(R.id.follow));
 
         this.setUpSupportActionBar();
     }
@@ -79,18 +81,17 @@ public class MovieActivity extends AbstractBaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void checkFollow(View view) {
-        view.setOnClickListener(new View.OnClickListener() {
+    private void checkFollow(final ToggleButton button) {
+        button.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(final View v) {
-                if (following) {
-                    showToastMessage("You are no longer following this movie");
-                    cancelNotification();
-                } else {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
                     showToastMessage("You are now following this movie");
                     scheduleNotification(getNotificationReleased());
+                } else {
+                    showToastMessage("You are no longer following this movie");
+                    cancelNotification();
                 }
-                following = !following;
             }
         });
     }
@@ -164,10 +165,10 @@ public class MovieActivity extends AbstractBaseActivity {
         releaseYear.setText(this.getString(R.string.row_released, movie.getRelease_date()));
         overview.setText(movie.getOverview());
 
-//        if (movieIsAlreadyReleased(movie.getRelease_date()))
-//            findViewById(R.id.follow).setVisibility(View.INVISIBLE);
-//        else
-//            findViewById(R.id.follow).setVisibility(View.VISIBLE);
+        if (!movieIsAlreadyReleased(movie.getRelease_date()) &&
+                PreferenceManager.getDefaultSharedPreferences(this).getBoolean("follow", false)) {
+            findViewById(R.id.follow).setVisibility(View.VISIBLE);
+        }
     }
 
     private boolean movieIsAlreadyReleased(String release_date) {

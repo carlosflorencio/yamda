@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- SELECTED -->
+    <item android:drawable="@android:drawable/button_onoff_indicator_on" android:state_checked="true" />
+
+    <!-- UNSELECTED -->
+    <item android:drawable="@android:drawable/button_onoff_indicator_off" android:state_checked="false" />
+
+</selector>

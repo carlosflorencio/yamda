@@ -10,12 +10,14 @@
     <string name="page_soon">A Estrear</string>
     <string name="page_top">Mais Vistos</string>
 
-    <string name="movie_button_more">Mais</string>
     <string name="search_results_title">Resultados da Procura</string>
     <string name="loading">A Carregar..</string>
     <string name="movie_released">Chegou!</string>
     <string name="row_rating">Pontuação: %1$s</string>
     <string name="row_released">Lançado: %1$s</string>
+
+    <string name="follow">Seguir</string>
+    <string name="following">A Seguir</string>
 
     <string name="no_connection">Sem conecção à internet</string>
 
