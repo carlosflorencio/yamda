@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -49,7 +48,7 @@ public class MovieActivity extends AbstractBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.movie_layout3);
+        this.setContentView(R.layout.movie_layout);
 
         this.movieView = this.findViewById(R.id.movie_view);
         this.loadingView = this.findViewById(R.id.loading_movie);
@@ -60,7 +59,24 @@ public class MovieActivity extends AbstractBaseActivity {
 
 //        this.checkFollow(findViewById(R.id.follow));
 
-        setUpSupportActionBar();
+        this.setUpSupportActionBar();
+    }
+
+    /**
+     * Make the back button close this activity
+     *
+     * @param item
+     * @return
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void checkFollow(View view) {
@@ -110,30 +126,6 @@ public class MovieActivity extends AbstractBaseActivity {
                 .setContentText(getResources().getString(R.string.movie_released))    // Text of notification
                 .setSmallIcon(R.drawable.yamda)                                 // Icon of notification
                 .setContentIntent(pIntent).build();
-    }
-
-    /**
-     * Display the back button
-     */
-    private void setUpSupportActionBar() {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-    }
-
-    /**
-     * Make the back button close this activity
-     * @param item
-     * @return
-     */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                break;
-
-        }
-        return super.onOptionsItemSelected(item);
     }
 
 

@@ -1,7 +1,6 @@
 package isel.pdm.yamda.presentation.view.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 
 import isel.pdm.yamda.R;
@@ -16,15 +15,7 @@ public class AboutActivity extends AbstractBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.about_layout);
-        setUpSupportActionBar();
-    }
-
-    private void setUpSupportActionBar() {
-        ActionBar actionBar = getSupportActionBar();
-
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+        this.setUpSupportActionBar();
     }
 
     @Override

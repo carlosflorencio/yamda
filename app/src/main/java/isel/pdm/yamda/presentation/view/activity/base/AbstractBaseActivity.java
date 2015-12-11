@@ -1,5 +1,6 @@
 package isel.pdm.yamda.presentation.view.activity.base;
 
+import android.support.v7.app.ActionBar;
 import android.widget.Toast;
 
 import isel.pdm.yamda.presentation.presenter.base.IPresenter;
@@ -53,5 +54,13 @@ public abstract class AbstractBaseActivity extends LoggingActivity {
         //Activity may not have a presenter
         if(this.presenter != null)
             this.presenter.onDestroy();
+    }
+
+    /**
+     * Display the back button
+     */
+    protected void setUpSupportActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 }

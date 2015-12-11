@@ -3,7 +3,6 @@ package isel.pdm.yamda.presentation.view.activity;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -38,7 +37,7 @@ public class SearchableActivity extends AbstractBaseActivity {
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         listView.setLayoutManager(mLayoutManager);
 
-        setUpSupportActionBar();
+        this.setUpSupportActionBar();
 
         handleIntent(getIntent());
     }
@@ -59,16 +58,6 @@ public class SearchableActivity extends AbstractBaseActivity {
 
             this.presenter = new SearchMovieViewPresenter(this, query);
         }
-    }
-
-
-    /**
-     * Set back button
-     */
-    private void setUpSupportActionBar() {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(R.string.search_results_title);
-        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     /**
