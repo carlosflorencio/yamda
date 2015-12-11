@@ -23,7 +23,7 @@
 
     <!-- PREFERENCES -->
     <string name="preferences">Preferências</string>
-    <string name="to_follow">Seguir filmes por estrear?</string>
+    <string name="get_notified">Receber notificações?</string>
     <string name="actualizations">Periodicidade das actualizações</string>
 
     <string name="once_a_week">Uma vez por semana</string>

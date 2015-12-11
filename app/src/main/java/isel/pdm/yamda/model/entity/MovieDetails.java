@@ -52,6 +52,8 @@ public final class MovieDetails implements Parcelable {
      **/
     private final String backdrop;
 
+    private boolean isBeingFollowed;
+
     public MovieDetails(int id, String title, String release_date, float rating, int voteCount, int runtime, String overview,
                         String poster, String backdrop, Genre[] genres, String homepage, String original_language,
                         String original_title, Crew[] crew, Actor[] actors) {
@@ -71,6 +73,7 @@ public final class MovieDetails implements Parcelable {
         this.original_title = original_title;
         this.crew = crew;
         this.actors = actors;
+        this.isBeingFollowed = false;
     }
 
     public int getId() {
@@ -133,11 +136,19 @@ public final class MovieDetails implements Parcelable {
         return backdrop;
     }
 
+    public void setBeingFollowed(boolean beingFollowed) {
+        isBeingFollowed = beingFollowed;
+    }
+
+    public boolean isBeingFollowed() {
+        return isBeingFollowed;
+    }
+
     /*
-        |--------------------------------------------------------------------------
-        | Parcelable methods
-        |--------------------------------------------------------------------------
-        */
+            |--------------------------------------------------------------------------
+            | Parcelable methods
+            |--------------------------------------------------------------------------
+            */
     protected MovieDetails(Parcel in) {
         id = in.readInt();
         title = in.readString();
@@ -154,6 +165,7 @@ public final class MovieDetails implements Parcelable {
         original_title = in.readString();
         crew = in.createTypedArray(Crew.CREATOR);
         actors = in.createTypedArray(Actor.CREATOR);
+        isBeingFollowed = in.readInt() == 1;
     }
 
     public static final Creator<MovieDetails> CREATOR = new Creator<MovieDetails>() {
@@ -190,5 +202,6 @@ public final class MovieDetails implements Parcelable {
         dest.writeString(original_title);
         dest.writeTypedArray(crew, 0);
         dest.writeTypedArray(actors, 0);
+        dest.writeInt(isBeingFollowed ? 1 : 0);
     }
 }

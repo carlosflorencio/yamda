@@ -23,7 +23,7 @@
 
     <!-- PREFERENCES -->
     <string name="preferences">Preferences</string>
-    <string name="to_follow">Folow day view of movies?</string>
+    <string name="get_notified">Get notifications?</string>
     <string name="actualizations">Actualizations periodicity</string>
 
     <string name="once_a_week">Once a Week</string>

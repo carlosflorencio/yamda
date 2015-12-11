@@ -2,10 +2,10 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <CheckBoxPreference
-        android:key="follow"
+        android:key="get_notified"
         android:summary="@string/follow_movies_summary"
         android:defaultValue="true"
-        android:title="@string/to_follow" />
+        android:title="@string/get_notified" />
 
     <ListPreference
         android:title="@string/actualizations"
