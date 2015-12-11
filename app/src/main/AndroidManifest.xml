@@ -54,7 +54,13 @@
             android:name=".data.handlers.service.MovieDetailsService"
             android:exported="false" />
         <service
-            android:name=".data.handlers.service.MovieListService"
+            android:name=".data.handlers.service.lists.TheatersListService"
+            android:exported="false" />
+        <service
+            android:name=".data.handlers.service.lists.TopListService"
+            android:exported="false" />
+        <service
+            android:name=".data.handlers.service.lists.SoonListService"
             android:exported="false" />
         <service
             android:name=".data.handlers.service.MovieSearchService"
