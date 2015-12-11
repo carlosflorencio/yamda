@@ -63,4 +63,14 @@ public interface IMovieRepository {
      * @throws ApiFailedGettingDataException
      */
     MovieDetails getMovieById(int id) throws ApiFailedGettingDataException;
+
+    /**
+     * Get ackowladge of user following or not
+     *
+     * @param movieId
+     * @return Boolean value
+     */
+    Boolean getMovieIsBeingFollowed(int movieId);
+
+    void setMovieIsBeingFollowed(int movieId, boolean value);
 }

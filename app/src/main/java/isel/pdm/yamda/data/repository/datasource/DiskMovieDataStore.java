@@ -21,11 +21,14 @@ public class DiskMovieDataStore implements IMovieApi {
 
     private Map<Integer, MovieDTO> movie;
 
+    private Map<Integer, Boolean> isBeingFollowed;
+
     /**
      * Constructs a new DiskMovieDataStore instance
      */
     public DiskMovieDataStore() {
         movie = new HashMap<>();
+        isBeingFollowed = new HashMap<>();
     }
 
     @Override
@@ -76,7 +79,16 @@ public class DiskMovieDataStore implements IMovieApi {
     public void setMovie(MovieDTO movie) {
         if (this.movie.get(movie.getId()) == null) {
             this.movie.put(movie.getId(), movie);
+            this.setIsBeingFollowed(movie.getId(), false);
         }
+    }
+
+    public void setIsBeingFollowed(Integer movieId, Boolean isBeingFollowed) {
+        this.isBeingFollowed.put(movieId, isBeingFollowed);
+    }
+
+    public boolean isBeingFollowed(int movieId) {
+        return this.isBeingFollowed.get(movieId);
     }
 
     /**

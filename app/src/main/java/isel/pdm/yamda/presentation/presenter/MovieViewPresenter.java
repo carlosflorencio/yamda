@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import isel.pdm.yamda.R;
+import isel.pdm.yamda.YamdaApplication;
 import isel.pdm.yamda.data.handlers.service.MovieDetailsService;
 import isel.pdm.yamda.model.entity.MovieDetails;
 import isel.pdm.yamda.presentation.presenter.base.IPresenter;
@@ -19,7 +20,6 @@ import isel.pdm.yamda.presentation.view.contract.ILoadDataView;
  */
 public class MovieViewPresenter implements IPresenter, ILoadDataView<MovieDetails> {
 
-
     private final BroadcastReceiver receiver;
     private int id;
     private MovieActivity activity;
@@ -28,10 +28,18 @@ public class MovieViewPresenter implements IPresenter, ILoadDataView<MovieDetail
         this.activity = activity;
         this.id = movieId;
 
+        activity.setFollowListener(new MovieActivity.FollowListener() {
+            @Override
+            public void setFollow(int movieId, boolean value) {
+                ((YamdaApplication) MovieViewPresenter.this.activity.getApplication()).getMovieRepository().setMovieIsBeingFollowed(movieId, value);
+            }
+        });
+
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (intent.getBooleanExtra(MovieDetailsService.DATA, false)) {
+                    MovieViewPresenter.this.activity.setFollowedState(intent.getBooleanExtra(MovieDetailsService.FOLLOW, false));
                     setData((MovieDetails) intent.getParcelableExtra(MovieDetailsService.MOVIE_PARAM));
                 } else {
                     MovieViewPresenter.this.showError(MovieViewPresenter.this.activity.getResources().getString(R.string.no_connection));

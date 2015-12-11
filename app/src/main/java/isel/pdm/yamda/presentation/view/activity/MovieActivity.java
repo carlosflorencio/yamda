@@ -9,11 +9,10 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CompoundButton;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -37,15 +36,25 @@ import isel.pdm.yamda.presentation.view.activity.base.AbstractBaseActivity;
  */
 public class MovieActivity extends AbstractBaseActivity {
 
+    public interface FollowListener {
+        void setFollow(int movieId, boolean value);
+    }
+
+    public static final String PENDING_INTENT = "pending_intent_follow_notification";
+
     public static final String ID_TAG = "movie_id";
 
     private View movieView;
     private View loadingView;
 
     private AlarmManager alarmManager;
-    private PendingIntent pendingIntent;
 
     private MovieDetails movie;
+    private Boolean isBeingFollowed;
+
+    // Receiver to be activated after a certain time to instantiate notification in argument
+    private Intent notificationIntent;
+    private FollowListener followListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,11 +64,11 @@ public class MovieActivity extends AbstractBaseActivity {
         this.movieView = this.findViewById(R.id.movie_view);
         this.loadingView = this.findViewById(R.id.loading_movie);
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        this.notificationIntent = new Intent(this, NotificationPublisher.class);
 
-        int movieId = getIntent().getExtras().getInt(ID_TAG);
-        this.presenter = new MovieViewPresenter(this, movieId);
+        this.presenter = new MovieViewPresenter(this, getIntent().getExtras().getInt(ID_TAG));
 
-        this.checkFollow((ToggleButton) findViewById(R.id.follow));
+        this.checkFollow(findViewById(R.id.follow));
 
         this.setUpSupportActionBar();
     }
@@ -81,38 +90,39 @@ public class MovieActivity extends AbstractBaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void checkFollow(final ToggleButton button) {
-        button.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+    private void checkFollow(View view) {
+        view.setOnClickListener(new OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    showToastMessage("You are now following this movie");
-                    scheduleNotification(getNotificationReleased());
-                } else {
+            public void onClick(View v) {
+                if (isBeingFollowed) {
                     showToastMessage("You are no longer following this movie");
                     cancelNotification();
+                } else {
+                    showToastMessage("You are now following this movie");
+                    scheduleNotification(getNotificationReleased());
+                }
+                isBeingFollowed = !isBeingFollowed;
+                if (followListener != null) {
+                    followListener.setFollow(movie.getId(), isBeingFollowed);
                 }
             }
         });
     }
 
     private void cancelNotification() {
-        alarmManager.cancel(pendingIntent);
-        pendingIntent.cancel();
+        alarmManager.cancel(PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_ONE_SHOT));
+        PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_ONE_SHOT).cancel();
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void scheduleNotification(Notification notification) {
-        // Receiver to be activated after a certain time to instantiate notification in argument
-        Intent notificationIntent = new Intent(this, NotificationPublisher.class);
-
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, movie.getId());  // Movie id
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification);      // Notification (argument)
 
-        pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_ONE_SHOT);
 
         //TODO: time to release date in millis
-        long futureInMillis = SystemClock.elapsedRealtime() + 5000;
+        long futureInMillis = SystemClock.elapsedRealtime() + 10000;
         alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);  // Set an alarm to tick at x time
     }
 
@@ -136,6 +146,14 @@ public class MovieActivity extends AbstractBaseActivity {
 
     public View getLoadingView() {
         return loadingView;
+    }
+
+    public void setFollowedState(Boolean state) {
+        this.isBeingFollowed = state;
+    }
+
+    public void setFollowListener(FollowListener followListener) {
+        this.followListener = followListener;
     }
 
     public void update(MovieDetails data) {
@@ -165,9 +183,9 @@ public class MovieActivity extends AbstractBaseActivity {
         releaseYear.setText(this.getString(R.string.row_released, movie.getRelease_date()));
         overview.setText(movie.getOverview());
 
-        if (!movieIsAlreadyReleased(movie.getRelease_date()) &&
-                PreferenceManager.getDefaultSharedPreferences(this).getBoolean("follow", false)) {
+        if (!movieIsAlreadyReleased(movie.getRelease_date())) {
             findViewById(R.id.follow).setVisibility(View.VISIBLE);
+            ((ToggleButton) findViewById(R.id.follow)).setChecked(isBeingFollowed);
         }
     }
 

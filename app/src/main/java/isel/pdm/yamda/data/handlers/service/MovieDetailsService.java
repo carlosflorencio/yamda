@@ -17,6 +17,8 @@ public class MovieDetailsService extends IntentService {
 
     public static final String DATA = "data_ok";
 
+    public static final String FOLLOW = "follow_movie";
+
     public static final String ID_PARAM = "id_parameter";
 
     public static final String MOVIE_PARAM = "movie_parameter";
@@ -34,7 +36,9 @@ public class MovieDetailsService extends IntentService {
         try {
             int id = intent.getIntExtra(ID_PARAM, -1);
             MovieDetails movie = ((YamdaApplication) getApplication()).getMovieRepository().getMovieById(id);
+            Boolean isBeingFollowed = ((YamdaApplication) getApplication()).getMovieRepository().getMovieIsBeingFollowed(id);
             intent1.putExtra(DATA, true);
+            intent1.putExtra(FOLLOW, isBeingFollowed);
             intent1.putExtra(MOVIE_PARAM, movie);
         } catch (ApiFailedGettingDataException e) {
             intent1.putExtra(DATA, false);

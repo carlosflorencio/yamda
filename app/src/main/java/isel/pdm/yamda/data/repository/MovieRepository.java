@@ -135,4 +135,14 @@ public class MovieRepository implements IMovieRepository {
             throw new ApiFailedGettingDataException(e);
         }
     }
+
+    @Override
+    public Boolean getMovieIsBeingFollowed(int movieId) {
+        return cache.isBeingFollowed(movieId);
+    }
+
+    @Override
+    public void setMovieIsBeingFollowed(int movieId, boolean value) {
+        cache.setIsBeingFollowed(movieId, value);
+    }
 }
