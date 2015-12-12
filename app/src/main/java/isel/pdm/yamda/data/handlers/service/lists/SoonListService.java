@@ -23,7 +23,8 @@ public class SoonListService extends ListService {
         Intent newIntent = new Intent(NOTIFICATION);
         try {
             int page = intent.getIntExtra(PAGE, 1);
-            List<MovieListDetails> movies = ((YamdaApplication) getApplication()).getMovieRepository().getSoonMovies(page);
+            boolean ignoreDisk = intent.getBooleanExtra(IGNORE_DISK, false);
+            List<MovieListDetails> movies = ((YamdaApplication) getApplication()).getMovieRepository().getSoonMovies(page, ignoreDisk);
 
             newIntent.putExtra(DATA, true);
             newIntent.putExtra(MOVIES_PARAM, (Serializable) movies);

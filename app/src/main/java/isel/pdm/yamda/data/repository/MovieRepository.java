@@ -43,9 +43,12 @@ public class MovieRepository implements IMovieRepository {
      * @throws ApiFailedGettingDataException
      */
     @Override
-    public List<MovieListDetails> getTheatersMovies(int page) throws ApiFailedGettingDataException {
+    public List<MovieListDetails> getTheatersMovies(int page, boolean ignoreDisk) throws ApiFailedGettingDataException {
+        MovieListingDTO data = null;
         try {
-            MovieListingDTO data = cache.getTheatersMovies(page);
+            if (!ignoreDisk) {
+                data = cache.getTheatersMovies(page);
+            }
             if (data == null) {
                 data = this.factory.createCloudDataStore().getTheatersMovies(page);
                 cache.setTheatersMovies(data);
@@ -65,9 +68,12 @@ public class MovieRepository implements IMovieRepository {
      * @throws ApiFailedGettingDataException
      */
     @Override
-    public List<MovieListDetails> getSoonMovies(int page) throws ApiFailedGettingDataException {
+    public List<MovieListDetails> getSoonMovies(int page, boolean ignoreDisk) throws ApiFailedGettingDataException {
+        MovieListingDTO data = null;
         try {
-            MovieListingDTO data = cache.getSoonMovies(page);
+            if (!ignoreDisk) {
+                data = cache.getSoonMovies(page);
+            }
             if (data == null) {
                 data = this.factory.createCloudDataStore().getSoonMovies(page);
                 cache.setSoonMovies(data);
@@ -87,7 +93,7 @@ public class MovieRepository implements IMovieRepository {
      * @throws ApiFailedGettingDataException
      */
     @Override
-    public List<MovieListDetails> getTopMovies(int page) throws ApiFailedGettingDataException {
+    public List<MovieListDetails> getTopMovies(int page, boolean ignoreDisk) throws ApiFailedGettingDataException {
         try {
             MovieListingDTO data = this.factory.createCloudDataStore().getTopMovies(page);
             return this.mapper.transform(data);
@@ -106,7 +112,7 @@ public class MovieRepository implements IMovieRepository {
      * @throws ApiFailedGettingDataException
      */
     @Override
-    public List<MovieListDetails> getMovieSearch(String search, int page)
+    public List<MovieListDetails> getMovieSearch(String search, int page, boolean ignoreDisk)
             throws ApiFailedGettingDataException {
         try {
             MovieListingDTO data = this.factory.createCloudDataStore().getMoviesSearch(search, page);
@@ -124,9 +130,12 @@ public class MovieRepository implements IMovieRepository {
      * @throws ApiFailedGettingDataException
      */
     @Override
-    public MovieDetails getMovieById(int id) throws ApiFailedGettingDataException {
+    public MovieDetails getMovieById(int id, boolean ignoreDisk) throws ApiFailedGettingDataException {
+        MovieDTO data = null;
         try {
-            MovieDTO data = cache.getMovie(id);
+            if (!ignoreDisk) {
+                data = cache.getMovie(id);
+            }
             if (data == null) {
                 data = this.factory.createCloudDataStore().getMovie(id);
                 cache.setMovie(data);

@@ -23,7 +23,9 @@ public class TheatersListService extends ListService {
         Intent newIntent = new Intent(NOTIFICATION);
         try {
             int page = intent.getIntExtra(PAGE, 1);
-            List<MovieListDetails> movies = ((YamdaApplication) getApplication()).getMovieRepository().getTheatersMovies(page);
+            boolean ignoreDisk = intent.getBooleanExtra(IGNORE_DISK, false);
+            //Log.v("DEBUG", "Page: "+ page+", : ignoreDisk: "+ignoreDisk);     DEBUG PURPOSE
+            List<MovieListDetails> movies = ((YamdaApplication) getApplication()).getMovieRepository().getTheatersMovies(page, ignoreDisk);
 
             newIntent.putExtra(DATA, true);
             newIntent.putExtra(MOVIES_PARAM, (Serializable) movies);

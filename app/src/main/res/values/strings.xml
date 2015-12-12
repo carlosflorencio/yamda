@@ -20,6 +20,8 @@
     <string name="following">Following</string>
 
     <string name="no_connection">No Internet Connection</string>
+    <string name="no_longer_following">You are no longer following this movie</string>
+    <string name="now_following">You are now following this movie</string>
 
     <!-- PREFERENCES -->
     <string name="preferences">Preferences</string>

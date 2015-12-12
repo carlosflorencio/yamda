@@ -26,7 +26,7 @@ public class DiskMovieDataStore implements IMovieApi {
     /**
      * Constructs a new DiskMovieDataStore instance
      */
-    public DiskMovieDataStore() {
+    private DiskMovieDataStore() {
         movie = new HashMap<>();
         isBeingFollowed = new HashMap<>();
     }

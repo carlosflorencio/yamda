@@ -14,6 +14,8 @@ public abstract class ListService extends IntentService {
 
     public static final String DATA = "data_ok";
 
+    public static final String IGNORE_DISK = "ignore_disk";
+
     public static final String MOVIES_PARAM = "movies_parameter";
 
     public ListService() {

@@ -30,4 +30,6 @@
     <string name="twice_a_month">Duas vezes por mês</string>
     <string name="once_a_month">Uma vez por mês</string>
     <string name="follow_movies_summary">Sim/Não</string>
+    <string name="no_longer_following">Já nao estás a seguir este filme</string>
+    <string name="now_following">Estás agora a seguir este filme</string>
 </resources>

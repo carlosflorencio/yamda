@@ -40,7 +40,7 @@ public class MovieSearchService extends IntentService {
         try {
             String search = intent.getStringExtra(SEARCH_PARAM);
             int page = intent.getIntExtra(PAGE, 1);
-            List<MovieListDetails> movies = ((YamdaApplication) getApplication()).getMovieRepository().getMovieSearch(search, page);
+            List<MovieListDetails> movies = ((YamdaApplication) getApplication()).getMovieRepository().getMovieSearch(search, page, false);
             intent1.putExtra(DATA, true);
             intent1.putExtra(SEARCH_RESULTS, (Serializable) movies);
         } catch (ApiFailedGettingDataException e) {

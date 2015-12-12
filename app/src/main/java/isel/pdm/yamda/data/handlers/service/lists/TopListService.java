@@ -24,7 +24,7 @@ public class TopListService extends ListService {
         Intent newIntent = new Intent(NOTIFICATION);
         try {
             int page = intent.getIntExtra(PAGE, 1);
-            List<MovieListDetails> movies = ((YamdaApplication) getApplication()).getMovieRepository().getTopMovies(page);
+            List<MovieListDetails> movies = ((YamdaApplication) getApplication()).getMovieRepository().getTopMovies(page, true);
 
             newIntent.putExtra(DATA, true);
             newIntent.putExtra(MOVIES_PARAM, (Serializable) movies);
