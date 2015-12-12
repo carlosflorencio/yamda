@@ -113,9 +113,9 @@ public class MovieActivity extends AbstractBaseActivity {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_ONE_SHOT);
 
         long futureInMillis = movie.whenIsBeingReleased();
-//        long futureInMillis = SystemClock.elapsedRealtime() + 5000;
+//        long futureInMillis = SystemClock.elapsedRealtime() + 5000;   DEBUG PURPOSES
+
         alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);  // Set an alarm to tick at x time
-        //        Log.v("DEBUG", String.valueOf(new Date(Calendar.getInstance().getTime().getTime() + futureInMillis)));
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)

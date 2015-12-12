@@ -1,9 +1,13 @@
 package isel.pdm.yamda.presentation.presenter;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.SystemClock;
+import android.preference.PreferenceManager;
 
 import java.util.List;
 
@@ -40,6 +44,14 @@ public class SoonMoviesListPresenter extends MovieListablePresenter {
 
         Intent intent = new Intent(activity, SoonListService.class);
         activity.startService(intent);
+
+        int days = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this.activity).getString("periodicity", "7"));
+
+        //TODO: KNOW THAT IS GOING TO GET FROM WEB
+        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                SystemClock.elapsedRealtime() + days * AlarmManager.INTERVAL_DAY,
+                days * AlarmManager.INTERVAL_DAY,
+                PendingIntent.getService(this.activity, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT));
     }
 
     @Override
