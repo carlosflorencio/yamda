@@ -19,17 +19,25 @@
     <string name="follow">Follow</string>
     <string name="following">Following</string>
 
+    <!-- TOASTS -->
     <string name="no_connection">No Internet Connection</string>
     <string name="no_longer_following">You are no longer following this movie</string>
     <string name="now_following">You are now following this movie</string>
 
     <!-- PREFERENCES -->
     <string name="preferences">Preferences</string>
-    <string name="get_notified">Get notifications?</string>
-    <string name="actualizations">Actualizations periodicity</string>
 
+    <string name="get_notified" translatable="false">get_notified</string>
+    <string name="get_notified_title">Get notifications?</string>
+    <string name="get_notified_summary">Yes/No</string>
+
+    <string name="enable_update" translatable="false">enable_update</string>
+    <string name="enable_update_title">Auto update local data</string>
+    <string name="enable_update_summary">Enable periodic local update</string>
+
+    <string name="periodicity" translatable="false">periodicity</string>
+    <string name="periodicity_title">Actualizations periodicity</string>
     <string name="once_a_week">Once a Week</string>
     <string name="twice_a_month">Twice a Month</string>
     <string name="once_a_month">Once a Month</string>
-    <string name="follow_movies_summary">Yes/No</string>
 </resources>

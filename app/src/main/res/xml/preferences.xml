@@ -2,14 +2,20 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <CheckBoxPreference
-        android:key="get_notified"
-        android:summary="@string/follow_movies_summary"
-        android:defaultValue="true"
-        android:title="@string/get_notified" />
+        android:key="@string/get_notified"
+        android:title="@string/get_notified_title"
+        android:summary="@string/get_notified_summary"
+        android:defaultValue="true" />
+
+    <CheckBoxPreference
+        android:key="@string/enable_update"
+        android:title="@string/enable_update_title"
+        android:summary="@string/enable_update_summary"
+        android:defaultValue="true" />
 
     <ListPreference
-        android:title="@string/actualizations"
-        android:key="periodicity"
+        android:key="@string/periodicity"
+        android:title="@string/periodicity_title"
         android:defaultValue="7"
         android:entries="@array/list"
         android:entryValues="@array/list_values" />

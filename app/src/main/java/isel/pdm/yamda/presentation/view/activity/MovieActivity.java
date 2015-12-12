@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.TaskStackBuilder;
+import android.support.v7.app.NotificationCompat;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -46,7 +48,6 @@ public class MovieActivity extends AbstractBaseActivity {
     private MovieDetails movie;
     private Boolean isBeingFollowed;
 
-    // Receiver to be activated after a certain time to instantiate notification in argument
     private Intent notificationIntent;
     private FollowListener followListener;
 
@@ -116,7 +117,7 @@ public class MovieActivity extends AbstractBaseActivity {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_ONE_SHOT);
 
         long futureInMillis = movie.whenIsBeingReleased();
-//        long futureInMillis = SystemClock.elapsedRealtime() + 5000;   DEBUG PURPOSES
+//        long futureInMillis = SystemClock.elapsedRealtime() + 5000;   //DEBUG PURPOSES
 
         alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);  // Set an alarm to tick at x time
     }
@@ -125,11 +126,15 @@ public class MovieActivity extends AbstractBaseActivity {
     private Notification getNotificationReleased() {
         Intent intent = new Intent(this, MovieActivity.class);      // Activity instantiated after clicking notification
         intent.putExtra(MovieActivity.ID_TAG, movie.getId());       // id of movie
-        PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
 
-        return new Notification.Builder(this)
-                .setContentTitle(movie.getTitle())                              // Title of notification
-                .setContentText(getResources().getString(R.string.movie_released))    // Text of notification
+        PendingIntent pIntent = TaskStackBuilder.create(this)
+                .addParentStack(MovieActivity.class)
+                .addNextIntent(intent)
+                .getPendingIntent(0, PendingIntent.FLAG_ONE_SHOT);
+
+        return new NotificationCompat.Builder(this)
+                .setContentTitle(movie.getTitle())                                  // Title of notification
+                .setContentText(getResources().getString(R.string.movie_released))                                  // Text of notification
                 .setSmallIcon(R.drawable.yamda)                                 // Icon of notification
                 .setContentIntent(pIntent).build();
     }

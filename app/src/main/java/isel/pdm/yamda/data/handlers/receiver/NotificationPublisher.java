@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import isel.pdm.yamda.R;
+
 /**
  * Class used to //TODO: comentary
  */
@@ -19,10 +21,12 @@ public class NotificationPublisher extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         // Shared Preferences Get Notifications
-        if (!PreferenceManager.getDefaultSharedPreferences(context).getBoolean("get_notified", true)) {
+        if (!PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(context.getResources().getString(R.string.get_notified), true)) {
             return;
         }
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager =
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         Notification notification = intent.getParcelableExtra(NOTIFICATION);
         int id = intent.getIntExtra(NOTIFICATION_ID, 0);

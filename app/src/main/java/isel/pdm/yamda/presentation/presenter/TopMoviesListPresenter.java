@@ -13,7 +13,6 @@ import isel.pdm.yamda.data.handlers.service.lists.TopListService;
 import isel.pdm.yamda.model.entity.MovieListDetails;
 import isel.pdm.yamda.presentation.presenter.common.MovieListablePresenter;
 import isel.pdm.yamda.presentation.view.fragment.TopMoviesListFragment;
-import isel.pdm.yamda.utils.android.Utils;
 
 public class TopMoviesListPresenter extends MovieListablePresenter {
 
@@ -37,12 +36,10 @@ public class TopMoviesListPresenter extends MovieListablePresenter {
     }
 
     private void askForData() {
-        if (Utils.isConnected(this.activity)) {
-            this.showLoading();
+        this.showLoading();
 
-            Intent intent = new Intent(activity, TopListService.class);
-            activity.startService(intent);
-        }
+        Intent intent = new Intent(activity, TopListService.class);
+        activity.startService(intent);
     }
 
     @Override

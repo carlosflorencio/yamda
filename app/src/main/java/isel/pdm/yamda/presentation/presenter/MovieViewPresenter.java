@@ -31,7 +31,8 @@ public class MovieViewPresenter implements IPresenter, ILoadDataView<MovieDetail
         activity.setFollowListener(new MovieActivity.FollowListener() {
             @Override
             public void setFollow(int movieId, boolean value) {
-                ((YamdaApplication) MovieViewPresenter.this.activity.getApplication()).getMovieRepository().setMovieIsBeingFollowed(movieId, value);
+                ((YamdaApplication) MovieViewPresenter.this.activity.getApplication())
+                        .getMovieRepository().setMovieIsBeingFollowed(movieId, value);
             }
         });
 

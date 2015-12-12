@@ -5,6 +5,7 @@ import android.app.Application;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
@@ -74,7 +75,11 @@ public class YamdaApplication extends Application {
 
 
     private void initPeriodicUpdates() {
-        int days = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("periodicity", "7"));
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if (!sharedPreferences.getBoolean(getResources().getString(R.string.enable_update), true)) {
+            return;
+        }
+        int days = Integer.parseInt(sharedPreferences.getString(getResources().getString(R.string.periodicity), "7"));
         AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
 
         Intent intent = new Intent(this, TheatersListService.class);
