@@ -2,7 +2,6 @@ package isel.pdm.yamda.model.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 /**
  * This class is used for representing a Movie details obtained from the data layer

@@ -1,8 +1,17 @@
 package isel.pdm.yamda;
 
+import android.app.AlarmManager;
 import android.app.Application;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.SystemClock;
+import android.preference.PreferenceManager;
 
+import isel.pdm.yamda.data.handlers.service.ListService;
+import isel.pdm.yamda.data.handlers.service.lists.SoonListService;
+import isel.pdm.yamda.data.handlers.service.lists.TheatersListService;
 import isel.pdm.yamda.data.repository.IMovieRepository;
 import isel.pdm.yamda.data.repository.MovieRepository;
 import isel.pdm.yamda.data.repository.datasource.MovieDataStoreFactory;
@@ -30,6 +39,7 @@ public class YamdaApplication extends Application {
 
         initLocaleConfiguration(getResources().getConfiguration());
         initMovieRepository();
+        initPeriodicUpdates();
     }
 
     @Override
@@ -46,6 +56,13 @@ public class YamdaApplication extends Application {
     |--------------------------------------------------------------------------
     */
     /**
+     * Initializes the locale dependent fields (language)
+     */
+    private void initLocaleConfiguration(Configuration config) {
+        language = config.locale.getLanguage();
+    }
+
+    /**
      * Constructs the movie repository setter
      */
     private void initMovieRepository() {
@@ -55,11 +72,28 @@ public class YamdaApplication extends Application {
         this.movieRepository = new MovieRepository(dataFactory, dataMapper);
     }
 
-    /**
-     * Initializes the locale dependent fields (language)
-     */
-    private void initLocaleConfiguration(Configuration config) {
-        language = config.locale.getLanguage();
+
+    private void initPeriodicUpdates() {
+        int days = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("periodicity", "7"));
+        AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+
+        Intent intent = new Intent(this, TheatersListService.class);
+        if (PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_NO_CREATE) == null) {
+            intent.putExtra(ListService.IGNORE_DISK, true);
+            alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                    SystemClock.elapsedRealtime() + days * AlarmManager.INTERVAL_DAY,
+                    days * AlarmManager.INTERVAL_DAY,
+                    PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT));
+        }
+
+        intent = new Intent(this, SoonListService.class);
+        if (PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_NO_CREATE) == null) {
+            intent.putExtra(ListService.IGNORE_DISK, true);
+            alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                    SystemClock.elapsedRealtime() + days * AlarmManager.INTERVAL_DAY,
+                    days * AlarmManager.INTERVAL_DAY,
+                    PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT));
+        }
     }
 
     public String getLanguage() {

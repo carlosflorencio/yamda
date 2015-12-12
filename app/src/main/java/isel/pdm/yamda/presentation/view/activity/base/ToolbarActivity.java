@@ -77,6 +77,8 @@ public abstract class ToolbarActivity extends AbstractBaseActivity {
                 intent = new Intent(this, PreferencesActivity.class);
                 startActivity(intent);
                 break;
+            default:
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

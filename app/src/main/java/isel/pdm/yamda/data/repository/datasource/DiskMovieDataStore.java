@@ -77,9 +77,10 @@ public class DiskMovieDataStore implements IMovieApi {
     }
 
     public void setMovie(MovieDTO movie) {
-        if (this.movie.get(movie.getId()) == null) {
-            this.movie.put(movie.getId(), movie);
-            this.setIsBeingFollowed(movie.getId(), false);
+        int id = movie.getId();
+        if (this.movie.get(id) == null) {
+            this.movie.put(id, movie);
+            this.setIsBeingFollowed(id, false);
         }
     }
 

@@ -19,7 +19,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     /**
      * This will Store the titles of the Tabs which are Going to be passed when ViewPagerAdapter is created
      */
-    private CharSequence titles[];
+    private CharSequence[] titles;
 
     /**
      * Store the number of tabs, this will also be passed when the ViewPagerAdapter is created

@@ -75,7 +75,7 @@ public interface IMovieRepository {
      * @param movieId
      * @return Boolean value
      */
-    Boolean getMovieIsBeingFollowed(int movieId);
+    Boolean isBeingFollowed(int movieId);
 
     void setMovieIsBeingFollowed(int movieId, boolean value);
 }

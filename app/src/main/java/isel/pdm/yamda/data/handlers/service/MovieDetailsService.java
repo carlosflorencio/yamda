@@ -36,7 +36,7 @@ public class MovieDetailsService extends IntentService {
         try {
             int id = intent.getIntExtra(ID_PARAM, -1);
             MovieDetails movie = ((YamdaApplication) getApplication()).getMovieRepository().getMovieById(id, false);
-            Boolean isBeingFollowed = ((YamdaApplication) getApplication()).getMovieRepository().getMovieIsBeingFollowed(id);
+            Boolean isBeingFollowed = ((YamdaApplication) getApplication()).getMovieRepository().isBeingFollowed(id);
             intent1.putExtra(DATA, true);
             intent1.putExtra(FOLLOW, isBeingFollowed);
             intent1.putExtra(MOVIE_PARAM, movie);

@@ -147,7 +147,7 @@ public class MovieRepository implements IMovieRepository {
     }
 
     @Override
-    public Boolean getMovieIsBeingFollowed(int movieId) {
+    public Boolean isBeingFollowed(int movieId) {
         return cache.isBeingFollowed(movieId);
     }
 

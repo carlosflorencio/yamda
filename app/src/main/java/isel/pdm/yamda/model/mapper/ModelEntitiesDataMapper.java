@@ -167,24 +167,24 @@ public class ModelEntitiesDataMapper {
     private String createPosterLink(String path) {
         if(path == null) return null;
 
-        StringBuilder string = new StringBuilder();
+        StringBuilder stringBuilder = new StringBuilder();
 
-        string.append(this.configuration.getImagesURI());
-        string.append(this.configuration.getListPosterSize());
-        string.append(path);
+        stringBuilder.append(this.configuration.getImagesURI());
+        stringBuilder.append(this.configuration.getListPosterSize());
+        stringBuilder.append(path);
 
-        return string.toString();
+        return stringBuilder.toString();
     }
 
     private String createBackdropLink(String path) {
         if (path == null) return null;
 
-        StringBuilder string = new StringBuilder();
+        StringBuilder stringBuilder = new StringBuilder();
 
-        string.append(this.configuration.getImagesURI());
-        string.append(this.configuration.getBackdropSize());
-        string.append(path);
+        stringBuilder.append(this.configuration.getImagesURI());
+        stringBuilder.append(this.configuration.getBackdropSize());
+        stringBuilder.append(path);
 
-        return string.toString();
+        return stringBuilder.toString();
     }
 }

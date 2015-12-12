@@ -11,9 +11,9 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Checkable;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.squareup.picasso.Picasso;
 
@@ -28,6 +28,9 @@ import isel.pdm.yamda.presentation.view.activity.base.AbstractBaseActivity;
  * Activity to display the movie details
  */
 public class MovieActivity extends AbstractBaseActivity {
+
+    public static final int MINUTES = 60;
+    public static final int SECONDS = 60;
 
     public interface FollowListener {
         void setFollow(int movieId, boolean value);
@@ -171,7 +174,7 @@ public class MovieActivity extends AbstractBaseActivity {
         overview.setText(movie.getOverview());
         if (movie.whenIsBeingReleased() > 0) {
             findViewById(R.id.follow).setVisibility(View.VISIBLE);
-            ((ToggleButton) findViewById(R.id.follow)).setChecked(isBeingFollowed);
+            ((Checkable) findViewById(R.id.follow)).setChecked(isBeingFollowed);
         }
     }
 
@@ -180,8 +183,8 @@ public class MovieActivity extends AbstractBaseActivity {
      * @return
      */
     private String createRuntimeText(int runtime) {
-        int hours = runtime / 60;
-        int minutes = runtime % 60;
+        int hours = runtime / MINUTES;
+        int minutes = runtime % SECONDS;
         return hours + "h " + minutes + "m";
     }
 

@@ -1,8 +1,6 @@
 package isel.pdm.yamda.presentation.presenter.common;
 
 import android.app.Activity;
-import android.app.AlarmManager;
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -21,13 +19,11 @@ public abstract class MovieListablePresenter implements IPresenter, ILoadDataVie
     protected RecyclerView listView;
     protected View         loadingView;
     protected Activity     activity;
-    protected AlarmManager alarmManager;
 
     public MovieListablePresenter(Activity activity, RecyclerView listView, View loading) {
         this.listView = listView;
         this.activity = activity;
         this.loadingView = loading;
-        this.alarmManager = (AlarmManager) this.activity.getSystemService(Context.ALARM_SERVICE);
     }
 
     /*
