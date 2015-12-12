@@ -55,12 +55,13 @@ public class InTheatersMoviesListPresenter extends MovieListablePresenter {
 
         int days = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this.activity).getString("periodicity", "7"));
 
-        //TODO: KNOW THAT IS GOING TO GET FROM WEB
-        intent.putExtra(ListService.IGNORE_DISK, true);
-        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                SystemClock.elapsedRealtime() + days * AlarmManager.INTERVAL_DAY,
-                days * AlarmManager.INTERVAL_DAY,
-                PendingIntent.getService(this.activity, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT));
+        if (PendingIntent.getService(this.activity, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT) == null) {
+            intent.putExtra(ListService.IGNORE_DISK, true);
+            alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                    SystemClock.elapsedRealtime() + days * AlarmManager.INTERVAL_DAY,
+                    days * AlarmManager.INTERVAL_DAY,
+                    PendingIntent.getService(this.activity, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT));
+        }
     }
 
     @Override
