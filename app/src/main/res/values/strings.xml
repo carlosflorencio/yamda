@@ -1,21 +1,31 @@
 <resources>
     <string name="app_name">YAMDA Deluxe</string>
-    <string name="action_settings">Settings</string>
+
+    <!-- TOOLBAR -->
     <string name="search_title">Search</string>
     <string name="search_hint">Search Title</string>
-
+    <string name="preferences">Preferences</string>
     <string name="about">About</string>
 
+    <!-- FRAGMENT PAGER ITEM ADAPTER -->
     <string name="page_theaters">In Theaters</string>
     <string name="page_soon">Coming Soon</string>
     <string name="page_top">Most Popular</string>
 
+    <!-- SEARCH ACTIVITY -->
     <string name="search_results_title">Search Results</string>
+
+    <!-- NOTIFICATIONS -->
     <string name="loading">Loading..</string>
+
+    <!-- PROGRESS BAR -->
     <string name="movie_released">It\'s arrived!</string>
+
+    <!-- MOVIE LIST -->
     <string name="row_rating">Rating: %1$s</string>
     <string name="row_released">Released: %1$s</string>
 
+    <!-- MOVIE DETAILS -->
     <string name="follow">Follow</string>
     <string name="following">Following</string>
 
@@ -25,8 +35,6 @@
     <string name="now_following">You are now following this movie</string>
 
     <!-- PREFERENCES -->
-    <string name="preferences">Preferences</string>
-
     <string name="get_notified" translatable="false">get_notified</string>
     <string name="get_notified_title">Get notifications?</string>
     <string name="get_notified_summary">Yes/No</string>
