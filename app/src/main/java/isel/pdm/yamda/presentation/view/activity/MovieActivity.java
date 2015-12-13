@@ -63,7 +63,7 @@ public class MovieActivity extends AbstractBaseActivity {
 
         this.presenter = new MovieViewPresenter(this, getIntent().getExtras().getInt(ID_TAG));
 
-        this.checkFollow(findViewById(R.id.follow));
+        this.checkFollow(findViewById(R.id.movie_follow));
 
         this.setUpSupportActionBar();
     }
@@ -159,14 +159,14 @@ public class MovieActivity extends AbstractBaseActivity {
     public void updateView(MovieDetails data) {
         this.movie = data;
 
-        ImageView backdropView = (ImageView) findViewById(R.id.backDropPath);
-        ImageView imageView = (ImageView) findViewById(R.id.cover);
-        TextView title = (TextView) findViewById(R.id.title);
-        TextView genre = (TextView) findViewById(R.id.genre);
-        TextView rating = (TextView) findViewById(R.id.tagline);
-        TextView runtime = (TextView) findViewById(R.id.runtime);
-        TextView releaseYear = (TextView) findViewById(R.id.release_date);
-        TextView overview = (TextView) findViewById(R.id.overview);
+        ImageView backdropView = (ImageView) findViewById(R.id.movie_back_drop_path);
+        ImageView imageView = (ImageView) findViewById(R.id.movie_cover);
+        TextView title = (TextView) findViewById(R.id.movie_title);
+        TextView genre = (TextView) findViewById(R.id.movie_genre);
+        TextView rating = (TextView) findViewById(R.id.movie_rating);
+        TextView runtime = (TextView) findViewById(R.id.movie_runtime);
+        TextView releaseYear = (TextView) findViewById(R.id.movie_release_date);
+        TextView overview = (TextView) findViewById(R.id.movie_overview);
 
 
         Picasso.with(this).load(movie.getBackdrop()).into(backdropView);
@@ -178,8 +178,8 @@ public class MovieActivity extends AbstractBaseActivity {
         releaseYear.setText(this.getString(R.string.row_released, movie.getRelease_date()));
         overview.setText(movie.getOverview());
         if (movie.whenIsBeingReleased() > 0) {
-            findViewById(R.id.follow).setVisibility(View.VISIBLE);
-            ((Checkable) findViewById(R.id.follow)).setChecked(isBeingFollowed);
+            findViewById(R.id.movie_follow).setVisibility(View.VISIBLE);
+            ((Checkable) findViewById(R.id.movie_follow)).setChecked(isBeingFollowed);
         }
     }
 

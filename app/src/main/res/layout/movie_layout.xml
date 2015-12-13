@@ -18,17 +18,17 @@
 
 
             <ImageView
-                android:id="@+id/backDropPath"
+                android:id="@+id/movie_back_drop_path"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="centerCrop" />
 
             <!-- Details layout -->
             <LinearLayout
-                android:id="@+id/detailsLayout"
+                android:id="@+id/movie_details_layout"
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
-                android:layout_below="@+id/backDropPath"
+                android:layout_below="@+id/movie_back_drop_path"
                 android:background="@android:color/white"
                 android:orientation="horizontal"
                 android:paddingBottom="20dp"
@@ -42,7 +42,7 @@
 
 
                     <ImageView
-                        android:id="@+id/cover"
+                        android:id="@+id/movie_cover"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="25dp" />
@@ -58,57 +58,57 @@
 
                     <!-- Title text view -->
                     <TextView
-                        android:id="@+id/title"
+                        android:id="@+id/movie_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/title"
+                        android:textSize="@dimen/movie_title"
                         android:textStyle="bold" />
 
                     <!-- Runtime text view -->
                     <TextView
-                        android:id="@+id/runtime"
+                        android:id="@+id/movie_runtime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:textSize="@dimen/rating"
+                        android:textSize="@dimen/movie_runtime"
                         android:textColor="@color/genre" />
 
                     <!-- Date text view -->
                     <TextView
-                        android:id="@+id/release_date"
+                        android:id="@+id/movie_release_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="11dp"
-                        android:textSize="@dimen/rating"
+                        android:textSize="@dimen/movie_release_date"
                         android:textColor="@color/genre" />
 
-                    <!-- Tagline text view -->
+                    <!-- Rating text view -->
                     <TextView
-                        android:id="@+id/tagline"
+                        android:id="@+id/movie_rating"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:textSize="@dimen/rating"
+                        android:textSize="@dimen/movie_rating"
                         android:textColor="@color/genre" />
 
                     <!-- Genres text view -->
                     <TextView
-                        android:id="@+id/genre"
+                        android:id="@+id/movie_genre"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:textColor="@color/genre"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/movie_genre" />
 
                 </LinearLayout>
             </LinearLayout>
 
 
             <LinearLayout
-                android:id="@+id/similarHolder"
+                android:id="@+id/movie_similar_holder"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/detailsLayout"
+                android:layout_below="@+id/movie_details_layout"
                 android:orientation="vertical">
 
 
@@ -120,7 +120,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/overview"
+                        android:id="@+id/movie_overview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingBottom="20dp"
@@ -129,10 +129,10 @@
             </LinearLayout>
 
             <ToggleButton
-                android:id="@+id/follow"
+                android:id="@+id/movie_follow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/similarHolder"
+                android:layout_below="@+id/movie_similar_holder"
                 android:background="@drawable/follow_state"
                 android:layout_margin="10dp"
                 android:textOn="@string/following"

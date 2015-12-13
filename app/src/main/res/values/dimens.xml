@@ -1,17 +1,18 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
+    <!-- TODO -->
 
-    <!-- Dimensions of List View Row-->
-    <dimen name="title">14sp</dimen>
-    <dimen name="title_original">12sp</dimen>
-    <dimen name="rating">12sp</dimen>
-    <dimen name="genre">12sp</dimen>
-    <dimen name="year">12sp</dimen>
+    <!-- LIST MOVIE LAYOUT -->
+    <dimen name="movie_list_title">14sp</dimen>
+    <dimen name="movie_list_title_original">12sp</dimen>
+    <dimen name="movie_list_rating">12sp</dimen>
+    <dimen name="movie_list_year">12sp</dimen>
 
-    <!-- Dimensions of Movie View-->
-    <dimen name="movie_view_title">25dp</dimen>
-    <dimen name="movie_view_overview">13dp</dimen>
+    <!-- MOVIE LAYOUT -->
+    <dimen name="movie_title">14sp</dimen>
+    <dimen name="movie_runtime">12sp</dimen>
+    <dimen name="movie_release_date">12sp</dimen>
+    <dimen name="movie_rating">12sp</dimen>
+    <dimen name="movie_genre">12sp</dimen>
+    <dimen name="movie_overview">13dp</dimen>
 </resources>

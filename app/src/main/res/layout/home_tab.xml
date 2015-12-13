@@ -4,13 +4,6 @@
                 android:layout_height="match_parent"
                 android:id="@+id/relative_layout_tab">
 
-    <!--<ListView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:visibility="gone"-->
-        <!--android:id="@+id/list_view">-->
-    <!--</ListView>-->
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list_view"
         android:scrollbars="vertical"
