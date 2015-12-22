@@ -3,8 +3,8 @@ package isel.pdm.yamda.data.repository;
 import java.util.List;
 
 import isel.pdm.yamda.data.exception.ApiFailedGettingDataException;
-import isel.pdm.yamda.model.entity.MovieDetails;
-import isel.pdm.yamda.model.entity.MovieListDetails;
+import isel.pdm.yamda.model.MovieDetails;
+import isel.pdm.yamda.model.MovieListDetails;
 
 /**
  * This interface defines the contract with the data layer

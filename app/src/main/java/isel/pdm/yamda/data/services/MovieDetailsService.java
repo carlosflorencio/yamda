@@ -6,7 +6,7 @@ import android.util.Log;
 
 import isel.pdm.yamda.YamdaApplication;
 import isel.pdm.yamda.data.exception.ApiFailedGettingDataException;
-import isel.pdm.yamda.model.entity.MovieDetails;
+import isel.pdm.yamda.model.MovieDetails;
 
 /**
  * Class used to //TODO: comentary

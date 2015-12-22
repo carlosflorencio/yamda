@@ -9,7 +9,7 @@ import java.util.List;
 
 import isel.pdm.yamda.YamdaApplication;
 import isel.pdm.yamda.data.exception.ApiFailedGettingDataException;
-import isel.pdm.yamda.model.entity.MovieListDetails;
+import isel.pdm.yamda.model.MovieListDetails;
 
 
 /**

@@ -6,11 +6,11 @@ import java.util.List;
 import isel.pdm.yamda.data.api.ITMDbServiceAPI;
 import isel.pdm.yamda.data.api.entity.MovieDTO;
 import isel.pdm.yamda.data.api.entity.MovieListingDTO;
-import isel.pdm.yamda.model.entity.Actor;
-import isel.pdm.yamda.model.entity.Crew;
-import isel.pdm.yamda.model.entity.Genre;
-import isel.pdm.yamda.model.entity.MovieDetails;
-import isel.pdm.yamda.model.entity.MovieListDetails;
+import isel.pdm.yamda.model.Actor;
+import isel.pdm.yamda.model.Crew;
+import isel.pdm.yamda.model.Genre;
+import isel.pdm.yamda.model.MovieDetails;
+import isel.pdm.yamda.model.MovieListDetails;
 
 /**
  * This class knows how to transform a data entity to a model entity

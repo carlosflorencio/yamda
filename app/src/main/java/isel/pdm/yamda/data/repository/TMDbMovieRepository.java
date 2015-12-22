@@ -8,8 +8,8 @@ import isel.pdm.yamda.data.api.entity.MovieListingDTO;
 import isel.pdm.yamda.data.exception.ApiFailedGettingDataException;
 import isel.pdm.yamda.data.mapper.ModelEntitiesDataMapper;
 import isel.pdm.yamda.data.repository.datasource.MovieDataStoreFactory;
-import isel.pdm.yamda.model.entity.MovieDetails;
-import isel.pdm.yamda.model.entity.MovieListDetails;
+import isel.pdm.yamda.model.MovieDetails;
+import isel.pdm.yamda.model.MovieListDetails;
 
 /**
  * Movies Repository, fetch list of movies and movies details

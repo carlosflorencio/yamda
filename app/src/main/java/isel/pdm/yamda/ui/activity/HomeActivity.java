@@ -1,0 +1,63 @@
+package isel.pdm.yamda.ui.activity;
+
+import android.os.Bundle;
+import android.support.v4.view.ViewPager;
+
+import com.ogaclejapan.smarttablayout.SmartTabLayout;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
+
+import isel.pdm.yamda.R;
+import isel.pdm.yamda.ui.activity.base.ToolbarActivity;
+import isel.pdm.yamda.ui.fragment.InTheatersMoviesListFragment;
+import isel.pdm.yamda.ui.fragment.SoonMoviesListFragment;
+import isel.pdm.yamda.ui.fragment.TopMoviesListFragment;
+
+/**
+ * Launcher activity that displays the tabs and fragments containing the movies lists
+ */
+public class HomeActivity extends ToolbarActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        this.setContentView(R.layout.home_layout);
+        this.setUpToolbar();
+
+        this.setPager();
+    }
+
+    /**
+     * Setup the ViewPager with tabs using SmartTabs Lib
+     */
+    private void setPager() {
+        FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
+                getSupportFragmentManager(),
+                FragmentPagerItems.with(this)
+                                  .add(R.string.page_theaters,
+                                       InTheatersMoviesListFragment.class)
+                                  .add(R.string.page_soon,
+                                       SoonMoviesListFragment.class)
+                                  .add(R.string.page_top,
+                                       TopMoviesListFragment.class)
+                                  .create());
+
+        //Set the fragments pager
+        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager.setAdapter(adapter);
+
+        //Set the tabs names pager
+        SmartTabLayout viewPagerTab = (SmartTabLayout) findViewById(R.id.tabs);
+        viewPagerTab.setViewPager(viewPager);
+    }
+
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        //Clear the search query and remove keyboard on back from the search activity
+        searchView.setQuery("", false);
+        searchView.clearFocus();
+    }
+
+}
