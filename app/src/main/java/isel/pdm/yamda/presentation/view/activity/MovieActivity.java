@@ -20,7 +20,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import isel.pdm.yamda.R;
-import isel.pdm.yamda.data.handlers.receiver.NotificationPublisher;
+import isel.pdm.yamda.data.handlers.NotificationPublisher;
 import isel.pdm.yamda.model.entity.Genre;
 import isel.pdm.yamda.model.entity.MovieDetails;
 import isel.pdm.yamda.presentation.presenter.MovieViewPresenter;

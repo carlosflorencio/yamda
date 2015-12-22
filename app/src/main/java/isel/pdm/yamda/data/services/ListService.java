@@ -1,4 +1,4 @@
-package isel.pdm.yamda.data.handlers.service;
+package isel.pdm.yamda.data.services;
 
 import android.app.IntentService;
 

@@ -1,8 +1,7 @@
-package isel.pdm.yamda.data.providers.tmdb;
+package isel.pdm.yamda.data.api;
 
-import isel.pdm.yamda.data.entity.tmdb.ConfigurationDTO;
-import isel.pdm.yamda.data.entity.tmdb.MovieDTO;
-import isel.pdm.yamda.data.entity.tmdb.MovieListingDTO;
+import isel.pdm.yamda.data.api.entity.MovieDTO;
+import isel.pdm.yamda.data.api.entity.MovieListingDTO;
 import retrofit.Call;
 import retrofit.http.GET;
 import retrofit.http.Path;
@@ -11,20 +10,13 @@ import retrofit.http.Query;
 /**
  * Retrieves information from online database through {@code Retrofit}.
  */
-public interface ITheMovieDbServiceAPI {
-
-    String BASE_URL = "http://api.themoviedb.org";
+public interface ITMDbServiceAPI {
+    //TODO: change this to a gradle property?
     String API_KEY = "3b4c65c3780fc1ef44ec5500b186d833";
-
-    /**
-     * Retrieves configuration information, such as image base url and sizes of images.
-     *
-     * @param api_key api_key used to retrieve information
-     * @return
-     */
-    @GET("/3/configuration")
-    Call<ConfigurationDTO> getConfig(@Query("api_key") String api_key);
-
+    String BASE_URL = "http://api.themoviedb.org";
+    String BASE_IMAGES_URL = "http://image.tmdb.org/t/p/";
+    String POSTER_SIZE = "w185";
+    String BACKDROP_SIZE = "w780";
 
     /**
      *  Retrieves a specific movie through his {@code id}
@@ -37,7 +29,7 @@ public interface ITheMovieDbServiceAPI {
      */
     @GET("/3/movie/{id}")
     Call<MovieDTO> getMovie(@Path("id") int id,
-                         @Query("api_key") String api_key,
+                            @Query("api_key") String api_key,
                             @Query("language") String lang,
                             @Query("append_to_response") String append);
 
@@ -51,8 +43,8 @@ public interface ITheMovieDbServiceAPI {
      */
     @GET("/3/movie/now_playing")
     Call<MovieListingDTO> getNowPlaying(@Query("api_key") String API_KEY,
-                                    @Query("page") int page,
-                                    @Query("language") String language);
+                                        @Query("page") int page,
+                                        @Query("language") String language);
 
     /**
      *  Retrieves a list of movies that are to come to cinema.

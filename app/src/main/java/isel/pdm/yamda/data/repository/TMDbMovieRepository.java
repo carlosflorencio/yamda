@@ -3,35 +3,30 @@ package isel.pdm.yamda.data.repository;
 import java.io.IOException;
 import java.util.List;
 
-import isel.pdm.yamda.data.entity.tmdb.MovieDTO;
-import isel.pdm.yamda.data.entity.tmdb.MovieListingDTO;
+import isel.pdm.yamda.data.api.entity.MovieDTO;
+import isel.pdm.yamda.data.api.entity.MovieListingDTO;
 import isel.pdm.yamda.data.exception.ApiFailedGettingDataException;
-import isel.pdm.yamda.data.repository.datasource.DiskMovieDataStore;
+import isel.pdm.yamda.data.mapper.ModelEntitiesDataMapper;
 import isel.pdm.yamda.data.repository.datasource.MovieDataStoreFactory;
 import isel.pdm.yamda.model.entity.MovieDetails;
 import isel.pdm.yamda.model.entity.MovieListDetails;
-import isel.pdm.yamda.model.mapper.ModelEntitiesDataMapper;
 
 /**
  * Movies Repository, fetch list of movies and movies details
  * This class  uses a factory and a mapper to retrieve the data and convert to a model entity
  * synchronously
  */
-public class MovieRepository implements IMovieRepository {
+public class TMDbMovieRepository implements IMovieRepository {
 
     protected final String TAG = "DEBUG_" + getClass().getSimpleName();
 
     private final MovieDataStoreFactory factory;
     private final ModelEntitiesDataMapper mapper;
 
-    //TODO: Map due to languages
-    private final DiskMovieDataStore cache;
-
-    public MovieRepository(MovieDataStoreFactory factory,
-                           ModelEntitiesDataMapper mapper) {
+    public TMDbMovieRepository(MovieDataStoreFactory factory,
+                               ModelEntitiesDataMapper mapper) {
         this.factory = factory;
         this.mapper = mapper;
-        this.cache = DiskMovieDataStore.create();
     }
 
     /**
@@ -43,16 +38,9 @@ public class MovieRepository implements IMovieRepository {
      * @throws ApiFailedGettingDataException
      */
     @Override
-    public List<MovieListDetails> getTheatersMovies(int page, boolean ignoreDisk) throws ApiFailedGettingDataException {
-        MovieListingDTO data = null;
+    public List<MovieListDetails> getTheatersMovies(int page) throws ApiFailedGettingDataException {
         try {
-            if (!ignoreDisk) {
-                data = cache.getTheatersMovies(page);
-            }
-            if (data == null) {
-                data = this.factory.createCloudDataStore().getTheatersMovies(page);
-                cache.setTheatersMovies(data);
-            }
+            MovieListingDTO data = this.factory.getCloudMovieDataStore().getTheatersMovies(page);
             return this.mapper.transform(data);
         } catch (IOException e) {
             throw new ApiFailedGettingDataException(e);
@@ -68,16 +56,10 @@ public class MovieRepository implements IMovieRepository {
      * @throws ApiFailedGettingDataException
      */
     @Override
-    public List<MovieListDetails> getSoonMovies(int page, boolean ignoreDisk) throws ApiFailedGettingDataException {
-        MovieListingDTO data = null;
+    public List<MovieListDetails> getSoonMovies(int page) throws ApiFailedGettingDataException {
+
         try {
-            if (!ignoreDisk) {
-                data = cache.getSoonMovies(page);
-            }
-            if (data == null) {
-                data = this.factory.createCloudDataStore().getSoonMovies(page);
-                cache.setSoonMovies(data);
-            }
+            MovieListingDTO data = this.factory.getCloudMovieDataStore().getSoonMovies(page);
             return this.mapper.transform(data);
         } catch (IOException e) {
             throw new ApiFailedGettingDataException(e);
@@ -93,9 +75,9 @@ public class MovieRepository implements IMovieRepository {
      * @throws ApiFailedGettingDataException
      */
     @Override
-    public List<MovieListDetails> getTopMovies(int page, boolean ignoreDisk) throws ApiFailedGettingDataException {
+    public List<MovieListDetails> getTopMovies(int page) throws ApiFailedGettingDataException {
         try {
-            MovieListingDTO data = this.factory.createCloudDataStore().getTopMovies(page);
+            MovieListingDTO data = this.factory.getCloudMovieDataStore().getTopMovies(page);
             return this.mapper.transform(data);
         } catch (IOException e) {
             throw new ApiFailedGettingDataException(e);
@@ -112,10 +94,10 @@ public class MovieRepository implements IMovieRepository {
      * @throws ApiFailedGettingDataException
      */
     @Override
-    public List<MovieListDetails> getMovieSearch(String search, int page, boolean ignoreDisk)
+    public List<MovieListDetails> getMovieSearch(String search, int page)
             throws ApiFailedGettingDataException {
         try {
-            MovieListingDTO data = this.factory.createCloudDataStore().getMoviesSearch(search, page);
+            MovieListingDTO data = this.factory.getCloudMovieDataStore().getMoviesSearch(search, page);
             return this.mapper.transform(data);
         } catch (IOException e) {
             throw new ApiFailedGettingDataException(e);
@@ -130,29 +112,43 @@ public class MovieRepository implements IMovieRepository {
      * @throws ApiFailedGettingDataException
      */
     @Override
-    public MovieDetails getMovieById(int id, boolean ignoreDisk) throws ApiFailedGettingDataException {
-        MovieDTO data = null;
+    public MovieDetails getMovieById(int id) throws ApiFailedGettingDataException {
         try {
-            if (!ignoreDisk) {
-                data = cache.getMovie(id);
-            }
-            if (data == null) {
-                data = this.factory.createCloudDataStore().getMovie(id);
-                cache.setMovie(data);
-            }
+            MovieDTO data = this.factory.getCloudMovieDataStore().getMovie(id);
             return this.mapper.transform(data);
         } catch (IOException e) {
             throw new ApiFailedGettingDataException(e);
         }
     }
 
+    /**
+     * Check if the movie is being followed by the user
+     *
+     * @param movieId
+     * @return
+     */
     @Override
-    public Boolean isBeingFollowed(int movieId) {
-        return cache.isBeingFollowed(movieId);
+    public boolean isBeingFollowed(int movieId) {
+        return false;
     }
 
+    /**
+     * Follow a movie
+     *
+     * @param movieId
+     */
     @Override
-    public void setMovieIsBeingFollowed(int movieId, boolean value) {
-        cache.setIsBeingFollowed(movieId, value);
+    public void followMovie(int movieId) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Unfollow a movie
+     *
+     * @param movieId
+     */
+    @Override
+    public void unfollowMovie(int movieId) {
+        throw new UnsupportedOperationException();
     }
 }

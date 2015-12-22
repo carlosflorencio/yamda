@@ -10,13 +10,15 @@ import android.content.res.Configuration;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
 
-import isel.pdm.yamda.data.handlers.service.ListService;
-import isel.pdm.yamda.data.handlers.service.lists.SoonListService;
-import isel.pdm.yamda.data.handlers.service.lists.TheatersListService;
+import isel.pdm.yamda.data.api.TMDbApiSync;
+import isel.pdm.yamda.data.mapper.ModelEntitiesDataMapper;
 import isel.pdm.yamda.data.repository.IMovieRepository;
-import isel.pdm.yamda.data.repository.MovieRepository;
+import isel.pdm.yamda.data.repository.TMDbMovieRepository;
+import isel.pdm.yamda.data.repository.datasource.CloudMovieDataStorage;
 import isel.pdm.yamda.data.repository.datasource.MovieDataStoreFactory;
-import isel.pdm.yamda.model.mapper.ModelEntitiesDataMapper;
+import isel.pdm.yamda.data.services.ListService;
+import isel.pdm.yamda.data.services.lists.SoonListService;
+import isel.pdm.yamda.data.services.lists.TheatersListService;
 
 /**
  * Singleton class (note that we have one instance per application process) that plays the role
@@ -56,6 +58,7 @@ public class YamdaApplication extends Application {
     | Custom methods
     |--------------------------------------------------------------------------
     */
+
     /**
      * Initializes the locale dependent fields (language)
      */
@@ -64,13 +67,16 @@ public class YamdaApplication extends Application {
     }
 
     /**
-     * Constructs the movie repository setter
+     * Constructs the movie repository with the all the data sources and a mapper
      */
     private void initMovieRepository() {
-        ModelEntitiesDataMapper dataMapper = new ModelEntitiesDataMapper();
-        MovieDataStoreFactory dataFactory = new MovieDataStoreFactory(language);
+        TMDbApiSync api = new TMDbApiSync(language);
 
-        this.movieRepository = new MovieRepository(dataFactory, dataMapper);
+        ModelEntitiesDataMapper dataMapper  = new ModelEntitiesDataMapper();
+        MovieDataStoreFactory   dataFactory = new MovieDataStoreFactory(
+                new CloudMovieDataStorage(api));
+
+        this.movieRepository = new TMDbMovieRepository(dataFactory, dataMapper);
     }
 
 
@@ -79,25 +85,30 @@ public class YamdaApplication extends Application {
         if (!sharedPreferences.getBoolean(getResources().getString(R.string.enable_update), true)) {
             return;
         }
-        int days = Integer.parseInt(sharedPreferences.getString(getResources().getString(R.string.periodicity), "7"));
+        int          days         = Integer.parseInt(
+                sharedPreferences.getString(getResources().getString(R.string.periodicity), "7"));
         AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
 
         Intent intent = new Intent(this, TheatersListService.class);
         if (PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_NO_CREATE) == null) {
             intent.putExtra(ListService.IGNORE_DISK, true);
             alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                    SystemClock.elapsedRealtime() + days * AlarmManager.INTERVAL_DAY,
-                    days * AlarmManager.INTERVAL_DAY,
-                    PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT));
+                                             SystemClock
+                                                     .elapsedRealtime() + days * AlarmManager.INTERVAL_DAY,
+                                             days * AlarmManager.INTERVAL_DAY,
+                                             PendingIntent.getService(this, 0, intent,
+                                                                      PendingIntent.FLAG_UPDATE_CURRENT));
         }
 
         intent = new Intent(this, SoonListService.class);
         if (PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_NO_CREATE) == null) {
             intent.putExtra(ListService.IGNORE_DISK, true);
             alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                    SystemClock.elapsedRealtime() + days * AlarmManager.INTERVAL_DAY,
-                    days * AlarmManager.INTERVAL_DAY,
-                    PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT));
+                                             SystemClock
+                                                     .elapsedRealtime() + days * AlarmManager.INTERVAL_DAY,
+                                             days * AlarmManager.INTERVAL_DAY,
+                                             PendingIntent.getService(this, 0, intent,
+                                                                      PendingIntent.FLAG_UPDATE_CURRENT));
         }
     }
 

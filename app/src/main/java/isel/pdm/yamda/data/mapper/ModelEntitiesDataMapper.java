@@ -1,12 +1,11 @@
-package isel.pdm.yamda.model.mapper;
+package isel.pdm.yamda.data.mapper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import isel.pdm.yamda.data.entity.IConfiguration;
-import isel.pdm.yamda.data.entity.TMDbConfiguration;
-import isel.pdm.yamda.data.entity.tmdb.MovieDTO;
-import isel.pdm.yamda.data.entity.tmdb.MovieListingDTO;
+import isel.pdm.yamda.data.api.ITMDbServiceAPI;
+import isel.pdm.yamda.data.api.entity.MovieDTO;
+import isel.pdm.yamda.data.api.entity.MovieListingDTO;
 import isel.pdm.yamda.model.entity.Actor;
 import isel.pdm.yamda.model.entity.Crew;
 import isel.pdm.yamda.model.entity.Genre;
@@ -18,12 +17,6 @@ import isel.pdm.yamda.model.entity.MovieListDetails;
  */
 public class ModelEntitiesDataMapper {
 
-    private IConfiguration configuration;
-
-    public ModelEntitiesDataMapper() {
-        //TODO: change this!! the configuration should be requested and cached and not hard coded
-        this.configuration = new TMDbConfiguration();
-    }
 
     /**
      * Transform a movie data entity to a business model
@@ -59,15 +52,12 @@ public class ModelEntitiesDataMapper {
      * @return
      */
     public MovieListDetails transform(MovieListingDTO.MovieListDTO dto) {
-        Genre[] genres = this.createGenres(dto.getGenreIds());
-
         return new MovieListDetails(dto.getId(),
                                     dto.getTitle(),
                                     dto.getOriginalTitle(),
                                     dto.getReleaseDate(),
                                     dto.getOverview(),
                                     createPosterLink(dto.getPosterPath()),
-                                    genres,
                                     dto.getVoteAverage()
                                     );
     }
@@ -144,22 +134,6 @@ public class ModelEntitiesDataMapper {
     }
 
     /**
-     * Create a genres array from a configuration
-     * @param genreIds
-     * @return
-     */
-    private Genre[] createGenres(int[] genreIds) {
-        Genre[] res = new Genre[genreIds.length];
-
-        for (int i = 0; i < genreIds.length; i++) {
-            res[i] = new Genre(genreIds[i], this.configuration.getGenre(genreIds[i]));
-        }
-
-        return res;
-    }
-
-
-    /**
      * Transform a relative path to a complete URI poster image
      * @param path
      * @return
@@ -169,20 +143,25 @@ public class ModelEntitiesDataMapper {
 
         StringBuilder stringBuilder = new StringBuilder();
 
-        stringBuilder.append(this.configuration.getImagesURI());
-        stringBuilder.append(this.configuration.getListPosterSize());
+        stringBuilder.append(ITMDbServiceAPI.BASE_IMAGES_URL);
+        stringBuilder.append(ITMDbServiceAPI.POSTER_SIZE);
         stringBuilder.append(path);
 
         return stringBuilder.toString();
     }
 
+    /**
+     * Transform a relative backdrop path to a complete URI
+     * @param path
+     * @return
+     */
     private String createBackdropLink(String path) {
         if (path == null) return null;
 
         StringBuilder stringBuilder = new StringBuilder();
 
-        stringBuilder.append(this.configuration.getImagesURI());
-        stringBuilder.append(this.configuration.getBackdropSize());
+        stringBuilder.append(ITMDbServiceAPI.BASE_IMAGES_URL);
+        stringBuilder.append(ITMDbServiceAPI.BACKDROP_SIZE);
         stringBuilder.append(path);
 
         return stringBuilder.toString();

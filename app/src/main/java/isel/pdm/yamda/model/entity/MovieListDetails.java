@@ -29,18 +29,15 @@ public final class MovieListDetails implements Parcelable {
     private final String overview;
     /** The movie poster image **/
     private final String poster;
-    /** The movie genres **/
-    private final Genre[] genres;
 
     public MovieListDetails(int id, String title, String original_title, String release_date,
-                            String overview, String poster, Genre[] genres, float rating) {
+                            String overview, String poster, float rating) {
         this.id = id;
         this.title = title;
         this.original_title = original_title;
         this.release_date = release_date;
         this.overview = overview;
         this.poster = poster;
-        this.genres = genres;
         this.rating = rating;
     }
 
@@ -72,22 +69,6 @@ public final class MovieListDetails implements Parcelable {
         return poster;
     }
 
-    public Genre[] getGenres() {
-        return genres;
-    }
-
-    public String getGenresTogether() {
-        if(this.genres.length == 0) return "";
-
-        StringBuilder res = new StringBuilder();
-
-        for (Genre genre : genres) {
-            res.append(genre.getName()).append(", ");
-        }
-
-        return res.substring(0, res.length() - 2);
-    }
-
     /*
     |--------------------------------------------------------------------------
     | Parcelable options
@@ -101,7 +82,6 @@ public final class MovieListDetails implements Parcelable {
         this.rating = in.readFloat();
         this.overview = in.readString();
         this.poster = in.readString();
-        this.genres = in.createTypedArray(Genre.CREATOR);
     }
 
     public static final Creator<MovieListDetails> CREATOR = new Creator<MovieListDetails>() {
@@ -130,6 +110,5 @@ public final class MovieListDetails implements Parcelable {
         dest.writeFloat(this.rating);
         dest.writeString(this.overview);
         dest.writeString(this.poster);
-        dest.writeTypedArray(this.genres, 0);
     }
 }

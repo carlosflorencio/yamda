@@ -1,4 +1,4 @@
-package isel.pdm.yamda.data.handlers.service.lists;
+package isel.pdm.yamda.data.services.lists;
 
 import android.content.Intent;
 import android.util.Log;
@@ -8,7 +8,7 @@ import java.util.List;
 
 import isel.pdm.yamda.YamdaApplication;
 import isel.pdm.yamda.data.exception.ApiFailedGettingDataException;
-import isel.pdm.yamda.data.handlers.service.ListService;
+import isel.pdm.yamda.data.services.ListService;
 import isel.pdm.yamda.model.entity.MovieListDetails;
 
 /**
@@ -25,7 +25,7 @@ public class TheatersListService extends ListService {
             int page = intent.getIntExtra(PAGE, 1);
             boolean ignoreDisk = intent.getBooleanExtra(IGNORE_DISK, false);
             //Log.v("DEBUG", "Page: "+ page+", : ignoreDisk: "+ignoreDisk);     DEBUG PURPOSE
-            List<MovieListDetails> movies = ((YamdaApplication) getApplication()).getMovieRepository().getTheatersMovies(page, ignoreDisk);
+            List<MovieListDetails> movies = ((YamdaApplication) getApplication()).getMovieRepository().getTheatersMovies(page);
 
             newIntent.putExtra(DATA, true);
             newIntent.putExtra(MOVIES_PARAM, (Serializable) movies);

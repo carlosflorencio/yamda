@@ -17,33 +17,30 @@ public interface IMovieRepository {
      * And convert to a model entity
      *
      * @param page api page
-     * @param ignoreDisk    choice to ignore what is in disk or not
      * @return Entity model
      * @throws ApiFailedGettingDataException
      */
-    List<MovieListDetails> getTheatersMovies(int page, boolean ignoreDisk) throws ApiFailedGettingDataException;
+    List<MovieListDetails> getTheatersMovies(int page) throws ApiFailedGettingDataException;
 
     /**
      * Get movies list that will be in theaters soon synchronously
      * And convert to a model entity
      *
      * @param page api page
-     * @param ignoreDisk    choice to ignore what is in disk or not
      * @return Entity model
      * @throws ApiFailedGettingDataException
      */
-    List<MovieListDetails> getSoonMovies(int page, boolean ignoreDisk) throws ApiFailedGettingDataException;
+    List<MovieListDetails> getSoonMovies(int page) throws ApiFailedGettingDataException;
 
     /**
      * Get top movies list synchronously
      * And convert to a model entity
      *
      * @param page api page
-     * @param ignoreDisk    choice to ignore what is in disk or not
      * @return Entity model
      * @throws ApiFailedGettingDataException
      */
-    List<MovieListDetails> getTopMovies(int page, boolean ignoreDisk) throws ApiFailedGettingDataException;
+    List<MovieListDetails> getTopMovies(int page) throws ApiFailedGettingDataException;
 
     /**
      * Get movies list for a search query synchronously
@@ -51,11 +48,10 @@ public interface IMovieRepository {
      *
      * @param search search query
      * @param page   api page
-     * @param ignoreDisk    choice to ignore what is in disk or not
      * @return Entity model
      * @throws ApiFailedGettingDataException
      */
-    List<MovieListDetails> getMovieSearch(String search, int page, boolean ignoreDisk)
+    List<MovieListDetails> getMovieSearch(String search, int page)
             throws ApiFailedGettingDataException;
 
     /**
@@ -63,19 +59,29 @@ public interface IMovieRepository {
      * And convert to a model entity
      *
      * @param id
-     * @param ignoreDisk    choice to ignore what is in disk or not
      * @return Entity model
      * @throws ApiFailedGettingDataException
      */
-    MovieDetails getMovieById(int id, boolean ignoreDisk) throws ApiFailedGettingDataException;
+    MovieDetails getMovieById(int id) throws ApiFailedGettingDataException;
 
     /**
-     * Get ackowladge of user following or not
+     * Get acknowledge of user following or not the movie
      *
      * @param movieId
      * @return Boolean value
      */
-    Boolean isBeingFollowed(int movieId);
+    boolean isBeingFollowed(int movieId);
 
-    void setMovieIsBeingFollowed(int movieId, boolean value);
+    /**
+     * Follow a movie
+     *
+     * @param movieId
+     */
+    void followMovie(int movieId);
+
+    /**
+     * Unfollow a movie
+     * @param movieId
+     */
+    void unfollowMovie(int movieId);
 }

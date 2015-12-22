@@ -1,4 +1,4 @@
-package isel.pdm.yamda.data.handlers.service;
+package isel.pdm.yamda.data.services;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -28,7 +28,7 @@ public class MovieSearchService extends IntentService {
 
     public static final String SEARCH_RESULTS = "search_results";
 
-    public static final String NOTIFICATION = "isel.pdm.yamda.data.handlers.service.MovieSearchService";
+    public static final String NOTIFICATION = "isel.pdm.yamda.data.services.MovieSearchService";
 
     public MovieSearchService() {
         super("MovieSearchService");
@@ -40,7 +40,7 @@ public class MovieSearchService extends IntentService {
         try {
             String search = intent.getStringExtra(SEARCH_PARAM);
             int page = intent.getIntExtra(PAGE, 1);
-            List<MovieListDetails> movies = ((YamdaApplication) getApplication()).getMovieRepository().getMovieSearch(search, page, false);
+            List<MovieListDetails> movies = ((YamdaApplication) getApplication()).getMovieRepository().getMovieSearch(search, page);
             intent1.putExtra(DATA, true);
             intent1.putExtra(SEARCH_RESULTS, (Serializable) movies);
         } catch (ApiFailedGettingDataException e) {

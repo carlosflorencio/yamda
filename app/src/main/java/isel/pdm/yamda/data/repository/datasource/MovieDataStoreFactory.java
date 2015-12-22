@@ -1,29 +1,29 @@
 package isel.pdm.yamda.data.repository.datasource;
 
 
-import isel.pdm.yamda.data.providers.IMovieApi;
-import isel.pdm.yamda.data.providers.tmdb.TheMovieDbApi;
 
+/**
+ * This factory contains all the data store's types of our application
+ * cloud, memory, disk (content provider)
+ * !!Coupled to the api!!
+ */
 public class MovieDataStoreFactory {
 
-    private String language;
+    private CloudMovieDataStorage cloud;
 
-    public MovieDataStoreFactory(String language) {
-        this.language = language;
+    /**
+     * Creates a new instance of MovieDataStoreFactory with
+     */
+    public MovieDataStoreFactory(CloudMovieDataStorage cloud) {
+        this.cloud = cloud;
     }
 
-    public IMovieApi create(int id) {
-        //Check if that id is cached and return diskStorage instead
-
-        return createCloudDataStore();
-    }
-
-
-    public IMovieApi createCloudDataStore() {
-        return new CloudMovieDataStorage(new TheMovieDbApi(this.language));
-    }
-
-    public String getLanguage() {
-        return language;
+    /**
+     * Get the Cloud Movie Data Store witch obtains data from api
+     *
+     * @return
+     */
+    public CloudMovieDataStorage getCloudMovieDataStore() {
+        return this.cloud;
     }
 }

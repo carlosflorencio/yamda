@@ -8,8 +8,8 @@ import android.content.IntentFilter;
 import java.util.List;
 
 import isel.pdm.yamda.R;
-import isel.pdm.yamda.data.handlers.service.ListService;
-import isel.pdm.yamda.data.handlers.service.lists.TopListService;
+import isel.pdm.yamda.data.services.ListService;
+import isel.pdm.yamda.data.services.lists.TopListService;
 import isel.pdm.yamda.model.entity.MovieListDetails;
 import isel.pdm.yamda.presentation.presenter.common.MovieListablePresenter;
 import isel.pdm.yamda.presentation.view.fragment.TopMoviesListFragment;

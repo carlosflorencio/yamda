@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import isel.pdm.yamda.R;
 import isel.pdm.yamda.YamdaApplication;
-import isel.pdm.yamda.data.handlers.service.MovieDetailsService;
+import isel.pdm.yamda.data.services.MovieDetailsService;
 import isel.pdm.yamda.model.entity.MovieDetails;
 import isel.pdm.yamda.presentation.presenter.base.IPresenter;
 import isel.pdm.yamda.presentation.view.activity.MovieActivity;
@@ -32,7 +32,7 @@ public class MovieViewPresenter implements IPresenter, ILoadDataView<MovieDetail
             @Override
             public void setFollow(int movieId, boolean value) {
                 ((YamdaApplication) MovieViewPresenter.this.activity.getApplication())
-                        .getMovieRepository().setMovieIsBeingFollowed(movieId, value);
+                        .getMovieRepository().followMovie(movieId);
             }
         });
 

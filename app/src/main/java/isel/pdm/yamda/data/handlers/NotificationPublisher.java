@@ -1,4 +1,4 @@
-package isel.pdm.yamda.data.handlers.receiver;
+package isel.pdm.yamda.data.handlers;
 
 import android.app.Notification;
 import android.app.NotificationManager;

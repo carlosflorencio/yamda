@@ -1,4 +1,4 @@
-package isel.pdm.yamda.data.handlers.service;
+package isel.pdm.yamda.data.services;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -23,7 +23,7 @@ public class MovieDetailsService extends IntentService {
 
     public static final String MOVIE_PARAM = "movie_parameter";
 
-    public static final String NOTIFICATION = "isel.pdm.yamda.data.handlers.service.MovieDetailsService";
+    public static final String NOTIFICATION = "isel.pdm.yamda.data.services.MovieDetailsService";
 
 
     public MovieDetailsService() {
@@ -35,7 +35,7 @@ public class MovieDetailsService extends IntentService {
         Intent intent1 = new Intent(NOTIFICATION);
         try {
             int id = intent.getIntExtra(ID_PARAM, -1);
-            MovieDetails movie = ((YamdaApplication) getApplication()).getMovieRepository().getMovieById(id, false);
+            MovieDetails movie = ((YamdaApplication) getApplication()).getMovieRepository().getMovieById(id);
             Boolean isBeingFollowed = ((YamdaApplication) getApplication()).getMovieRepository().isBeingFollowed(id);
             intent1.putExtra(DATA, true);
             intent1.putExtra(FOLLOW, isBeingFollowed);

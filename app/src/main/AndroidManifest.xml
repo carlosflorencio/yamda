@@ -56,24 +56,24 @@
         <!-- /Activities -->
 
         <!-- Receivers -->
-        <receiver android:name=".data.handlers.receiver.NotificationPublisher"/>
+        <receiver android:name=".data.handlers.NotificationPublisher"/>
         <!-- /Receivers -->
 
         <!-- Services -->
         <service
-            android:name=".data.handlers.service.MovieDetailsService"
+            android:name=".data.services.MovieDetailsService"
             android:exported="false"/>
         <service
-            android:name=".data.handlers.service.lists.TheatersListService"
+            android:name=".data.services.lists.TheatersListService"
             android:exported="false"/>
         <service
-            android:name=".data.handlers.service.lists.TopListService"
+            android:name=".data.services.lists.TopListService"
             android:exported="false"/>
         <service
-            android:name=".data.handlers.service.lists.SoonListService"
+            android:name=".data.services.lists.SoonListService"
             android:exported="false"/>
         <service
-            android:name=".data.handlers.service.MovieSearchService"
+            android:name=".data.services.MovieSearchService"
             android:exported="false"/>
         <!-- /Services -->
     </application>
