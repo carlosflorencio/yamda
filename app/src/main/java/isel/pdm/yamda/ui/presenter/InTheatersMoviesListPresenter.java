@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.util.Log;
 
 import java.util.List;
 
@@ -13,50 +14,64 @@ import isel.pdm.yamda.data.services.ListService;
 import isel.pdm.yamda.data.services.lists.TheatersListService;
 import isel.pdm.yamda.model.MovieListDetails;
 import isel.pdm.yamda.ui.fragment.InTheatersMoviesListFragment;
-import isel.pdm.yamda.ui.presenter.common.MovieListablePresenter;
+import isel.pdm.yamda.ui.presenter.base.IPresenter;
 
 /**
  * Presenter class for the InTheatersFragment
  */
-public class InTheatersMoviesListPresenter extends MovieListablePresenter {
+public class InTheatersMoviesListPresenter implements IPresenter {
 
-    private final BroadcastReceiver receiver;
+    private final String TAG = getClass().getSimpleName();
+    private BroadcastReceiver receiver;
+    private InTheatersMoviesListFragment view;
 
     /**
      * Constructs a new instance of InTheatersMoviesListPresenter given the fragment
      * @param fragment
      */
     public InTheatersMoviesListPresenter(InTheatersMoviesListFragment fragment) {
-        super(fragment.getActivity(), fragment.getListView(), fragment.getLoadingView());
+        view = fragment;
 
-        receiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                if (intent.getBooleanExtra(ListService.DATA, false)) {
-                    setData((List<MovieListDetails>) intent.getSerializableExtra(ListService.MOVIES_PARAM));
-                } else {
-                    InTheatersMoviesListPresenter.this.showError(InTheatersMoviesListPresenter.this.activity.getResources().getString(R.string.no_connection));
-                }
-            }
-        };
-
+        this.subscribe();
         this.askForData();
     }
 
-    private void askForData() {
-        this.showLoading();
+    /**
+     * Register the broadcast receiver
+     */
+    private void subscribe() {
+        this.receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent.getBooleanExtra(ListService.DATA, false)) {
+                    view.setData((List<MovieListDetails>) intent.getSerializableExtra(ListService.MOVIES_PARAM));
+                } else {
+                    view.showError(view.getActivity().getResources().getString(
+                            R.string.no_connection));
+                }
+            }
+        };
+    }
 
-        Intent intent = new Intent(this.activity, TheatersListService.class);
-        this.activity.startService(intent);
+    private void askForData() {
+        //this.view.showLoading(); progress bar is visible by default in the layout
+        Log.v(TAG, "asked for data!");
+        Intent intent = new Intent(this.view.getActivity(), TheatersListService.class);
+        this.view.getActivity().startService(intent);
     }
 
     @Override
     public void onResume() {
-        activity.registerReceiver(receiver, new IntentFilter(TheatersListService.NOTIFICATION));
+        this.view.getActivity().registerReceiver(receiver, new IntentFilter(TheatersListService.NOTIFICATION));
     }
 
     @Override
     public void onPause() {
-        activity.unregisterReceiver(receiver);
+        this.view.getActivity().unregisterReceiver(receiver);
+    }
+
+    @Override
+    public void onDestroy() {
+        this.view = null;
     }
 }

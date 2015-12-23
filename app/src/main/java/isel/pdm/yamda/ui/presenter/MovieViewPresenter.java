@@ -4,29 +4,25 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.view.View;
-import android.widget.Toast;
 
 import isel.pdm.yamda.R;
 import isel.pdm.yamda.YamdaApplication;
 import isel.pdm.yamda.data.services.MovieDetailsService;
 import isel.pdm.yamda.model.MovieDetails;
 import isel.pdm.yamda.ui.activity.MovieActivity;
-import isel.pdm.yamda.ui.contract.ILoadDataView;
 import isel.pdm.yamda.ui.presenter.base.IPresenter;
 
 /**
  * Movie view details presenter
  */
-public class MovieViewPresenter implements IPresenter, ILoadDataView<MovieDetails> {
+public class MovieViewPresenter implements IPresenter {
 
     private final BroadcastReceiver receiver;
     private int id;
     private MovieActivity activity;
 
-    public MovieViewPresenter(MovieActivity activity, int movieId) {
+    public MovieViewPresenter(MovieActivity activity) {
         this.activity = activity;
-        this.id = movieId;
 
         activity.setFollowListener(new MovieActivity.FollowListener() {
             @Override
@@ -40,53 +36,29 @@ public class MovieViewPresenter implements IPresenter, ILoadDataView<MovieDetail
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (intent.getBooleanExtra(MovieDetailsService.DATA, false)) {
-                    MovieViewPresenter.this.activity.setFollowedState(intent.getBooleanExtra(MovieDetailsService.FOLLOW, false));
-                    setData((MovieDetails) intent.getParcelableExtra(MovieDetailsService.MOVIE_PARAM));
+                    MovieViewPresenter.this.activity.setFollowedState(
+                            intent.getBooleanExtra(MovieDetailsService.FOLLOW, false));
+                    MovieViewPresenter.this.activity.setData((MovieDetails) intent
+                            .getParcelableExtra(MovieDetailsService.MOVIE_PARAM));
                 } else {
-                    MovieViewPresenter.this.showError(MovieViewPresenter.this.activity.getResources().getString(R.string.no_connection));
+                    MovieViewPresenter.this.activity.showError(
+                            MovieViewPresenter.this.activity.getResources()
+                                                            .getString(R.string.no_connection));
                 }
             }
         };
-
-        this.askForData();
     }
 
     private void askForData() {
-        this.showLoading();
-
         Intent intent = new Intent(this.activity, MovieDetailsService.class);
         intent.putExtra(MovieDetailsService.ID_PARAM, id);
 
         activity.startService(intent);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | DataView Methods
-    |--------------------------------------------------------------------------
-    */
-    @Override
-    public void showLoading() {
-        this.activity.getMovieView().setVisibility(View.INVISIBLE);
-        this.activity.getLoadingView().setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void hideLoading() {
-        this.activity.getLoadingView().setVisibility(View.INVISIBLE);
-        this.activity.getMovieView().setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void showError(String message) {
-        this.hideLoading();
-        Toast.makeText(this.activity, message, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void setData(MovieDetails data) {
-        this.hideLoading();
-        this.activity.updateView(data);
+    public void setMovieId(int id) {
+        this.id = id;
+        this.askForData();
     }
 
     /*
@@ -106,6 +78,6 @@ public class MovieViewPresenter implements IPresenter, ILoadDataView<MovieDetail
 
     @Override
     public void onDestroy() {
-
+        this.activity = null;
     }
 }

@@ -19,6 +19,7 @@ public interface IPresenter {
 
     /**
      * Method that control the lifecycle of the view. It should be called in the view's
+     * Should delete the view reference for the gc work and avoid memory leaks
      * (Activity or Fragment) onDestroy() method.
      */
     void onDestroy();

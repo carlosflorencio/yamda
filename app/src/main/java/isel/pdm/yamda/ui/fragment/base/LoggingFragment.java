@@ -14,22 +14,28 @@ import android.view.ViewGroup;
  */
 public abstract class LoggingFragment extends Fragment {
 
-    /** Debugging tag used by the Android logger. */
-    protected final String TAG = getClass().getSimpleName();
+    /**
+     * Debugging tag used by the Android logger.
+     */
+    protected final String TAG = "FRAGMENT_" + getClass().getSimpleName();
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         Log.d(TAG, "onAttach() - the fragment is being attached to its context");
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(savedInstanceState != null) {
+        if (savedInstanceState != null) {
             // The fragment is being re-created.
             Log.d(TAG, "onCreate(): fragment re-created");
 
@@ -38,51 +44,78 @@ public abstract class LoggingFragment extends Fragment {
             Log.d(TAG, "onCreate(): fragment created anew");
         }
     }
-    /** {@inheritDoc} */
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = super.onCreateView(inflater, container, savedInstanceState);
-        Log.d(TAG, "onCreateView() - the fragment is creating its view");
+        String saved = savedInstanceState == null ? "yes" : "no";
+        Log.d(TAG,
+              "onCreateView() - the fragment is creating its view; savedInstanceState is null?" + saved);
         return view;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void onStart(){
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        Log.d(TAG, "onDestroyView() - the fragment destroyed its view");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onStart() {
         super.onStart();
         Log.d(TAG, "onStart() - the fragment is about to become visible");
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         Log.d(TAG, "onResume() - the fragment has become visible (it is now \"resumed\")");
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void onPause(){
+    public void onPause() {
         super.onPause();
         Log.d(TAG, "onPause() - the fragment is being hidden");
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void onStop(){
+    public void onStop() {
         super.onStop();
         Log.d(TAG, "onStop() - the fragment is no longer visible (it is now \"stopped\")");
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void onDestroy(){
+    public void onDestroy() {
         Log.d(TAG, "onDestroy() - the fragment is about to be destroyed");
         super.onDestroy();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onDetach() {
         super.onDetach();

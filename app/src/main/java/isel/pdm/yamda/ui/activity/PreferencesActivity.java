@@ -1,15 +1,16 @@
 package isel.pdm.yamda.ui.activity;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 
-import isel.pdm.yamda.ui.activity.base.AbstractBaseActivity;
+import isel.pdm.yamda.ui.activity.base.LoggingActivity;
 import isel.pdm.yamda.ui.fragment.PreferencesFragment;
 
 /**
  * Class used to store shared preferences of some details of the aplication
  */
-public class PreferencesActivity extends AbstractBaseActivity {
+public class PreferencesActivity extends LoggingActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,14 @@ public class PreferencesActivity extends AbstractBaseActivity {
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Display the back button
+     */
+    protected void setUpSupportActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
 }

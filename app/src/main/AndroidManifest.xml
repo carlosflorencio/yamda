@@ -25,7 +25,7 @@
 
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value=".presentation.view.activity.SearchableActivity"/>
+                android:value=".ui.activity.SearchableActivity"/>
         </activity>
 
         <activity android:name=".ui.activity.SearchableActivity">

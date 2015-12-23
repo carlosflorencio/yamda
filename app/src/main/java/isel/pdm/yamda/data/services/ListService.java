@@ -8,7 +8,7 @@ import android.app.IntentService;
  */
 public abstract class ListService extends IntentService {
 
-    public final String TAG = "DEBUG_" + getClass().getSimpleName();
+    public final String TAG = "SERVICE_" + getClass().getSimpleName();
 
     protected static final String PAGE = ListService.class.getName() + ".id";
 

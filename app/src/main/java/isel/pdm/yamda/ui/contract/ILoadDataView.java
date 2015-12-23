@@ -16,7 +16,6 @@ public interface ILoadDataView<T> {
      */
     void hideLoading();
 
-
     /**
      * Show an error message
      *

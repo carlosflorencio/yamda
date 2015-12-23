@@ -6,21 +6,28 @@ import android.os.Bundle;
 import isel.pdm.yamda.ui.presenter.base.IPresenter;
 
 /**
- * Base Fragment class for every fragment in this application.
+ * Presentable Fragment class for every fragment with a presenter in this application.
  */
-public class BaseFragment extends LoggingFragment {
+public abstract class PresentableFragment extends LoggingFragment {
 
     /**
      * Fragment Presenter
      */
     protected IPresenter presenter;
 
+    /**
+     * Method that return the presenter for the fragment
+     * Must be called in the concrete implementation
+     */
+    protected abstract IPresenter createPresenter();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-    }
 
+        if (this.presenter == null)
+            this.presenter = this.createPresenter();
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -31,26 +38,21 @@ public class BaseFragment extends LoggingFragment {
     public void onResume() {
         super.onResume();
 
-        //Fragment may not have a presenter
-        if(this.presenter != null)
-            this.presenter.onResume();
+        this.presenter.onResume();
     }
 
     @Override
     public void onPause() {
-        super.onResume();
+        super.onPause();
 
-        //Fragment may not have a presenter
-        if(this.presenter != null)
-            this.presenter.onPause();
+        this.presenter.onPause();
     }
 
     @Override
     public void onDestroy() {
-        super.onResume();
+        super.onDestroy();
 
-        //Fragment may not have a presenter
-        if(this.presenter != null)
-            this.presenter.onDestroy();
+        this.presenter.onDestroy();
+        this.presenter = null;
     }
 }

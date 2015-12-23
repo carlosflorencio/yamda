@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.TaskStackBuilder;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.NotificationCompat;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,23 +17,28 @@ import android.view.View.OnClickListener;
 import android.widget.Checkable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import isel.pdm.yamda.R;
+import isel.pdm.yamda.Utils;
 import isel.pdm.yamda.data.handlers.NotificationPublisher;
 import isel.pdm.yamda.model.Genre;
 import isel.pdm.yamda.model.MovieDetails;
-import isel.pdm.yamda.ui.activity.base.AbstractBaseActivity;
+import isel.pdm.yamda.ui.activity.base.PresentableActivity;
+import isel.pdm.yamda.ui.contract.ILoadDataView;
 import isel.pdm.yamda.ui.presenter.MovieViewPresenter;
+import isel.pdm.yamda.ui.presenter.base.IPresenter;
 
 /**
  * Activity to display the movie details
  */
-public class MovieActivity extends AbstractBaseActivity {
+public class MovieActivity extends PresentableActivity implements ILoadDataView<MovieDetails> {
 
     public static final int MINUTES = 60;
     public static final int SECONDS = 60;
+
 
     public interface FollowListener {
         void setFollow(int movieId, boolean value);
@@ -42,6 +48,7 @@ public class MovieActivity extends AbstractBaseActivity {
 
     private View movieView;
     private View loadingView;
+    private int movieId;
 
     private AlarmManager alarmManager;
 
@@ -54,18 +61,33 @@ public class MovieActivity extends AbstractBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.movie_layout);
+        this.setContentView(R.layout.activity_movie);
 
         this.movieView = this.findViewById(R.id.movie_view);
         this.loadingView = this.findViewById(R.id.loading_movie);
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         this.notificationIntent = new Intent(this, NotificationPublisher.class);
 
-        this.presenter = new MovieViewPresenter(this, getIntent().getExtras().getInt(ID_TAG));
+        this.movieId = getIntent().getExtras().getInt(ID_TAG);
 
         this.checkFollow(findViewById(R.id.movie_follow));
 
         this.setUpSupportActionBar();
+
+        ((MovieViewPresenter) this.presenter).setMovieId(this.movieId);
+    }
+
+    @Override
+    protected IPresenter createPresenter() {
+        return new MovieViewPresenter(this);
+    }
+
+    /**
+     * Display the back button
+     */
+    protected void setUpSupportActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     /**
@@ -80,7 +102,6 @@ public class MovieActivity extends AbstractBaseActivity {
             case android.R.id.home:
                 finish();
                 break;
-
         }
         return super.onOptionsItemSelected(item);
     }
@@ -90,10 +111,11 @@ public class MovieActivity extends AbstractBaseActivity {
             @Override
             public void onClick(View v) {
                 if (isBeingFollowed) {
-                    showToastMessage("You are no longer following this movie");
+                    Utils.showToastMessage(MovieActivity.this,
+                                           "You are no longer following this movie");
                     cancelNotification();
                 } else {
-                    showToastMessage("You are now following this movie");
+                    Utils.showToastMessage(MovieActivity.this, "You are now following this movie");
                     scheduleNotification(getNotificationReleased());
                 }
                 isBeingFollowed = !isBeingFollowed;
@@ -105,37 +127,47 @@ public class MovieActivity extends AbstractBaseActivity {
     }
 
     private void cancelNotification() {
-        alarmManager.cancel(PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_ONE_SHOT));
-        PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_ONE_SHOT).cancel();
+        alarmManager.cancel(PendingIntent.getBroadcast(this, 0, notificationIntent,
+                                                       PendingIntent.FLAG_ONE_SHOT));
+        PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_ONE_SHOT)
+                     .cancel();
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void scheduleNotification(Notification notification) {
-        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, movie.getId());  // Movie id
-        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification);      // Notification (argument)
+        notificationIntent
+                .putExtra(NotificationPublisher.NOTIFICATION_ID, movie.getId());  // Movie id
+        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION,
+                                    notification);      // Notification (argument)
 
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent pendingIntent = PendingIntent
+                .getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_ONE_SHOT);
 
         long futureInMillis = movie.whenIsBeingReleased();
 //        long futureInMillis = SystemClock.elapsedRealtime() + 5000;   //DEBUG PURPOSES
 
-        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);  // Set an alarm to tick at x time
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis,
+                         pendingIntent);  // Set an alarm to tick at x time
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private Notification getNotificationReleased() {
-        Intent intent = new Intent(this, MovieActivity.class);      // Activity instantiated after clicking notification
+        Intent intent = new Intent(this,
+                                   MovieActivity.class);      // Activity instantiated after clicking notification
         intent.putExtra(MovieActivity.ID_TAG, movie.getId());       // id of movie
 
         PendingIntent pIntent = TaskStackBuilder.create(this)
-                .addParentStack(MovieActivity.class)
-                .addNextIntent(intent)
-                .getPendingIntent(0, PendingIntent.FLAG_ONE_SHOT);
+                                                .addParentStack(MovieActivity.class)
+                                                .addNextIntent(intent)
+                                                .getPendingIntent(0, PendingIntent.FLAG_ONE_SHOT);
 
         return new NotificationCompat.Builder(this)
-                .setContentTitle(movie.getTitle())                                  // Title of notification
-                .setContentText(getResources().getString(R.string.movie_released))                                  // Text of notification
-                .setSmallIcon(R.drawable.yamda)                                 // Icon of notification
+                .setContentTitle(
+                        movie.getTitle())                                  // Title of notification
+                .setContentText(getResources().getString(
+                        R.string.movie_released))                                  // Text of notification
+                .setSmallIcon(
+                        R.drawable.yamda)                                 // Icon of notification
                 .setContentIntent(pIntent).build();
     }
 
@@ -209,5 +241,31 @@ public class MovieActivity extends AbstractBaseActivity {
         intent.putExtra(ID_TAG, id);
 
         return intent;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | DataView Methods
+    |--------------------------------------------------------------------------
+    */
+    public void showLoading() {
+        this.movieView.setVisibility(View.GONE);
+        this.loadingView.setVisibility(View.VISIBLE);
+    }
+
+    public void hideLoading() {
+        this.loadingView.setVisibility(View.GONE);
+        this.movieView.setVisibility(View.VISIBLE);
+    }
+
+    public void showError(String message) {
+        this.hideLoading();
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void setData(MovieDetails data) {
+        this.hideLoading();
+        this.updateView(data);
     }
 }

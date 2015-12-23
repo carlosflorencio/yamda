@@ -12,22 +12,23 @@ import isel.pdm.yamda.data.services.ListService;
 import isel.pdm.yamda.data.services.lists.SoonListService;
 import isel.pdm.yamda.model.MovieListDetails;
 import isel.pdm.yamda.ui.fragment.SoonMoviesListFragment;
-import isel.pdm.yamda.ui.presenter.common.MovieListablePresenter;
+import isel.pdm.yamda.ui.presenter.base.IPresenter;
 
-public class SoonMoviesListPresenter extends MovieListablePresenter {
+public class SoonMoviesListPresenter implements IPresenter {
 
-    private final BroadcastReceiver receiver;
+    private BroadcastReceiver receiver;
+    private SoonMoviesListFragment view;
 
-    public SoonMoviesListPresenter(SoonMoviesListFragment fragment) {
-        super(fragment.getActivity(), fragment.getListView(), fragment.getLoadingView());
+    public SoonMoviesListPresenter(SoonMoviesListFragment v) {
+        this.view = v;
 
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (intent.getBooleanExtra(ListService.DATA, false)) {
-                    setData((List<MovieListDetails>) intent.getSerializableExtra(ListService.MOVIES_PARAM));
+                    view.setData((List<MovieListDetails>) intent.getSerializableExtra(ListService.MOVIES_PARAM));
                 } else {
-                    SoonMoviesListPresenter.this.showError(SoonMoviesListPresenter.this.activity.getResources().getString(R.string.no_connection));
+                    view.showError(view.getActivity().getResources().getString(R.string.no_connection));
                 }
             }
         };
@@ -36,19 +37,24 @@ public class SoonMoviesListPresenter extends MovieListablePresenter {
     }
 
     private void askForData() {
-        this.showLoading();
+        //this.view.showLoading(); progress bar is visible by default in the layout
 
-        Intent intent = new Intent(activity, SoonListService.class);
-        activity.startService(intent);
+        Intent intent = new Intent(this.view.getActivity(), SoonListService.class);
+        this.view.getActivity().startService(intent);
     }
 
     @Override
     public void onResume() {
-        activity.registerReceiver(receiver, new IntentFilter(SoonListService.NOTIFICATION));
+        this.view.getActivity().registerReceiver(receiver, new IntentFilter(SoonListService.NOTIFICATION));
     }
 
     @Override
     public void onPause() {
-        activity.unregisterReceiver(receiver);
+        this.view.getActivity().unregisterReceiver(receiver);
+    }
+
+    @Override
+    public void onDestroy() {
+        this.view = null;
     }
 }

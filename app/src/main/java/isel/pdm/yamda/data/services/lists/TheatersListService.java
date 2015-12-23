@@ -15,7 +15,6 @@ import isel.pdm.yamda.model.MovieListDetails;
  * Class used to //TODO: comentary
  */
 public class TheatersListService extends ListService {
-
     public static final String NOTIFICATION = "isel.pdm.yamda.data.handlers.service.list.TheatersListService";
 
     @Override
@@ -23,7 +22,6 @@ public class TheatersListService extends ListService {
         Intent newIntent = new Intent(NOTIFICATION);
         try {
             int page = intent.getIntExtra(PAGE, 1);
-            boolean ignoreDisk = intent.getBooleanExtra(IGNORE_DISK, false);
             //Log.v("DEBUG", "Page: "+ page+", : ignoreDisk: "+ignoreDisk);     DEBUG PURPOSE
             List<MovieListDetails> movies = ((YamdaApplication) getApplication()).getMovieRepository().getTheatersMovies(page);
 
