@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.util.Log;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ import isel.pdm.yamda.ui.presenter.base.IPresenter;
 
 public class SoonMoviesListPresenter implements IPresenter {
 
+    private final String TAG = getClass().getSimpleName();
     private BroadcastReceiver receiver;
     private SoonMoviesListFragment view;
 
@@ -38,7 +40,7 @@ public class SoonMoviesListPresenter implements IPresenter {
 
     private void askForData() {
         //this.view.showLoading(); progress bar is visible by default in the layout
-
+        Log.v(TAG, "asked for data!");
         Intent intent = new Intent(this.view.getActivity(), SoonListService.class);
         this.view.getActivity().startService(intent);
     }
