@@ -2,6 +2,10 @@ package isel.pdm.yamda.data.provider.table;
 
 import android.database.sqlite.SQLiteDatabase;
 
+/**
+ * Class used to create the movies details table witch belongs to a movie
+ * Can have multiple translations
+ */
 public class MoviesDetailsTable {
 
     public static final String NAME = "movies_details";
@@ -17,9 +21,11 @@ public class MoviesDetailsTable {
             + COLUMN_ID + " INTEGER NOT NULL, "
             + COLUMN_LANG + " TEXT NOT NULL, "
             + COLUMN_TITLE + " TEXT NOT NULL, "
-            + COLUMN_RUNTIME + " INTEGER NOT NULL, "
-            + COLUMN_OVERVIEW + " TEXT NOT NULL, "
-            + "PRIMARY KEY(" + COLUMN_ID + ", " + COLUMN_LANG + ")"
+            + COLUMN_RUNTIME + " INTEGER, "
+            + COLUMN_OVERVIEW + " TEXT, "
+            + "PRIMARY KEY(" + COLUMN_ID + ", " + COLUMN_LANG + "), "
+            + "FOREIGN KEY(" + COLUMN_ID +") REFERENCES " + MoviesTable.NAME
+                                        + "(" + MoviesTable.COLUMN_ID + ") ON DELETE CASCADE"
             + ");";
 
     public static void onCreate(SQLiteDatabase database) {
