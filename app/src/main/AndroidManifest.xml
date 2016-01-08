@@ -76,6 +76,14 @@
             android:name=".data.services.MovieSearchService"
             android:exported="false"/>
         <!-- /Services -->
+
+        <!-- Provider -->
+        <provider
+            android:name=".data.provider.MoviesContentProvider"
+            android:authorities="isel.pdm.yamda.provider"
+            android:exported="false"/>
+        <!-- /Provider -->
+
     </application>
 
 </manifest>
