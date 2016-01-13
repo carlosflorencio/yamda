@@ -16,7 +16,7 @@ public class FollowMoviesTable {
             + "("
             + COLUMN_ID + " INTEGER NOT NULL, "
             + "PRIMARY KEY(" + COLUMN_ID  + "), "
-            + "FOREIGN KEY(" + COLUMN_ID +") REFERENCES " + MoviesTable.NAME + "(" + MoviesTable.COLUMN_ID + ")"
+            + "FOREIGN KEY(" + COLUMN_ID +") REFERENCES " + MoviesTable.NAME + "(" + MoviesTable.COLUMN_ID + ") ON DELETE CASCADE"
             + ");";
 
     public static void onCreate(SQLiteDatabase database) {

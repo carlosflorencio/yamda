@@ -79,7 +79,7 @@
 
         <!-- Provider -->
         <provider
-            android:name=".data.provider.MoviesContentProvider"
+            android:name=".data.provider.MoviesProvider"
             android:authorities="isel.pdm.yamda.provider"
             android:exported="false"/>
         <!-- /Provider -->

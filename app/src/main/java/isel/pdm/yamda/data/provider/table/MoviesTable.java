@@ -16,9 +16,16 @@ public class MoviesTable {
     public static final String COLUMN_POSTER = "poster";
     public static final String COLUMN_POPULARITY = "popularity";
     public static final String COLUMN_LIST_TYPE = "list_type";
+    public static final String COLUMN_LANG = "lang";
+    public static final String COLUMN_TITLE = "title";
 
-    public static final String TYPE_SOON = "now";
-    public static final String TYPE_NOW = "soon";
+    //flag to know if the movie details are present
+    public static final String COLUMN_DOWNLOADED = "downloaded";
+    public static final String COLUMN_OVERVIEW = "overview";
+    public static final String COLUMN_RUNTIME = "runtime";
+
+    public static final String TYPE_SOON = "soon";
+    public static final String TYPE_NOW = "now";
 
     // Database creation SQL statement
     private static final String CREATE = "CREATE TABLE " + NAME
@@ -30,7 +37,12 @@ public class MoviesTable {
             + COLUMN_RATING + " REAL NOT NULL, "
             + COLUMN_POPULARITY + " REAL NOT NULL, "
             + COLUMN_POSTER + " TEXT NOT NULL, "
-            + COLUMN_LIST_TYPE + " TEXT NOT NULL"
+            + COLUMN_LIST_TYPE + " TEXT NOT NULL, "
+            + COLUMN_LANG + " TEXT NOT NULL, "
+            + COLUMN_TITLE + " TEXT NOT NULL, "
+            + COLUMN_DOWNLOADED + " INTEGER, "
+            + COLUMN_OVERVIEW + " TEXT, "
+            + COLUMN_RUNTIME + " INTEGER"
             + ");";
 
     public static void onCreate(SQLiteDatabase database) {
