@@ -2,14 +2,6 @@ package isel.pdm.yamda.data.services;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.util.Log;
-
-import java.io.Serializable;
-import java.util.List;
-
-import isel.pdm.yamda.YamdaApplication;
-import isel.pdm.yamda.data.exception.ApiFailedGettingDataException;
-import isel.pdm.yamda.model.MovieListDetails;
 
 
 /**
@@ -36,17 +28,17 @@ public class MovieSearchService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        Intent intent1 = new Intent(NOTIFICATION);
-        try {
-            String search = intent.getStringExtra(SEARCH_PARAM);
-            int page = intent.getIntExtra(PAGE, 1);
-            List<MovieListDetails> movies = ((YamdaApplication) getApplication()).getMovieRepository().getMovieSearch(search, page);
-            intent1.putExtra(DATA, true);
-            intent1.putExtra(SEARCH_RESULTS, (Serializable) movies);
-        } catch (ApiFailedGettingDataException e) {
-            intent1.putExtra(DATA, false);
-            Log.v(TAG, "Exception! Message: " + e.getMessage());
-        }
-        sendBroadcast(intent1);
+//        Intent intent1 = new Intent(NOTIFICATION);
+//        try {
+//            String search = intent.getStringExtra(SEARCH_PARAM);
+//            int page = intent.getIntExtra(PAGE, 1);
+//            List<MovieListDetails> movies = ((YamdaApplication) getApplication()).getMovieRepository().getMovieSearch(search, page);
+//            intent1.putExtra(DATA, true);
+//            intent1.putExtra(SEARCH_RESULTS, (Serializable) movies);
+//        } catch (FailedGettingDataException e) {
+//            intent1.putExtra(DATA, false);
+//            Log.v(TAG, "Exception! Message: " + e.getMessage());
+//        }
+//        sendBroadcast(intent1);
     }
 }

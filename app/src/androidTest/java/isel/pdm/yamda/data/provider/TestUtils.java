@@ -4,10 +4,13 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.test.AndroidTestCase;
 
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import isel.pdm.yamda.data.provider.table.GenresTable;
 import isel.pdm.yamda.data.provider.table.MoviesTable;
+import isel.pdm.yamda.model.Genre;
 
 public class TestUtils extends AndroidTestCase {
 
@@ -78,6 +81,12 @@ public class TestUtils extends AndroidTestCase {
                       MoviesTable.TYPE_SOON, 7.3, "en", "EN: Small"),
     };
 
+    public static Genre[] defaultGenres = new Genre[] {
+            new Genre(1, "Acção"),
+            new Genre(2, "Drama"),
+            new Genre(3, "Romance")
+    };
+
     /*
     |--------------------------------------------------------------------------
     | Create values
@@ -100,6 +109,17 @@ public class TestUtils extends AndroidTestCase {
         testValues.put(MoviesTable.COLUMN_DOWNLOADED, m.downloaded ? 1 : 0);
         testValues.put(MoviesTable.COLUMN_RUNTIME, m.runtime);
         testValues.put(MoviesTable.COLUMN_OVERVIEW, m.overview);
+
+
+        return testValues;
+    }
+
+    static ContentValues createGenreContent(Genre m) {
+
+        ContentValues testValues = new ContentValues();
+        testValues.put(GenresTable.COLUMN_ID, m.getId());
+        testValues.put(GenresTable.COLUMN_LANG, Locale.getDefault().getLanguage());
+        testValues.put(GenresTable.COLUMN_TITLE, m.getName());
 
 
         return testValues;

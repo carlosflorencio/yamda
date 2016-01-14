@@ -3,29 +3,31 @@ package isel.pdm.yamda.data.repository;
 import java.io.IOException;
 import java.util.List;
 
+import isel.pdm.yamda.data.api.TMDbApiSync;
 import isel.pdm.yamda.data.api.entity.MovieDTO;
 import isel.pdm.yamda.data.api.entity.MovieListingDTO;
-import isel.pdm.yamda.data.exception.ApiFailedGettingDataException;
-import isel.pdm.yamda.data.mapper.ModelEntitiesDataMapper;
-import isel.pdm.yamda.data.repository.datasource.MovieDataStoreFactory;
+import isel.pdm.yamda.data.exception.FailedGettingDataException;
+import isel.pdm.yamda.data.mapper.DTOModelEntitiesDataMapper;
+import isel.pdm.yamda.data.repository.base.IMovieRepository;
+import isel.pdm.yamda.model.Genre;
 import isel.pdm.yamda.model.MovieDetails;
 import isel.pdm.yamda.model.MovieListDetails;
 
 /**
  * Movies Repository, fetch list of movies and movies details
- * This class  uses a factory and a mapper to retrieve the data and convert to a model entity
+ * This class  uses an api and a mapper to retrieve the data and convert to a model entity
  * synchronously
  */
 public class TMDbMovieRepository implements IMovieRepository {
 
     protected final String TAG = "DEBUG_" + getClass().getSimpleName();
 
-    private final MovieDataStoreFactory factory;
-    private final ModelEntitiesDataMapper mapper;
+    private final TMDbApiSync api;
+    private final DTOModelEntitiesDataMapper mapper;
 
-    public TMDbMovieRepository(MovieDataStoreFactory factory,
-                               ModelEntitiesDataMapper mapper) {
-        this.factory = factory;
+    public TMDbMovieRepository(TMDbApiSync api,
+                               DTOModelEntitiesDataMapper mapper) {
+        this.api = api;
         this.mapper = mapper;
     }
 
@@ -35,15 +37,15 @@ public class TMDbMovieRepository implements IMovieRepository {
      *
      * @param page api page
      * @return Entity model
-     * @throws ApiFailedGettingDataException
+     * @throws FailedGettingDataException
      */
     @Override
-    public List<MovieListDetails> getTheatersMovies(int page) throws ApiFailedGettingDataException {
+    public List<MovieListDetails> getTheatersMovies(int page) throws FailedGettingDataException {
         try {
-            MovieListingDTO data = this.factory.getCloudMovieDataStore().getTheatersMovies(page);
+            MovieListingDTO data = this.api.getTheatersMovies(page);
             return this.mapper.transform(data);
         } catch (IOException e) {
-            throw new ApiFailedGettingDataException(e);
+            throw new FailedGettingDataException(e);
         }
     }
 
@@ -53,16 +55,16 @@ public class TMDbMovieRepository implements IMovieRepository {
      *
      * @param page api page
      * @return Entity model
-     * @throws ApiFailedGettingDataException
+     * @throws FailedGettingDataException
      */
     @Override
-    public List<MovieListDetails> getSoonMovies(int page) throws ApiFailedGettingDataException {
+    public List<MovieListDetails> getSoonMovies(int page) throws FailedGettingDataException {
 
         try {
-            MovieListingDTO data = this.factory.getCloudMovieDataStore().getSoonMovies(page);
+            MovieListingDTO data = this.api.getSoonMovies(page);
             return this.mapper.transform(data);
         } catch (IOException e) {
-            throw new ApiFailedGettingDataException(e);
+            throw new FailedGettingDataException(e);
         }
     }
 
@@ -72,15 +74,15 @@ public class TMDbMovieRepository implements IMovieRepository {
      *
      * @param page api page
      * @return Entity model
-     * @throws ApiFailedGettingDataException
+     * @throws FailedGettingDataException
      */
     @Override
-    public List<MovieListDetails> getTopMovies(int page) throws ApiFailedGettingDataException {
+    public List<MovieListDetails> getTopMovies(int page) throws FailedGettingDataException {
         try {
-            MovieListingDTO data = this.factory.getCloudMovieDataStore().getTopMovies(page);
+            MovieListingDTO data = this.api.getTopMovies(page);
             return this.mapper.transform(data);
         } catch (IOException e) {
-            throw new ApiFailedGettingDataException(e);
+            throw new FailedGettingDataException(e);
         }
     }
 
@@ -91,16 +93,16 @@ public class TMDbMovieRepository implements IMovieRepository {
      * @param search search query
      * @param page   api page
      * @return Entity model
-     * @throws ApiFailedGettingDataException
+     * @throws FailedGettingDataException
      */
     @Override
     public List<MovieListDetails> getMovieSearch(String search, int page)
-            throws ApiFailedGettingDataException {
+            throws FailedGettingDataException {
         try {
-            MovieListingDTO data = this.factory.getCloudMovieDataStore().getMoviesSearch(search, page);
+            MovieListingDTO data = this.api.getMoviesSearch(search, page);
             return this.mapper.transform(data);
         } catch (IOException e) {
-            throw new ApiFailedGettingDataException(e);
+            throw new FailedGettingDataException(e);
         }
     }
 
@@ -109,46 +111,31 @@ public class TMDbMovieRepository implements IMovieRepository {
      * And convert to a model entity
      *
      * @return Entity model
-     * @throws ApiFailedGettingDataException
+     * @throws FailedGettingDataException
      */
     @Override
-    public MovieDetails getMovieById(int id) throws ApiFailedGettingDataException {
+    public MovieDetails getMovieById(int id) throws FailedGettingDataException {
         try {
-            MovieDTO data = this.factory.getCloudMovieDataStore().getMovie(id);
+            MovieDTO data = this.api.getMovie(id);
             return this.mapper.transform(data);
         } catch (IOException e) {
-            throw new ApiFailedGettingDataException(e);
+            throw new FailedGettingDataException(e);
         }
     }
 
     /**
-     * Check if the movie is being followed by the user
+     * Get a list of genres synchronously
+     * And convert to a model entity
      *
-     * @param movieId
      * @return
+     * @throws FailedGettingDataException
      */
     @Override
-    public boolean isBeingFollowed(int movieId) {
-        return false;
-    }
-
-    /**
-     * Follow a movie
-     *
-     * @param movieId
-     */
-    @Override
-    public void followMovie(int movieId) {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * Unfollow a movie
-     *
-     * @param movieId
-     */
-    @Override
-    public void unfollowMovie(int movieId) {
-        throw new UnsupportedOperationException();
+    public List<Genre> getGenres() throws FailedGettingDataException {
+        try {
+            return this.mapper.transform(this.api.getGenres());
+        } catch (IOException e) {
+            throw new FailedGettingDataException(e);
+        }
     }
 }

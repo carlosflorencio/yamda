@@ -4,19 +4,19 @@ import java.io.IOException;
 
 /**
  * A class that represents an exception that occur when something odd happens getting
- * the data from the api
+ * the data from the repository
  */
-public class ApiFailedGettingDataException extends Exception {
+public class FailedGettingDataException extends Exception {
 
     /**
      * Construct the exception by passing an IOException
      * @param ex
      */
-    public ApiFailedGettingDataException(IOException ex) {
+    public FailedGettingDataException(IOException ex) {
         super(ex.getMessage());
     }
 
-    public ApiFailedGettingDataException(String detailMessage) {
+    public FailedGettingDataException(String detailMessage) {
         super(detailMessage);
     }
 }

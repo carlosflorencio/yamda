@@ -8,7 +8,7 @@ import isel.pdm.yamda.ui.activity.base.LoggingActivity;
 import isel.pdm.yamda.ui.fragment.PreferencesFragment;
 
 /**
- * Class used to store shared preferences of some details of the aplication
+ * Class used to store shared preferences of some details of the application
  */
 public class PreferencesActivity extends LoggingActivity {
 

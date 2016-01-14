@@ -31,7 +31,8 @@ public class MovieListingDTO {
         private String backdrop_path;
         private String release_date;
         private int[] genre_ids;
-        private float vote_average;
+        private double vote_average;
+        private double popularity;
         private String original_title;
         private String original_language;
         private String overview;
@@ -60,7 +61,7 @@ public class MovieListingDTO {
             return genre_ids;
         }
 
-        public float getVoteAverage() {
+        public double getVoteAverage() {
             return vote_average;
         }
 
@@ -74,6 +75,10 @@ public class MovieListingDTO {
 
         public String getOverview() {
             return overview;
+        }
+
+        public double getPopularity() {
+            return popularity;
         }
     }
 }

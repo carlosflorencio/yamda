@@ -1,5 +1,6 @@
 package isel.pdm.yamda.data.api;
 
+import isel.pdm.yamda.data.api.entity.GenreListingDTO;
 import isel.pdm.yamda.data.api.entity.MovieDTO;
 import isel.pdm.yamda.data.api.entity.MovieListingDTO;
 import retrofit.Call;
@@ -86,5 +87,15 @@ public interface ITMDbServiceAPI {
                                                @Query("query") String movie,
                                                @Query("page") int page,
                                                @Query("language") String lang);
+
+    /**
+     * Retrieves a lisf of the movies genres
+     * @param API_KEY
+     * @param language
+     * @return
+     */
+    @GET("/3/genre/movie/list")
+    Call<GenreListingDTO> getGenres(@Query("api_key") String API_KEY,
+                                         @Query("language") String language);
 
 }

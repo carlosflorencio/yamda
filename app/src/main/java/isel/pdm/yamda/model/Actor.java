@@ -1,18 +1,9 @@
 package isel.pdm.yamda.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 /**
  * This class is used for representing an Actor Member
- * <p/>
- * Instances can also be used to transport information between components of the
- * application (e.g. Activities, Services). Because those interactions may cross process
- * boundaries, the class supports the {@link Parcelable} contract and conventions.
- * <p/>
- * Instances are designed to be immutable, and are therefore thread-safe.
  */
-public final class Actor implements Parcelable {
+public final class Actor {
 
     /**
      * The actor cast id
@@ -83,44 +74,4 @@ public final class Actor implements Parcelable {
         return order;
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Parcelable methods
-    |--------------------------------------------------------------------------
-    */
-    protected Actor(Parcel in) {
-        cast_id = in.readString();
-        character = in.readString();
-        id = in.readInt();
-        name = in.readString();
-        profile_path = in.readString();
-        order = in.readInt();
-    }
-
-    public static final Creator<Actor> CREATOR = new Creator<Actor>() {
-        @Override
-        public Actor createFromParcel(Parcel in) {
-            return new Actor(in);
-        }
-
-        @Override
-        public Actor[] newArray(int size) {
-            return new Actor[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.cast_id);
-        dest.writeString(this.character);
-        dest.writeInt(this.id);
-        dest.writeString(this.name);
-        dest.writeString(this.profile_path);
-        dest.writeInt(this.order);
-    }
 }

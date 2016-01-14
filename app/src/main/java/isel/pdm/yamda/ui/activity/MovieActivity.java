@@ -211,7 +211,7 @@ public class MovieActivity extends PresentableActivity implements ILoadDataView<
         genre.setText(createGenreText(movie.getGenres()));
         rating.setText(this.getString(R.string.row_rating, movie.getRating()));
         runtime.setText(createRuntimeText(movie.getRuntime()));
-        releaseYear.setText(this.getString(R.string.row_released, movie.getRelease_date()));
+        releaseYear.setText(this.getString(R.string.row_released, movie.getReleaseDate()));
         overview.setText(movie.getOverview());
         if (movie.whenIsBeingReleased() > 0) {
             findViewById(R.id.movie_follow).setVisibility(View.VISIBLE);

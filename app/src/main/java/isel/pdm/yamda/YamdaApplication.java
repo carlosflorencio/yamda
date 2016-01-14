@@ -10,12 +10,6 @@ import android.content.res.Configuration;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
 
-import isel.pdm.yamda.data.api.TMDbApiSync;
-import isel.pdm.yamda.data.mapper.ModelEntitiesDataMapper;
-import isel.pdm.yamda.data.repository.IMovieRepository;
-import isel.pdm.yamda.data.repository.TMDbMovieRepository;
-import isel.pdm.yamda.data.repository.datasource.CloudMovieDataStorage;
-import isel.pdm.yamda.data.repository.datasource.MovieDataStoreFactory;
 import isel.pdm.yamda.data.services.ListService;
 import isel.pdm.yamda.data.services.lists.SoonListService;
 import isel.pdm.yamda.data.services.lists.TheatersListService;
@@ -31,17 +25,12 @@ public class YamdaApplication extends Application {
      */
     private String language;
 
-    /**
-     * Instance of movie repository
-     */
-    private IMovieRepository movieRepository;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
         initLocaleConfiguration(getResources().getConfiguration());
-        initMovieRepository();
         initPeriodicUpdates();
     }
 
@@ -50,7 +39,6 @@ public class YamdaApplication extends Application {
         super.onConfigurationChanged(newConfig);
 
         initLocaleConfiguration(newConfig);
-        initMovieRepository();
     }
 
     /*
@@ -64,19 +52,6 @@ public class YamdaApplication extends Application {
      */
     private void initLocaleConfiguration(Configuration config) {
         language = config.locale.getLanguage();
-    }
-
-    /**
-     * Constructs the movie repository with the all the data sources and a mapper
-     */
-    private void initMovieRepository() {
-        TMDbApiSync api = new TMDbApiSync(language);
-
-        ModelEntitiesDataMapper dataMapper  = new ModelEntitiesDataMapper();
-        MovieDataStoreFactory   dataFactory = new MovieDataStoreFactory(
-                new CloudMovieDataStorage(api));
-
-        this.movieRepository = new TMDbMovieRepository(dataFactory, dataMapper);
     }
 
 
@@ -116,7 +91,4 @@ public class YamdaApplication extends Application {
         return language;
     }
 
-    public IMovieRepository getMovieRepository() {
-        return movieRepository;
-    }
 }

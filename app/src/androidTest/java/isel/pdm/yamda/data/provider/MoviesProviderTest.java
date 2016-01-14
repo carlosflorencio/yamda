@@ -9,6 +9,9 @@ import android.net.Uri;
 import android.test.ProviderTestCase2;
 import android.test.mock.MockContentResolver;
 
+import java.util.Locale;
+
+import isel.pdm.yamda.data.provider.table.GenresTable;
 import isel.pdm.yamda.data.provider.table.MoviesTable;
 
 
@@ -93,6 +96,8 @@ public class MoviesProviderTest extends ProviderTestCase2<MoviesProvider> {
         assertEquals(1, res.getCount());
 
         TestUtils.validateCursor(res, values);
+
+        res.close();
     }
 
     public void testInsertBulkMovies() {
@@ -111,6 +116,70 @@ public class MoviesProviderTest extends ProviderTestCase2<MoviesProvider> {
             ContentValues v = TestUtils.createMovieContent(TestUtils.defaultMovies[i++]);
             TestUtils.validateCurrentRecord(res, v);
         }
+
+        res.close();
+    }
+
+    public void testInsertBulkGenres() {
+        final Uri uri = MoviesContract.GenreEntry.CONTENT_URI;
+        final int len = TestUtils.defaultGenres.length;
+
+        int inserted = insertGenresInContentProvider();
+        assertEquals(len, inserted);
+
+        Cursor res = resolve.query(uri, null, null, null, null);
+
+        assertEquals(len, res.getCount());
+
+        int i = 0;
+        while (res.moveToNext()) {
+            ContentValues v = TestUtils.createGenreContent(TestUtils.defaultGenres[i++]);
+            TestUtils.validateCurrentRecord(res, v);
+        }
+
+        res.close();
+    }
+
+    public void testAssociateMovieWithGenres() {
+        TestUtils.Movie movie = TestUtils.defaultMovies[0];
+        Uri movieUri = resolve.insert(MoviesContract.MovieEntry.CONTENT_URI, TestUtils.createMovieContent(movie));
+
+        Cursor res1 = resolve.query(movieUri, null, null, null, null);
+        assertTrue(res1.moveToFirst());
+
+        ContentValues[] valuesPivot = new ContentValues[TestUtils.defaultGenres.length];
+        for (int i = 0; i < valuesPivot.length; i++) {
+            ContentValues v = new ContentValues();
+            v.put(GenresTable.PIVOT_COLUMN_ID, TestUtils.defaultGenres[i].getId());
+            v.put(GenresTable.PIVOT_COLUMN_MOVIE_ID, movie.id);
+            v.put(GenresTable.PIVOT_COLUMN_LANG, Locale.getDefault().getLanguage());
+
+            valuesPivot[i] = v;
+        }
+
+        int insertedGenres = insertGenresInContentProvider();
+        assertEquals(TestUtils.defaultGenres.length, insertedGenres);
+
+        final Uri uri = MoviesContract.GenreEntry.CONTENT_URI_PIVOT;
+        int inserted = resolve.bulkInsert(uri, valuesPivot);
+        assertEquals(TestUtils.defaultGenres.length, inserted);
+
+        final Uri uri_pivot_movie = MoviesContract.GenreEntry.buildGenrePivotUri(movie.id);
+        Cursor res = resolve
+                .query(uri_pivot_movie, null, null, null,
+                       GenresTable.PIVOT_COLUMN_ID + " ASC");
+
+        assertEquals(TestUtils.defaultGenres.length, res.getCount());
+
+        int i = 0;
+        while (res.moveToNext()) {
+            int id = res.getInt(res.getColumnIndex(GenresTable.PIVOT_COLUMN_ID));
+            ContentValues v = valuesPivot[i++];
+            TestUtils.validateCurrentRecord(res, v);
+        }
+
+        res.close();
+        res1.close();
     }
 
     /*
@@ -144,6 +213,8 @@ public class MoviesProviderTest extends ProviderTestCase2<MoviesProvider> {
         assertEquals(1, downloaded);
         assertEquals(150, runtime);
         assertEquals("Overview", overview);
+
+        c.close();
     }
 
     /*
@@ -162,6 +233,8 @@ public class MoviesProviderTest extends ProviderTestCase2<MoviesProvider> {
         Cursor c = resolve.query(uri, null, null, null, null);
 
         assertFalse(c.moveToFirst());
+
+        c.close();
     }
 
     public void testDeleteMovieById() {
@@ -177,6 +250,25 @@ public class MoviesProviderTest extends ProviderTestCase2<MoviesProvider> {
         int rowsAffected = resolve.delete(inserted, null, null);
 
         assertEquals(1, rowsAffected);
+
+        c.close();
+    }
+
+    public void testDeleteGenresList() {
+        final Uri uri = MoviesContract.GenreEntry.CONTENT_URI;
+        final int len = TestUtils.defaultGenres.length;
+
+        int inserted = insertGenresInContentProvider();
+        assertEquals(len, inserted);
+
+        int deleted = resolve.delete(uri, null, null);
+        assertEquals(len, deleted);
+
+        Cursor res = resolve.query(uri, null, null, null, null);
+
+        assertFalse(res.moveToFirst());
+
+        res.close();
     }
 
     /*
@@ -192,6 +284,19 @@ public class MoviesProviderTest extends ProviderTestCase2<MoviesProvider> {
 
         for (int i = 0; i < values.length; i++) {
             values[i] = TestUtils.createMovieContent(TestUtils.defaultMovies[i]);
+        }
+
+        return resolve.bulkInsert(uri, values);
+    }
+
+    private int insertGenresInContentProvider() {
+        final Uri uri = MoviesContract.GenreEntry.CONTENT_URI;
+        final int len = TestUtils.defaultGenres.length;
+
+        ContentValues[] values = new ContentValues[len];
+
+        for (int i = 0; i < values.length; i++) {
+            values[i] = TestUtils.createGenreContent(TestUtils.defaultGenres[i]);
         }
 
         return resolve.bulkInsert(uri, values);

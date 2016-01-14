@@ -1,17 +1,14 @@
 package isel.pdm.yamda.ui.presenter;
 
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import java.util.List;
 
-import isel.pdm.yamda.R;
-import isel.pdm.yamda.data.services.ListService;
-import isel.pdm.yamda.data.services.lists.TheatersListService;
+import isel.pdm.yamda.data.exception.FailedGettingDataException;
+import isel.pdm.yamda.data.repository.base.ILocalMovieRepository;
+import isel.pdm.yamda.data.repository.base.MovieRepositoryFactory;
 import isel.pdm.yamda.model.MovieListDetails;
 import isel.pdm.yamda.ui.fragment.InTheatersMoviesListFragment;
 import isel.pdm.yamda.ui.presenter.base.IPresenter;
@@ -22,7 +19,6 @@ import isel.pdm.yamda.ui.presenter.base.IPresenter;
 public class InTheatersMoviesListPresenter implements IPresenter {
 
     private final String TAG = getClass().getSimpleName();
-    private BroadcastReceiver receiver;
     private InTheatersMoviesListFragment view;
 
     /**
@@ -32,42 +28,46 @@ public class InTheatersMoviesListPresenter implements IPresenter {
     public InTheatersMoviesListPresenter(InTheatersMoviesListFragment fragment) {
         view = fragment;
 
-        this.subscribe();
-        this.askForData();
+        new LoadDataTask().execute();
     }
 
     /**
-     * Register the broadcast receiver
+     * Load movie list in a worker thread using an AsyncTask
      */
-    private void subscribe() {
-        this.receiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                if (intent.getBooleanExtra(ListService.DATA, false)) {
-                    view.setData((List<MovieListDetails>) intent.getSerializableExtra(ListService.MOVIES_PARAM));
-                } else {
-                    view.showError(view.getActivity().getResources().getString(
-                            R.string.no_connection));
-                }
+    private class LoadDataTask extends AsyncTask<Void, Void, List<MovieListDetails>> {
+
+        @Override
+        protected List<MovieListDetails> doInBackground(Void... params) {
+            ILocalMovieRepository repo = MovieRepositoryFactory.getLocalRepository(view.getContext());
+
+            try {
+                return repo.getTheatersMovies(1);
+            } catch (FailedGettingDataException e) {
+                Log.d(TAG, "Unreachable code!");
             }
-        };
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(List<MovieListDetails> list) {
+            super.onPostExecute(list);
+
+            view.setData(list);
+        }
     }
 
-    private void askForData() {
-        //this.view.showLoading(); progress bar is visible by default in the layout
-        Log.v(TAG, "asked for data!");
-        Intent intent = new Intent(this.view.getActivity(), TheatersListService.class);
-        this.view.getActivity().startService(intent);
-    }
-
+    /*
+    |--------------------------------------------------------------------------
+    | Presenter lifecycle
+    |--------------------------------------------------------------------------
+    */
     @Override
     public void onResume() {
-        this.view.getActivity().registerReceiver(receiver, new IntentFilter(TheatersListService.NOTIFICATION));
     }
 
     @Override
     public void onPause() {
-        this.view.getActivity().unregisterReceiver(receiver);
     }
 
     @Override

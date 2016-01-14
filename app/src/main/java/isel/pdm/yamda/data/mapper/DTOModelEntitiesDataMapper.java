@@ -1,9 +1,11 @@
 package isel.pdm.yamda.data.mapper;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import isel.pdm.yamda.data.api.ITMDbServiceAPI;
+import isel.pdm.yamda.data.api.entity.GenreListingDTO;
 import isel.pdm.yamda.data.api.entity.MovieDTO;
 import isel.pdm.yamda.data.api.entity.MovieListingDTO;
 import isel.pdm.yamda.model.Actor;
@@ -15,11 +17,12 @@ import isel.pdm.yamda.model.MovieListDetails;
 /**
  * This class knows how to transform a data entity to a model entity
  */
-public class ModelEntitiesDataMapper {
+public class DTOModelEntitiesDataMapper {
 
 
     /**
      * Transform a movie data entity to a business model
+     *
      * @param dto
      * @return
      */
@@ -31,16 +34,14 @@ public class ModelEntitiesDataMapper {
         return new MovieDetails(dto.getId(),
                                 dto.getTitle(),
                                 dto.getReleaseDate(),
-                                dto.getVoteAverage(),
-                dto.getVoteCount(),
-                dto.getRuntime(),
-                                dto.getOverview(),
+                                dto.getReleaseDate(),
                                 createPosterLink(dto.getPosterPath()),
-                createBackdropLink(dto.getBackdropPath()),
+                                createBackdropLink(dto.getBackdropPath()),
+                                dto.getVoteAverage(),
+                                dto.getPopularity(),
+                                dto.getRuntime(),
+                                dto.getOverview(),
                                 genres,
-                                dto.getHomepage(),
-                                dto.getOriginalLanguage(),
-                                dto.getOriginalTitle(),
                                 crew,
                                 actors
         );
@@ -48,6 +49,7 @@ public class ModelEntitiesDataMapper {
 
     /**
      * Transform a movie list details data entity to a business details model
+     *
      * @param dto
      * @return
      */
@@ -56,14 +58,17 @@ public class ModelEntitiesDataMapper {
                                     dto.getTitle(),
                                     dto.getOriginalTitle(),
                                     dto.getReleaseDate(),
-                                    dto.getOverview(),
                                     createPosterLink(dto.getPosterPath()),
-                                    dto.getVoteAverage()
-                                    );
+                                    createBackdropLink(dto.getBackdropPath()),
+                                    dto.getVoteAverage(),
+                                    dto.getPopularity(),
+                                    null
+        );
     }
 
     /**
      * Transform a movie list data entity to a business list model
+     *
      * @param dto
      * @return
      */
@@ -77,7 +82,23 @@ public class ModelEntitiesDataMapper {
     }
 
     /**
+     * Transform a genres list data entity to a business list model
+     *
+     * @param dto
+     * @return
+     */
+    public List<Genre> transform(GenreListingDTO dto) {
+        List<Genre> genres = new LinkedList<>();
+        List<GenreListingDTO.GenreDTO> dtoList = dto.getGenres();
+        for (GenreListingDTO.GenreDTO genreDto : dtoList) {
+            genres.add(new Genre(genreDto.getId(), genreDto.getName()));
+        }
+        return genres;
+    }
+
+    /**
      * Transform a CrewDTO to a Crew model
+     *
      * @param crew
      * @return
      */
@@ -86,11 +107,11 @@ public class ModelEntitiesDataMapper {
 
         for (int i = 0; i < crew.length; i++) {
             res[i] = new Crew(crew[i].getCreditId(),
-                               crew[i].getDepartment(),
-                               crew[i].getId(),
-                               crew[i].getJob(),
-                               crew[i].getName(),
-                               crew[i].getProfilePath()
+                              crew[i].getDepartment(),
+                              crew[i].getId(),
+                              crew[i].getJob(),
+                              crew[i].getName(),
+                              crew[i].getProfilePath()
             );
         }
 
@@ -99,6 +120,7 @@ public class ModelEntitiesDataMapper {
 
     /**
      * Transform a ActorsDTO to a Actor model
+     *
      * @param actors
      * @return
      */
@@ -120,6 +142,7 @@ public class ModelEntitiesDataMapper {
 
     /**
      * Transform a Genres DTO to a Genre model
+     *
      * @param genres
      * @return
      */
@@ -135,11 +158,12 @@ public class ModelEntitiesDataMapper {
 
     /**
      * Transform a relative path to a complete URI poster image
+     *
      * @param path
      * @return
      */
     private String createPosterLink(String path) {
-        if(path == null) return null;
+        if (path == null) return null;
 
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -152,6 +176,7 @@ public class ModelEntitiesDataMapper {
 
     /**
      * Transform a relative backdrop path to a complete URI
+     *
      * @param path
      * @return
      */

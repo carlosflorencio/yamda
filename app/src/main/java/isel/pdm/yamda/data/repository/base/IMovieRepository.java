@@ -1,8 +1,9 @@
-package isel.pdm.yamda.data.repository;
+package isel.pdm.yamda.data.repository.base;
 
 import java.util.List;
 
-import isel.pdm.yamda.data.exception.ApiFailedGettingDataException;
+import isel.pdm.yamda.data.exception.FailedGettingDataException;
+import isel.pdm.yamda.model.Genre;
 import isel.pdm.yamda.model.MovieDetails;
 import isel.pdm.yamda.model.MovieListDetails;
 
@@ -18,9 +19,9 @@ public interface IMovieRepository {
      *
      * @param page api page
      * @return Entity model
-     * @throws ApiFailedGettingDataException
+     * @throws FailedGettingDataException
      */
-    List<MovieListDetails> getTheatersMovies(int page) throws ApiFailedGettingDataException;
+    List<MovieListDetails> getTheatersMovies(int page) throws FailedGettingDataException;
 
     /**
      * Get movies list that will be in theaters soon synchronously
@@ -28,9 +29,9 @@ public interface IMovieRepository {
      *
      * @param page api page
      * @return Entity model
-     * @throws ApiFailedGettingDataException
+     * @throws FailedGettingDataException
      */
-    List<MovieListDetails> getSoonMovies(int page) throws ApiFailedGettingDataException;
+    List<MovieListDetails> getSoonMovies(int page) throws FailedGettingDataException;
 
     /**
      * Get top movies list synchronously
@@ -38,9 +39,9 @@ public interface IMovieRepository {
      *
      * @param page api page
      * @return Entity model
-     * @throws ApiFailedGettingDataException
+     * @throws FailedGettingDataException
      */
-    List<MovieListDetails> getTopMovies(int page) throws ApiFailedGettingDataException;
+    List<MovieListDetails> getTopMovies(int page) throws FailedGettingDataException;
 
     /**
      * Get movies list for a search query synchronously
@@ -49,10 +50,10 @@ public interface IMovieRepository {
      * @param search search query
      * @param page   api page
      * @return Entity model
-     * @throws ApiFailedGettingDataException
+     * @throws FailedGettingDataException
      */
     List<MovieListDetails> getMovieSearch(String search, int page)
-            throws ApiFailedGettingDataException;
+            throws FailedGettingDataException;
 
     /**
      * Get movie by id synchronously
@@ -60,28 +61,16 @@ public interface IMovieRepository {
      *
      * @param id
      * @return Entity model
-     * @throws ApiFailedGettingDataException
+     * @throws FailedGettingDataException
      */
-    MovieDetails getMovieById(int id) throws ApiFailedGettingDataException;
+    MovieDetails getMovieById(int id) throws FailedGettingDataException;
 
     /**
-     * Get acknowledge of user following or not the movie
+     * Get a list of genres synchronously
+     * And convert to a model entity
      *
-     * @param movieId
-     * @return Boolean value
+     * @return
+     * @throws FailedGettingDataException
      */
-    boolean isBeingFollowed(int movieId);
-
-    /**
-     * Follow a movie
-     *
-     * @param movieId
-     */
-    void followMovie(int movieId);
-
-    /**
-     * Unfollow a movie
-     * @param movieId
-     */
-    void unfollowMovie(int movieId);
+    List<Genre> getGenres() throws FailedGettingDataException;
 }

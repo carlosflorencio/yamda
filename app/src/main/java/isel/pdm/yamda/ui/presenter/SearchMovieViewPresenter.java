@@ -1,14 +1,13 @@
 package isel.pdm.yamda.ui.presenter;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
+import android.os.AsyncTask;
+import android.util.Log;
 
 import java.util.List;
 
-import isel.pdm.yamda.R;
-import isel.pdm.yamda.data.services.MovieSearchService;
+import isel.pdm.yamda.data.exception.FailedGettingDataException;
+import isel.pdm.yamda.data.repository.base.IMovieRepository;
+import isel.pdm.yamda.data.repository.base.MovieRepositoryFactory;
 import isel.pdm.yamda.model.MovieListDetails;
 import isel.pdm.yamda.ui.activity.SearchableActivity;
 import isel.pdm.yamda.ui.presenter.base.IPresenter;
@@ -18,33 +17,49 @@ import isel.pdm.yamda.ui.presenter.base.IPresenter;
  */
 public class SearchMovieViewPresenter implements IPresenter {
 
+    protected final String TAG = getClass().getSimpleName();
     private SearchableActivity view;
     private String query;
 
-    private BroadcastReceiver receiver;
-
     public SearchMovieViewPresenter(SearchableActivity activity) {
         view = activity;
-
-        receiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                if (intent.getBooleanExtra(MovieSearchService.DATA, false)) {
-                    view.setData((List<MovieListDetails>) intent.getSerializableExtra(MovieSearchService.SEARCH_RESULTS));
-                } else {
-                   view.showError(view.getResources().getString(R.string.no_connection));
-                }
-            }
-        };
     }
 
-    private void askForData() {
-        //this.view.showLoading(); progress bar is visible by default in the layout
+    /**
+     * Setter for the query
+     * @param query
+     */
+    public void setQuery(String query) {
+        this.query = query;
 
-        Intent intent = new Intent(this.view, MovieSearchService.class);
-        intent.putExtra(MovieSearchService.SEARCH_PARAM, query);
+        new LoadDataTask().execute(query);
+    }
 
-        this.view.startService(intent);
+    /**
+     * Download movie list in a worker thread using an AsyncTask
+     * From cloud repo
+     */
+    private class LoadDataTask extends AsyncTask<String, Void, List<MovieListDetails>> {
+
+        @Override
+        protected List<MovieListDetails> doInBackground(String... params) {
+            IMovieRepository repo = MovieRepositoryFactory.getCloudRepository();
+
+            try {
+                return repo.getMovieSearch(params[0], 1);
+            } catch (FailedGettingDataException e) {
+                Log.d(TAG, "Unreachable code!");
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(List<MovieListDetails> list) {
+            super.onPostExecute(list);
+
+            view.setData(list);
+        }
     }
 
     /*
@@ -54,25 +69,14 @@ public class SearchMovieViewPresenter implements IPresenter {
     */
     @Override
     public void onResume() {
-        this.view.registerReceiver(receiver, new IntentFilter(MovieSearchService.NOTIFICATION));
     }
 
     @Override
     public void onPause() {
-        this.view.unregisterReceiver(receiver);
     }
 
     @Override
     public void onDestroy() {
         this.view = null;
-    }
-
-    /**
-     * Setter for the query
-     * @param query
-     */
-    public void setQuery(String query) {
-        this.query = query;
-        this.askForData();
     }
 }

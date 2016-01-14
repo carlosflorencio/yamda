@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import java.util.Locale;
 
 import isel.pdm.yamda.data.provider.table.FollowMoviesTable;
+import isel.pdm.yamda.data.provider.table.GenresTable;
 import isel.pdm.yamda.data.provider.table.MoviesTable;
 
 /**
@@ -24,8 +25,12 @@ public class MoviesProvider extends ContentProvider {
     private MoviesDatabaseHelper mOpenHelper;
 
     static final int MOVIE_LIST = 100;
-    static final int MOVIE_ID = 200;
-    static final int FOLLOW = 300;
+    static final int MOVIE_ID = 101;
+    static final int FOLLOW = 200;
+    static final int GENRE_LIST = 300;
+    static final int GENRE_ID = 301;
+    static final int GENRE_PIVOT = 302;
+    static final int GENRE_MOVIE_ASSOCIATION = 303;
 
     static UriMatcher buildUriMatcher() {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -33,7 +38,17 @@ public class MoviesProvider extends ContentProvider {
 
         matcher.addURI(authority, MoviesContract.PATH_MOVIES, MOVIE_LIST);
         matcher.addURI(authority, MoviesContract.PATH_MOVIES + "/#", MOVIE_ID);
+
         matcher.addURI(authority, MoviesContract.PATH_FOLLOW, FOLLOW);
+
+        matcher.addURI(authority, MoviesContract.PATH_GENRES, GENRE_LIST);
+        matcher.addURI(authority, MoviesContract.PATH_GENRES + "/#", GENRE_ID);
+        matcher.addURI(authority,
+                       MoviesContract.PATH_GENRES + "/" + MoviesContract.PATH_GENRES_PIVOT,
+                       GENRE_PIVOT);
+        matcher.addURI(authority,
+                       MoviesContract.PATH_GENRES + "/" + MoviesContract.PATH_GENRES_PIVOT + "/#",
+                       GENRE_MOVIE_ASSOCIATION);
 
         return matcher;
     }
@@ -50,12 +65,12 @@ public class MoviesProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
                         String sortOrder) {
 
-        // default sort is by popularity
-        if (TextUtils.isEmpty(sortOrder)) sortOrder = MoviesTable.COLUMN_POPULARITY + " DESC";
-
         Cursor retCursor;
         switch (sUriMatcher.match(uri)) {
             case MOVIE_LIST:
+                // default sort is by popularity
+                if (TextUtils.isEmpty(sortOrder))
+                    sortOrder = MoviesTable.COLUMN_POPULARITY + " DESC";
                 retCursor = sMoviesWhereLanguageEqualsSystem.query(
                         mOpenHelper.getReadableDatabase(),
                         projection,
@@ -71,15 +86,19 @@ public class MoviesProvider extends ContentProvider {
                         mOpenHelper.getReadableDatabase(),
                         projection,
                         MoviesTable.COLUMN_ID + " = ?",
-                        new String[] { uri.getLastPathSegment() },
+                        new String[]{uri.getLastPathSegment()},
                         null,
                         null,
-                        null
+                        sortOrder
                 );
                 break;
             case FOLLOW:
-                retCursor = mOpenHelper.getReadableDatabase().query(
-                        FollowMoviesTable.NAME,
+                retCursor = getSimpleCursor(FollowMoviesTable.NAME, projection, selection,
+                                            selectionArgs, sortOrder);
+                break;
+            case GENRE_LIST:
+                retCursor = sGenresWhereLanguageEqualsSystem.query(
+                        mOpenHelper.getReadableDatabase(),
                         projection,
                         selection,
                         selectionArgs,
@@ -87,6 +106,37 @@ public class MoviesProvider extends ContentProvider {
                         null,
                         sortOrder
                 );
+                break;
+            case GENRE_ID:
+                retCursor = sGenresWhereLanguageEqualsSystem.query(
+                        mOpenHelper.getReadableDatabase(),
+                        projection,
+                        GenresTable.COLUMN_ID + " = ?",
+                        new String[]{uri.getLastPathSegment()},
+                        null,
+                        null,
+                        sortOrder
+                );
+                break;
+            case GENRE_PIVOT:
+                retCursor = sGenresPivotWhereLanguageEqualsSystem
+                        .query(mOpenHelper.getReadableDatabase(),
+                               projection,
+                               selection,
+                               selectionArgs,
+                               null,
+                               null,
+                               sortOrder);
+                break;
+            case GENRE_MOVIE_ASSOCIATION:
+                retCursor = sGenresPivotWhereLanguageEqualsSystem
+                        .query(mOpenHelper.getReadableDatabase(),
+                               projection,
+                               GenresTable.PIVOT_COLUMN_MOVIE_ID + " = ?",
+                               new String[]{uri.getLastPathSegment()},
+                               null,
+                               null,
+                               sortOrder);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
@@ -107,6 +157,14 @@ public class MoviesProvider extends ContentProvider {
                 return MoviesContract.MovieEntry.CONTENT_ITEM_TYPE;
             case FOLLOW:
                 return MoviesContract.FollowEntry.CONTENT_TYPE;
+            case GENRE_LIST:
+                return MoviesContract.GenreEntry.CONTENT_TYPE;
+            case GENRE_ID:
+                return MoviesContract.GenreEntry.CONTENT_ITEM_TYPE;
+            case GENRE_MOVIE_ASSOCIATION:
+                return MoviesContract.GenreEntry.CONTENT_TYPE; //is a list, n to n
+            case GENRE_PIVOT:
+                return MoviesContract.GenreEntry.CONTENT_TYPE;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -118,18 +176,24 @@ public class MoviesProvider extends ContentProvider {
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         Uri returnUri;
 
+        long id = 0;
         switch (sUriMatcher.match(uri)) {
-            case MOVIE_LIST: {
-                long _id = db.insert(MoviesTable.NAME, null, values);
-                if ( _id > 0 )
-                    returnUri = MoviesContract.MovieEntry.buildMovieUri((int)_id);
-                else
-                    throw new android.database.SQLException("Failed to insert row into " + uri);
+            case MOVIE_LIST:
+                id = db.insert(MoviesTable.NAME, null, values);
+                returnUri = MoviesContract.MovieEntry.buildMovieUri((int) id);
                 break;
-            }
+            case GENRE_LIST:
+                id = db.insert(GenresTable.NAME, null, values);
+                returnUri = MoviesContract.GenreEntry.buildGenreUri((int) id);
+                break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
+
+        if (id <= 0) {
+            throw new android.database.SQLException("Failed to insert row into " + uri);
+        }
+
         getContext().getContentResolver().notifyChange(uri, null);
 
         return returnUri;
@@ -140,14 +204,18 @@ public class MoviesProvider extends ContentProvider {
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         int rowsDeleted;
         // this makes delete all rows return the number of rows deleted
-        if ( null == selection ) selection = "1";
+        if (null == selection) selection = "1";
 
         switch (sUriMatcher.match(uri)) {
             case MOVIE_LIST:
                 rowsDeleted = db.delete(MoviesTable.NAME, selection, selectionArgs);
                 break;
             case MOVIE_ID:
-                rowsDeleted = db.delete(MoviesTable.NAME, MoviesTable.COLUMN_ID + " = ?", new String[] {uri.getLastPathSegment()});
+                rowsDeleted = db.delete(MoviesTable.NAME, MoviesTable.COLUMN_ID + " = ?",
+                                        new String[]{uri.getLastPathSegment()});
+                break;
+            case GENRE_LIST:
+                rowsDeleted = db.delete(GenresTable.NAME, selection, selectionArgs);
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -167,7 +235,7 @@ public class MoviesProvider extends ContentProvider {
         switch (sUriMatcher.match(uri)) {
             case MOVIE_ID:
                 rowsUpdated = db.update(MoviesTable.NAME, values, MoviesTable.COLUMN_ID + " = ?",
-                                        new String[] {uri.getLastPathSegment()});
+                                        new String[]{uri.getLastPathSegment()});
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -183,21 +251,11 @@ public class MoviesProvider extends ContentProvider {
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         switch (sUriMatcher.match(uri)) {
             case MOVIE_LIST:
-                db.beginTransaction();
-                int returnCount = 0;
-                try {
-                    for (ContentValues value : values) {
-                        long _id = db.insert(MoviesTable.NAME, null, value);
-                        if (_id != -1) {
-                            returnCount++;
-                        }
-                    }
-                    db.setTransactionSuccessful();
-                } finally {
-                    db.endTransaction();
-                }
-                getContext().getContentResolver().notifyChange(uri, null);
-                return returnCount;
+                return bulkInsertInTable(uri, values, db, MoviesTable.NAME);
+            case GENRE_LIST:
+                return bulkInsertInTable(uri, values, db, GenresTable.NAME);
+            case GENRE_PIVOT:
+                return bulkInsertInTable(uri, values, db, GenresTable.PIVOT_NAME);
             default:
                 return super.bulkInsert(uri, values);
         }
@@ -211,21 +269,86 @@ public class MoviesProvider extends ContentProvider {
     }
 
     /*
-        |--------------------------------------------------------------------------
-        | Queries
-        |--------------------------------------------------------------------------
-        */
-    // query builder that joins movies with details
+    |--------------------------------------------------------------------------
+    | Helpers
+    |--------------------------------------------------------------------------
+    */
+    private Cursor getSimpleCursor(String table, String[] projection, String selection,
+                                   String[] selectionArgs, String sort) {
+        return mOpenHelper.getReadableDatabase().query(
+                table,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                sort
+        );
+    }
+
+    private int bulkInsertInTable(Uri uri, ContentValues[] values, SQLiteDatabase db,
+                                  String table) {
+        db.beginTransaction();
+        int returnCount = 0;
+        try {
+            for (ContentValues value : values) {
+                long _id = db.insert(table, null, value);
+                if (_id != -1) {
+                    returnCount++;
+                }
+            }
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
+        getContext().getContentResolver().notifyChange(uri, null);
+        return returnCount;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Queries
+    |--------------------------------------------------------------------------
+    */
+    // query builder that selects the movies where the language = system
     private static final SQLiteQueryBuilder sMoviesWhereLanguageEqualsSystem;
 
-    static{
+    static {
         sMoviesWhereLanguageEqualsSystem = new SQLiteQueryBuilder();
 
         sMoviesWhereLanguageEqualsSystem.setTables(MoviesTable.NAME);
 
         // movies_details.lang = ?
         sMoviesWhereLanguageEqualsSystem.appendWhere(
-            MoviesTable.COLUMN_LANG + " = '" + Locale.getDefault().getLanguage() + "'"
+                MoviesTable.COLUMN_LANG + " = '" + Locale.getDefault().getLanguage() + "'"
+        );
+    }
+
+    // query builder that selects the genres where the language = system
+    private static final SQLiteQueryBuilder sGenresWhereLanguageEqualsSystem;
+
+    static {
+        sGenresWhereLanguageEqualsSystem = new SQLiteQueryBuilder();
+
+        sGenresWhereLanguageEqualsSystem.setTables(GenresTable.NAME);
+
+        // movies_details.lang = ?
+        sGenresWhereLanguageEqualsSystem.appendWhere(
+                GenresTable.COLUMN_LANG + " = '" + Locale.getDefault().getLanguage() + "'"
+        );
+    }
+
+    // query builder that selects the genres pivot where the language = system
+    private static final SQLiteQueryBuilder sGenresPivotWhereLanguageEqualsSystem;
+
+    static {
+        sGenresPivotWhereLanguageEqualsSystem = new SQLiteQueryBuilder();
+
+        sGenresPivotWhereLanguageEqualsSystem.setTables(GenresTable.PIVOT_NAME);
+
+        // movies_details.lang = ?
+        sGenresPivotWhereLanguageEqualsSystem.appendWhere(
+                GenresTable.PIVOT_COLUMN_LANG + " = '" + Locale.getDefault().getLanguage() + "'"
         );
     }
 }

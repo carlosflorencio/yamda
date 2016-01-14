@@ -14,7 +14,8 @@ public class MovieDTO {
     private String release_date;
     private String status;
     private String title;
-    private float vote_average;
+    private double vote_average;
+    private double popularity;
     private int vote_count;
     private int runtime;
     private String overview;
@@ -51,7 +52,7 @@ public class MovieDTO {
         return title;
     }
 
-    public float getVoteAverage() {
+    public double getVoteAverage() {
         return vote_average;
     }
 
@@ -85,6 +86,10 @@ public class MovieDTO {
 
     public int getVoteCount() {
         return vote_count;
+    }
+
+    public double getPopularity() {
+        return popularity;
     }
 
     /*

@@ -1,16 +1,13 @@
 package isel.pdm.yamda.ui.presenter;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import java.util.List;
 
-import isel.pdm.yamda.R;
-import isel.pdm.yamda.data.services.ListService;
-import isel.pdm.yamda.data.services.lists.TopListService;
+import isel.pdm.yamda.data.exception.FailedGettingDataException;
+import isel.pdm.yamda.data.repository.base.IMovieRepository;
+import isel.pdm.yamda.data.repository.base.MovieRepositoryFactory;
 import isel.pdm.yamda.model.MovieListDetails;
 import isel.pdm.yamda.ui.fragment.TopMoviesListFragment;
 import isel.pdm.yamda.ui.presenter.base.IPresenter;
@@ -18,41 +15,52 @@ import isel.pdm.yamda.ui.presenter.base.IPresenter;
 public class TopMoviesListPresenter implements IPresenter {
 
     private final String TAG = getClass().getSimpleName();
-    private final BroadcastReceiver receiver;
     private TopMoviesListFragment view;
 
     public TopMoviesListPresenter(TopMoviesListFragment fragment) {
         view = fragment;
 
-        receiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                if (intent.getBooleanExtra(ListService.DATA, false)) {
-                    view.setData((List<MovieListDetails>) intent.getSerializableExtra(ListService.MOVIES_PARAM));
-                } else {
-                   view.showError(view.getActivity().getResources().getString(R.string.no_connection));
-                }
+        new LoadDataTask().execute();
+    }
+
+    /**
+     * Download top movie list in a worker thread using an AsyncTask
+     * From cloud repo
+     */
+    private class LoadDataTask extends AsyncTask<Void, Void, List<MovieListDetails>> {
+
+        @Override
+        protected List<MovieListDetails> doInBackground(Void... params) {
+            IMovieRepository repo = MovieRepositoryFactory.getCloudRepository();
+
+            try {
+                return repo.getTopMovies(1);
+            } catch (FailedGettingDataException e) {
+                Log.d(TAG, "Unreachable code!");
             }
-        };
 
-        this.askForData();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(List<MovieListDetails> list) {
+            super.onPostExecute(list);
+
+            view.setData(list);
+        }
     }
 
-    private void askForData() {
-        //this.view.showLoading(); progress bar is visible by default in the layout
-        Log.v(TAG, "asked for data!");
-        Intent intent = new Intent(this.view.getActivity(), TopListService.class);
-        this.view.getActivity().startService(intent);
-    }
-
+    /*
+    |--------------------------------------------------------------------------
+    | Presenter lifecycle
+    |--------------------------------------------------------------------------
+    */
     @Override
     public void onResume() {
-        this.view.getActivity().registerReceiver(receiver, new IntentFilter(TopListService.NOTIFICATION));
     }
 
     @Override
     public void onPause() {
-        this.view.getActivity().unregisterReceiver(receiver);
     }
 
     @Override

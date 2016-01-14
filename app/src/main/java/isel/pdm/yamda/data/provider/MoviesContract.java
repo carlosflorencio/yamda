@@ -24,6 +24,8 @@ public class MoviesContract {
     // Possible paths (appended to base content URI for possible URI's)
     public static final String PATH_MOVIES = "movie";
     public static final String PATH_FOLLOW = "follow";
+    public static final String PATH_GENRES = "genre";
+    public static final String PATH_GENRES_PIVOT = "pivot";
 
 
     /* Inner class that defines the table contents of the movies table */
@@ -52,5 +54,28 @@ public class MoviesContract {
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_FOLLOW;
         public static final String CONTENT_ITEM_TYPE =
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_FOLLOW;
+    }
+
+    /* Inner class that defines the table contents of the genres table */
+    public static final class GenreEntry implements BaseColumns {
+
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_GENRES).build();
+
+        public static final Uri CONTENT_URI_PIVOT =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_GENRES).appendPath(PATH_GENRES_PIVOT).build();
+
+        public static final String CONTENT_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_GENRES;
+        public static final String CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_GENRES;
+
+        public static Uri buildGenreUri(int id) {
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
+
+        public static Uri buildGenrePivotUri(int movieId) {
+            return ContentUris.withAppendedId(CONTENT_URI_PIVOT, movieId);
+        }
     }
 }

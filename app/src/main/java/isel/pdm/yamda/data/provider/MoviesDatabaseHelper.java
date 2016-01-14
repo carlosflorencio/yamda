@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import isel.pdm.yamda.data.provider.table.FollowMoviesTable;
+import isel.pdm.yamda.data.provider.table.GenresTable;
 import isel.pdm.yamda.data.provider.table.MoviesTable;
 
 /**
@@ -38,11 +39,13 @@ public class MoviesDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         MoviesTable.onCreate(db);
         FollowMoviesTable.onCreate(db);
+        GenresTable.onCreate(db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         MoviesTable.onUpgrade(db, oldVersion, newVersion);
         FollowMoviesTable.onUpgrade(db, oldVersion, newVersion);
+        GenresTable.onUpgrade(db, oldVersion, newVersion);
     }
 }

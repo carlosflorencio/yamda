@@ -1,18 +1,9 @@
 package isel.pdm.yamda.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 /**
  * This class is used for representing a Crew Member like a director, producer, etc
- * <p/>
- * Instances can also be used to transport information between components of the
- * application (e.g. Activities, Services). Because those interactions may cross process
- * boundaries, the class supports the {@link android.os.Parcelable} contract and conventions.
- * <p/>
- * Instances are designed to be immutable, and are therefore thread-safe.
  */
-public final class Crew implements Parcelable {
+public final class Crew {
 
     /**
      * The crew credit id
@@ -25,7 +16,7 @@ public final class Crew implements Parcelable {
     /**
      * The crew id
      **/
-    private final int    id;
+    private final int id;
     /**
      * The crew job
      **/
@@ -81,46 +72,5 @@ public final class Crew implements Parcelable {
 
     public String getProfilePath() {
         return profile_path;
-    }
-
-    /*
-    |--------------------------------------------------------------------------
-    | Parcelable methods
-    |--------------------------------------------------------------------------
-    */
-    protected Crew(Parcel in) {
-        credit_id = in.readString();
-        department = in.readString();
-        id = in.readInt();
-        job = in.readString();
-        name = in.readString();
-        profile_path = in.readString();
-    }
-
-    public static final Creator<Crew> CREATOR = new Creator<Crew>() {
-        @Override
-        public Crew createFromParcel(Parcel in) {
-            return new Crew(in);
-        }
-
-        @Override
-        public Crew[] newArray(int size) {
-            return new Crew[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.credit_id);
-        dest.writeString(this.department);
-        dest.writeInt(this.id);
-        dest.writeString(this.job);
-        dest.writeString(this.name);
-        dest.writeString(this.profile_path);
     }
 }
