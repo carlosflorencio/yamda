@@ -44,6 +44,7 @@ public abstract class LoadDataFragment<T> extends PresentableFragment implements
         this.mainView = stub.inflate();
         this.loadingView = viewContainer.findViewById(R.id.progress_view);
         this.retryView = viewContainer.findViewById(R.id.retry_view);
+        showLoading();
 
         return viewContainer;
     }

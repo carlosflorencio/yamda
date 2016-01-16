@@ -25,14 +25,14 @@ import isel.pdm.yamda.ui.fragment.TopMoviesListFragment;
  */
 public class HomeActivity extends LoggingActivity {
 
-    protected Toolbar    toolbar;
+    protected Toolbar toolbar;
     protected SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.setContentView(R.layout.show_movie_details);
+        this.setContentView(R.layout.activity_home);
 
         //set the toolbar
         this.toolbar = (Toolbar) findViewById(R.id.home_toolbar);

@@ -9,14 +9,12 @@
         android:id="@+id/stub_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:inflatedId="@+id/included_view"
-        android:visibility="gone"/>
+        android:inflatedId="@+id/included_view"/>
 
     <RelativeLayout
         android:id="@+id/progress_view"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:visibility="visible">
+        android:layout_height="fill_parent">
 
         <ProgressBar
             style="?android:attr/progressBarStyleLarge"
@@ -32,8 +30,7 @@
         android:id="@+id/retry_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:orientation="vertical">
 
 
         <TextView

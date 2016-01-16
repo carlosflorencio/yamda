@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,6 @@ import isel.pdm.yamda.ui.fragment.base.LoadDataFragment;
  */
 public abstract class MovieListableFragment extends LoadDataFragment<List<Movie>> {
 
-    protected View viewContainer;
     protected RecyclerView listView;
     protected MovieRecyclerAdapter adapter;
 
@@ -31,7 +31,7 @@ public abstract class MovieListableFragment extends LoadDataFragment<List<Movie>
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
+        View viewContainer = super.onCreateView(inflater, container, savedInstanceState);
 
         this.listView = (RecyclerView) this.mainView;
 
@@ -43,6 +43,9 @@ public abstract class MovieListableFragment extends LoadDataFragment<List<Movie>
         // TODO: 23/12/2015 improve this restore method
         if(data != null) {
             this.setData(data);
+        } else {
+            Log.d(TAG, "onCreateView: execute presenter!");
+            this.presenter.execute();
         }
 
         return viewContainer;
@@ -78,13 +81,20 @@ public abstract class MovieListableFragment extends LoadDataFragment<List<Movie>
 
     @Override
     public void setData(List<Movie> data) {
+        Log.d(TAG, "setData: data! size: " + data.size());
+        this.showResults();
         this.data = data;
         this.adapter.setData(data);
-        this.showResults();
     }
 
     @Override
     protected int getLayout() {
         return R.layout.list_movies_layout;
+    }
+
+    @Override
+    public void showResults() {
+        this.frameLayout.removeAllViews();
+        this.frameLayout.addView(listView);
     }
 }

@@ -67,7 +67,7 @@ public class MovieActivity extends PresentableActivity implements ILoadDataView<
         this.setContentView(R.layout.state_layout);
 
         ViewStub stub = (ViewStub) findViewById(R.id.stub_view);
-        stub.setLayoutResource(R.layout.show_movie_details);
+        stub.setLayoutResource(R.layout.activity_home);
 
         this.movieView = stub.inflate();
         this.loadingView = this.findViewById(R.id.progress_view);

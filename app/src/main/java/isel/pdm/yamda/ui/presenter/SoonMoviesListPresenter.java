@@ -26,6 +26,12 @@ public class SoonMoviesListPresenter extends Presenter<List<Movie>> {
         protected List<Movie> doInBackground(Void... params) {
             ILocalMovieRepository repo = MovieRepositoryFactory.getLocalRepository(view.getViewContext());
 
+            try {
+                Thread.sleep(2000);
+            } catch(InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
+
             return repo.getSoonMovies();
         }
 

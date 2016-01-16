@@ -19,7 +19,10 @@ public class SplashActivity extends LoadDataActivity<Void> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //show the splash instead of the loading
         showResults();
+
+        this.presenter.execute();
     }
 
     @Override

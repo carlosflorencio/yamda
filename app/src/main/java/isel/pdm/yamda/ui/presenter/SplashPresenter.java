@@ -28,17 +28,19 @@ public class SplashPresenter extends Presenter<Void> {
     /**
      * Download data from the cloud if the local repo (content provider) is empty
      */
-    private class LoadDataTask extends AsyncTask<Void, Void, Void> {
+    private class LoadDataTask extends AsyncTask<Void, Void, Boolean> {
 
         @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
+        protected void onPostExecute(Boolean success) {
+            super.onPostExecute(success);
 
-            view.setData(null);
+            if(success)
+                view.setData(null);
         }
 
         @Override
-        protected Void doInBackground(Void... params) {
+        protected Boolean doInBackground(Void... params) {
+            boolean res = false;
             ILocalMovieRepository localRepo = MovieRepositoryFactory
                     .getLocalRepository(view.getViewContext());
 
@@ -58,8 +60,10 @@ public class SplashPresenter extends Presenter<Void> {
                     Log.d(TAG, "There are already movies in the repo, no downloads!");
                 }
 
+                res = true;
             } catch (FailedGettingDataException e) {
                 Log.d(TAG, "Failed getting data! Error: " + e.getMessage());
+                view.showNoConnection();
             }
 
             // Loading data is so fast that we really want a small delay to see the splash
@@ -69,7 +73,7 @@ public class SplashPresenter extends Presenter<Void> {
                 Thread.currentThread().interrupt();
             }
 
-            return null;
+            return res;
         }
     }
 }
