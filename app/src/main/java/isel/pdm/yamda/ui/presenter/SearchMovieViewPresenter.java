@@ -6,23 +6,22 @@ import android.util.Log;
 import java.util.List;
 
 import isel.pdm.yamda.data.exception.FailedGettingDataException;
-import isel.pdm.yamda.data.repository.base.IMovieRepository;
+import isel.pdm.yamda.data.repository.base.ICloudMovieRepository;
 import isel.pdm.yamda.data.repository.base.MovieRepositoryFactory;
-import isel.pdm.yamda.model.MovieListDetails;
-import isel.pdm.yamda.ui.activity.SearchableActivity;
-import isel.pdm.yamda.ui.presenter.base.IPresenter;
+import isel.pdm.yamda.model.Movie;
+import isel.pdm.yamda.ui.contract.ILoadDataView;
+import isel.pdm.yamda.ui.presenter.base.Presenter;
 
 /**
  * Search presenter
  */
-public class SearchMovieViewPresenter implements IPresenter {
+public class SearchMovieViewPresenter extends Presenter<List<Movie>> {
 
-    protected final String TAG = getClass().getSimpleName();
-    private SearchableActivity view;
     private String query;
 
-    public SearchMovieViewPresenter(SearchableActivity activity) {
-        view = activity;
+    public SearchMovieViewPresenter(
+            ILoadDataView<List<Movie>> view) {
+        super(view);
     }
 
     /**
@@ -31,7 +30,11 @@ public class SearchMovieViewPresenter implements IPresenter {
      */
     public void setQuery(String query) {
         this.query = query;
+    }
 
+
+    @Override
+    public void execute() {
         new LoadDataTask().execute(query);
     }
 
@@ -39,11 +42,11 @@ public class SearchMovieViewPresenter implements IPresenter {
      * Download movie list in a worker thread using an AsyncTask
      * From cloud repo
      */
-    private class LoadDataTask extends AsyncTask<String, Void, List<MovieListDetails>> {
+    private class LoadDataTask extends AsyncTask<String, Void, List<Movie>> {
 
         @Override
-        protected List<MovieListDetails> doInBackground(String... params) {
-            IMovieRepository repo = MovieRepositoryFactory.getCloudRepository();
+        protected List<Movie> doInBackground(String... params) {
+            ICloudMovieRepository repo = MovieRepositoryFactory.getCloudRepository();
 
             try {
                 return repo.getMovieSearch(params[0], 1);
@@ -55,28 +58,10 @@ public class SearchMovieViewPresenter implements IPresenter {
         }
 
         @Override
-        protected void onPostExecute(List<MovieListDetails> list) {
+        protected void onPostExecute(List<Movie> list) {
             super.onPostExecute(list);
 
             view.setData(list);
         }
-    }
-
-    /*
-    |--------------------------------------------------------------------------
-    | Presenter Lifecycle
-    |--------------------------------------------------------------------------
-    */
-    @Override
-    public void onResume() {
-    }
-
-    @Override
-    public void onPause() {
-    }
-
-    @Override
-    public void onDestroy() {
-        this.view = null;
     }
 }

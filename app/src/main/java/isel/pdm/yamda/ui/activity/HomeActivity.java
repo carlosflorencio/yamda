@@ -32,7 +32,7 @@ public class HomeActivity extends LoggingActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.setContentView(R.layout.activity_home);
+        this.setContentView(R.layout.show_movie_details);
 
         //set the toolbar
         this.toolbar = (Toolbar) findViewById(R.id.home_toolbar);

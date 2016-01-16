@@ -20,25 +20,18 @@ import isel.pdm.yamda.data.services.lists.TheatersListService;
  */
 public class YamdaApplication extends Application {
 
-    /**
-     * System language (ex: pt, en)
-     */
-    private String language;
-
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        initLocaleConfiguration(getResources().getConfiguration());
-        initPeriodicUpdates();
+        //initPeriodicUpdates();
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
-        initLocaleConfiguration(newConfig);
     }
 
     /*
@@ -46,14 +39,6 @@ public class YamdaApplication extends Application {
     | Custom methods
     |--------------------------------------------------------------------------
     */
-
-    /**
-     * Initializes the locale dependent fields (language)
-     */
-    private void initLocaleConfiguration(Configuration config) {
-        language = config.locale.getLanguage();
-    }
-
 
     private void initPeriodicUpdates() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -85,10 +70,6 @@ public class YamdaApplication extends Application {
                                              PendingIntent.getService(this, 0, intent,
                                                                       PendingIntent.FLAG_UPDATE_CURRENT));
         }
-    }
-
-    public String getLanguage() {
-        return language;
     }
 
 }

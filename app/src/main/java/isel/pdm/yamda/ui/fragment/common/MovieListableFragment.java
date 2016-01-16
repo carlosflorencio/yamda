@@ -8,46 +8,32 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.List;
 
 import isel.pdm.yamda.R;
-import isel.pdm.yamda.model.MovieListDetails;
+import isel.pdm.yamda.model.Movie;
 import isel.pdm.yamda.ui.activity.MovieActivity;
 import isel.pdm.yamda.ui.adapter.MovieRecyclerAdapter;
-import isel.pdm.yamda.ui.contract.ILoadDataView;
-import isel.pdm.yamda.ui.fragment.base.PresentableFragment;
+import isel.pdm.yamda.ui.fragment.base.LoadDataFragment;
 
 /**
  * Common code for the movies list fragments
  */
-public abstract class MovieListableFragment extends PresentableFragment implements
-        ILoadDataView<List<MovieListDetails>> {
+public abstract class MovieListableFragment extends LoadDataFragment<List<Movie>> {
 
     protected View viewContainer;
     protected RecyclerView listView;
-    protected View loadingView;
     protected MovieRecyclerAdapter adapter;
 
-    List<MovieListDetails> data;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setRetainInstance(true);
-    }
+    List<Movie> data;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-
-        this.viewContainer = inflater.inflate(R.layout.home_tab, container, false);
-        this.listView = (RecyclerView) this.viewContainer.findViewById(R.id.list_view);
-        this.loadingView = this.viewContainer.findViewById(R.id.tab_progress_bar);
+        this.listView = (RecyclerView) this.mainView;
 
         this.setupListView();
         this.setListViewAdapter();
@@ -61,8 +47,6 @@ public abstract class MovieListableFragment extends PresentableFragment implemen
 
         return viewContainer;
     }
-
-
 
     /**
      * Setup the RecyclerView
@@ -83,7 +67,7 @@ public abstract class MovieListableFragment extends PresentableFragment implemen
 
         adapter.setListener(new MovieRecyclerAdapter.IClickListener() {
             @Override
-            public void onItemClick(MovieListDetails movie) {
+            public void onItemClick(Movie movie) {
                 Intent i = MovieActivity.createIntent(getActivity(), movie.getId());
                 getActivity().startActivity(i);
             }
@@ -92,29 +76,15 @@ public abstract class MovieListableFragment extends PresentableFragment implemen
         this.listView.setAdapter(adapter);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | DataView Methods
-    |--------------------------------------------------------------------------
-    */
-    public void showLoading() {
-        this.listView.setVisibility(View.GONE);
-        this.loadingView.setVisibility(View.VISIBLE);
-    }
-
-    public void hideLoading() {
-        this.loadingView.setVisibility(View.GONE);
-        this.listView.setVisibility(View.VISIBLE);
-    }
-
-    public void showError(String message) {
-        this.hideLoading();
-        Toast.makeText(this.getActivity(), message, Toast.LENGTH_SHORT).show();
-    }
-
-    public void setData(List<MovieListDetails> data) {
-        this.hideLoading();
+    @Override
+    public void setData(List<Movie> data) {
         this.data = data;
         this.adapter.setData(data);
+        this.showResults();
+    }
+
+    @Override
+    protected int getLayout() {
+        return R.layout.list_movies_layout;
     }
 }

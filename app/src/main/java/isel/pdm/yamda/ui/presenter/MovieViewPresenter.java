@@ -4,31 +4,33 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import isel.pdm.yamda.data.exception.FailedGettingDataException;
-import isel.pdm.yamda.data.repository.base.ILocalMovieRepository;
+import isel.pdm.yamda.data.repository.base.ICloudMovieRepository;
 import isel.pdm.yamda.data.repository.base.MovieRepositoryFactory;
 import isel.pdm.yamda.model.MovieDetails;
-import isel.pdm.yamda.ui.activity.MovieActivity;
-import isel.pdm.yamda.ui.presenter.base.IPresenter;
+import isel.pdm.yamda.ui.contract.ILoadDataView;
+import isel.pdm.yamda.ui.presenter.base.Presenter;
 
 /**
  * Movie view details presenter
  */
-public class MovieViewPresenter implements IPresenter {
-
-    protected final String TAG = getClass().getSimpleName();
+public class MovieViewPresenter extends Presenter<MovieDetails> {
 
     private int id;
-    private MovieActivity activity;
 
-    public MovieViewPresenter(MovieActivity activity) {
-        this.activity = activity;
+    public MovieViewPresenter(ILoadDataView<MovieDetails> view) {
+        super(view);
     }
+
 
     public void setMovieId(int id) {
         this.id = id;
+    }
 
+    @Override
+    public void execute() {
         new LoadDataTask().execute(id);
     }
+
 
     /**
      * Load movie details in a worker thread using an AsyncTask
@@ -37,7 +39,7 @@ public class MovieViewPresenter implements IPresenter {
 
         @Override
         protected MovieDetails doInBackground(Integer... params) {
-            ILocalMovieRepository repo = MovieRepositoryFactory.getLocalRepository(activity);
+            ICloudMovieRepository repo = MovieRepositoryFactory.getCloudRepository();
 
             try {
                 return repo.getMovieById(params[0]);
@@ -52,25 +54,7 @@ public class MovieViewPresenter implements IPresenter {
         protected void onPostExecute(MovieDetails movie) {
             super.onPostExecute(movie);
 
-            activity.setData(movie);
+            view.setData(movie);
         }
-    }
-
-    /*
-    |--------------------------------------------------------------------------
-    | Presenter Lifecycle
-    |--------------------------------------------------------------------------
-    */
-    @Override
-    public void onResume() {
-    }
-
-    @Override
-    public void onPause() {
-    }
-
-    @Override
-    public void onDestroy() {
-        this.activity = null;
     }
 }

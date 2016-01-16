@@ -3,15 +3,14 @@ package isel.pdm.yamda.data.repository.base;
 import java.util.List;
 
 import isel.pdm.yamda.data.exception.FailedGettingDataException;
-import isel.pdm.yamda.model.Genre;
+import isel.pdm.yamda.model.Movie;
 import isel.pdm.yamda.model.MovieDetails;
-import isel.pdm.yamda.model.MovieListDetails;
 
 /**
  * This interface defines the contract with the data layer
  * and the presentation layer for requesting data synchronously
  */
-public interface IMovieRepository {
+public interface ICloudMovieRepository {
 
     /**
      * Get movies list in theaters synchronously
@@ -21,7 +20,7 @@ public interface IMovieRepository {
      * @return Entity model
      * @throws FailedGettingDataException
      */
-    List<MovieListDetails> getTheatersMovies(int page) throws FailedGettingDataException;
+    List<Movie> getTheatersMovies(int page) throws FailedGettingDataException;
 
     /**
      * Get movies list that will be in theaters soon synchronously
@@ -31,7 +30,7 @@ public interface IMovieRepository {
      * @return Entity model
      * @throws FailedGettingDataException
      */
-    List<MovieListDetails> getSoonMovies(int page) throws FailedGettingDataException;
+    List<Movie> getSoonMovies(int page) throws FailedGettingDataException;
 
     /**
      * Get top movies list synchronously
@@ -41,7 +40,7 @@ public interface IMovieRepository {
      * @return Entity model
      * @throws FailedGettingDataException
      */
-    List<MovieListDetails> getTopMovies(int page) throws FailedGettingDataException;
+    List<Movie> getTopMovies(int page) throws FailedGettingDataException;
 
     /**
      * Get movies list for a search query synchronously
@@ -52,7 +51,7 @@ public interface IMovieRepository {
      * @return Entity model
      * @throws FailedGettingDataException
      */
-    List<MovieListDetails> getMovieSearch(String search, int page)
+    List<Movie> getMovieSearch(String search, int page)
             throws FailedGettingDataException;
 
     /**
@@ -64,13 +63,4 @@ public interface IMovieRepository {
      * @throws FailedGettingDataException
      */
     MovieDetails getMovieById(int id) throws FailedGettingDataException;
-
-    /**
-     * Get a list of genres synchronously
-     * And convert to a model entity
-     *
-     * @return
-     * @throws FailedGettingDataException
-     */
-    List<Genre> getGenres() throws FailedGettingDataException;
 }

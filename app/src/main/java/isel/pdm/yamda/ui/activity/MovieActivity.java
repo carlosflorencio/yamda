@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewStub;
 import android.widget.Checkable;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -49,6 +50,7 @@ public class MovieActivity extends PresentableActivity implements ILoadDataView<
 
     private View movieView;
     private View loadingView;
+    private View retryView;
     private int movieId;
 
     private AlarmManager alarmManager;
@@ -62,13 +64,18 @@ public class MovieActivity extends PresentableActivity implements ILoadDataView<
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.activity_movie);
+        this.setContentView(R.layout.state_layout);
+
+        ViewStub stub = (ViewStub) findViewById(R.id.stub_view);
+        stub.setLayoutResource(R.layout.show_movie_details);
+
+        this.movieView = stub.inflate();
+        this.loadingView = this.findViewById(R.id.progress_view);
+        this.retryView = this.findViewById(R.id.retry_view);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.movie_toolbar);
         setSupportActionBar(toolbar);
 
-        this.movieView = this.findViewById(R.id.movie_view);
-        this.loadingView = this.findViewById(R.id.loading_movie);
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         this.notificationIntent = new Intent(this, NotificationPublisher.class);
 
@@ -257,19 +264,28 @@ public class MovieActivity extends PresentableActivity implements ILoadDataView<
         this.loadingView.setVisibility(View.VISIBLE);
     }
 
-    public void hideLoading() {
+    @Override
+    public void showResults() {
         this.loadingView.setVisibility(View.GONE);
         this.movieView.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    public void showNoConnection() {
+
+    }
+
     public void showError(String message) {
-        this.hideLoading();
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void setData(MovieDetails data) {
-        this.hideLoading();
         this.updateView(data);
+    }
+
+    @Override
+    public Context getViewContext() {
+        return this;
     }
 }

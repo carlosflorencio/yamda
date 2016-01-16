@@ -6,20 +6,21 @@ import android.util.Log;
 import java.util.List;
 
 import isel.pdm.yamda.data.exception.FailedGettingDataException;
-import isel.pdm.yamda.data.repository.base.IMovieRepository;
+import isel.pdm.yamda.data.repository.base.ICloudMovieRepository;
 import isel.pdm.yamda.data.repository.base.MovieRepositoryFactory;
-import isel.pdm.yamda.model.MovieListDetails;
-import isel.pdm.yamda.ui.fragment.TopMoviesListFragment;
-import isel.pdm.yamda.ui.presenter.base.IPresenter;
+import isel.pdm.yamda.model.Movie;
+import isel.pdm.yamda.ui.contract.ILoadDataView;
+import isel.pdm.yamda.ui.presenter.base.Presenter;
 
-public class TopMoviesListPresenter implements IPresenter {
+public class TopMoviesListPresenter extends Presenter<List<Movie>> {
 
-    private final String TAG = getClass().getSimpleName();
-    private TopMoviesListFragment view;
+    public TopMoviesListPresenter(
+            ILoadDataView<List<Movie>> view) {
+        super(view);
+    }
 
-    public TopMoviesListPresenter(TopMoviesListFragment fragment) {
-        view = fragment;
-
+    @Override
+    public void execute() {
         new LoadDataTask().execute();
     }
 
@@ -27,11 +28,11 @@ public class TopMoviesListPresenter implements IPresenter {
      * Download top movie list in a worker thread using an AsyncTask
      * From cloud repo
      */
-    private class LoadDataTask extends AsyncTask<Void, Void, List<MovieListDetails>> {
+    private class LoadDataTask extends AsyncTask<Void, Void, List<Movie>> {
 
         @Override
-        protected List<MovieListDetails> doInBackground(Void... params) {
-            IMovieRepository repo = MovieRepositoryFactory.getCloudRepository();
+        protected List<Movie> doInBackground(Void... params) {
+            ICloudMovieRepository repo = MovieRepositoryFactory.getCloudRepository();
 
             try {
                 return repo.getTopMovies(1);
@@ -43,28 +44,10 @@ public class TopMoviesListPresenter implements IPresenter {
         }
 
         @Override
-        protected void onPostExecute(List<MovieListDetails> list) {
+        protected void onPostExecute(List<Movie> list) {
             super.onPostExecute(list);
 
             view.setData(list);
         }
-    }
-
-    /*
-    |--------------------------------------------------------------------------
-    | Presenter lifecycle
-    |--------------------------------------------------------------------------
-    */
-    @Override
-    public void onResume() {
-    }
-
-    @Override
-    public void onPause() {
-    }
-
-    @Override
-    public void onDestroy() {
-        this.view = null;
     }
 }

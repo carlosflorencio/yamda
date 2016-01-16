@@ -6,6 +6,11 @@ package isel.pdm.yamda.ui.presenter.base;
 public interface IPresenter {
 
     /**
+     * Execute task
+     */
+    void execute();
+
+    /**
      * Method that control the lifecycle of the view. It should be called in the view's
      * (Activity or Fragment) onResume() method.
      */

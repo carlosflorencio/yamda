@@ -30,10 +30,10 @@ public abstract class PresentableActivity extends LoggingActivity {
     }
 
     /*
-        |--------------------------------------------------------------------------
-        | Control presenter lifecycle
-        |--------------------------------------------------------------------------
-        */
+    |--------------------------------------------------------------------------
+    | Control presenter lifecycle
+    |--------------------------------------------------------------------------
+    */
     @Override
     public void onResume() {
         super.onResume();

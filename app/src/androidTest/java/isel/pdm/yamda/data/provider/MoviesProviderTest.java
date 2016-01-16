@@ -9,12 +9,10 @@ import android.net.Uri;
 import android.test.ProviderTestCase2;
 import android.test.mock.MockContentResolver;
 
-import java.util.Locale;
-
-import isel.pdm.yamda.data.provider.table.GenresTable;
-import isel.pdm.yamda.data.provider.table.MoviesTable;
-
-
+/**
+ * Test the Movies Provider
+ * The database is brand new when running all single tests
+ */
 public class MoviesProviderTest extends ProviderTestCase2<MoviesProvider> {
 
     // in the test case scenario, we use the MockContentResolver to make queries
@@ -25,13 +23,9 @@ public class MoviesProviderTest extends ProviderTestCase2<MoviesProvider> {
     }
 
     @Override
-    public void setUp() {
-        try {
-            super.setUp();
-            resolve = this.getMockContentResolver();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void setUp() throws Exception {
+        super.setUp();
+        resolve = this.getMockContentResolver();
     }
 
     @Override
@@ -84,8 +78,8 @@ public class MoviesProviderTest extends ProviderTestCase2<MoviesProvider> {
     |--------------------------------------------------------------------------
     */
     public void testInsertMovie() {
-        TestUtils.Movie movie = TestUtils.defaultMovies[1];
-        ContentValues values = TestUtils.createMovieContent(movie);
+        ProviderTestUtils.Movie movie = ProviderTestUtils.defaultMovies[1];
+        ContentValues values = ProviderTestUtils.createMovieContent(movie);
 
         Uri uri = resolve.insert(MoviesContract.MovieEntry.CONTENT_URI, values);
 
@@ -95,14 +89,14 @@ public class MoviesProviderTest extends ProviderTestCase2<MoviesProvider> {
 
         assertEquals(1, res.getCount());
 
-        TestUtils.validateCursor(res, values);
+        ProviderTestUtils.validateCursor(res, values);
 
         res.close();
     }
 
     public void testInsertBulkMovies() {
         final Uri uri = MoviesContract.MovieEntry.CONTENT_URI;
-        final int len = TestUtils.defaultMovies.length;
+        final int len = ProviderTestUtils.defaultMovies.length;
 
         int inserted = this.insertMoviesInContentProvider();
         assertEquals(len, inserted);
@@ -113,108 +107,12 @@ public class MoviesProviderTest extends ProviderTestCase2<MoviesProvider> {
 
         int i = 0;
         while (res.moveToNext()) {
-            ContentValues v = TestUtils.createMovieContent(TestUtils.defaultMovies[i++]);
-            TestUtils.validateCurrentRecord(res, v);
+            ContentValues v = ProviderTestUtils
+                    .createMovieContent(ProviderTestUtils.defaultMovies[i++]);
+            ProviderTestUtils.validateCurrentRecord(res, v);
         }
 
         res.close();
-    }
-
-    public void testInsertBulkGenres() {
-        final Uri uri = MoviesContract.GenreEntry.CONTENT_URI;
-        final int len = TestUtils.defaultGenres.length;
-
-        int inserted = insertGenresInContentProvider();
-        assertEquals(len, inserted);
-
-        Cursor res = resolve.query(uri, null, null, null, null);
-
-        assertEquals(len, res.getCount());
-
-        int i = 0;
-        while (res.moveToNext()) {
-            ContentValues v = TestUtils.createGenreContent(TestUtils.defaultGenres[i++]);
-            TestUtils.validateCurrentRecord(res, v);
-        }
-
-        res.close();
-    }
-
-    public void testAssociateMovieWithGenres() {
-        TestUtils.Movie movie = TestUtils.defaultMovies[0];
-        Uri movieUri = resolve.insert(MoviesContract.MovieEntry.CONTENT_URI, TestUtils.createMovieContent(movie));
-
-        Cursor res1 = resolve.query(movieUri, null, null, null, null);
-        assertTrue(res1.moveToFirst());
-
-        ContentValues[] valuesPivot = new ContentValues[TestUtils.defaultGenres.length];
-        for (int i = 0; i < valuesPivot.length; i++) {
-            ContentValues v = new ContentValues();
-            v.put(GenresTable.PIVOT_COLUMN_ID, TestUtils.defaultGenres[i].getId());
-            v.put(GenresTable.PIVOT_COLUMN_MOVIE_ID, movie.id);
-            v.put(GenresTable.PIVOT_COLUMN_LANG, Locale.getDefault().getLanguage());
-
-            valuesPivot[i] = v;
-        }
-
-        int insertedGenres = insertGenresInContentProvider();
-        assertEquals(TestUtils.defaultGenres.length, insertedGenres);
-
-        final Uri uri = MoviesContract.GenreEntry.CONTENT_URI_PIVOT;
-        int inserted = resolve.bulkInsert(uri, valuesPivot);
-        assertEquals(TestUtils.defaultGenres.length, inserted);
-
-        final Uri uri_pivot_movie = MoviesContract.GenreEntry.buildGenrePivotUri(movie.id);
-        Cursor res = resolve
-                .query(uri_pivot_movie, null, null, null,
-                       GenresTable.PIVOT_COLUMN_ID + " ASC");
-
-        assertEquals(TestUtils.defaultGenres.length, res.getCount());
-
-        int i = 0;
-        while (res.moveToNext()) {
-            int id = res.getInt(res.getColumnIndex(GenresTable.PIVOT_COLUMN_ID));
-            ContentValues v = valuesPivot[i++];
-            TestUtils.validateCurrentRecord(res, v);
-        }
-
-        res.close();
-        res1.close();
-    }
-
-    /*
-    |--------------------------------------------------------------------------
-    | Updates tests
-    |--------------------------------------------------------------------------
-    */
-    public void testUpdateMovieWithDetails() {
-        TestUtils.Movie movie = TestUtils.defaultMovies[1];
-        ContentValues values = TestUtils.createMovieContent(movie);
-
-        Uri uri = resolve.insert(MoviesContract.MovieEntry.CONTENT_URI, values);
-
-        ContentValues addValues = new ContentValues();
-        addValues.put(MoviesTable.COLUMN_DOWNLOADED, 1);
-        addValues.put(MoviesTable.COLUMN_RUNTIME, 150);
-        addValues.put(MoviesTable.COLUMN_OVERVIEW, "Overview");
-
-        int updated = resolve.update(uri, addValues, null, null);
-
-        assertEquals(1, updated);
-
-        Cursor c = resolve.query(uri, null, null, null, null);
-
-        assertTrue(c.moveToFirst());
-
-        int downloaded = c.getInt(c.getColumnIndex(MoviesTable.COLUMN_DOWNLOADED));
-        int runtime = c.getInt(c.getColumnIndex(MoviesTable.COLUMN_RUNTIME));
-        String overview = c.getString(c.getColumnIndex(MoviesTable.COLUMN_OVERVIEW));
-
-        assertEquals(1, downloaded);
-        assertEquals(150, runtime);
-        assertEquals("Overview", overview);
-
-        c.close();
     }
 
     /*
@@ -239,36 +137,19 @@ public class MoviesProviderTest extends ProviderTestCase2<MoviesProvider> {
 
     public void testDeleteMovieById() {
         final Uri uri = MoviesContract.MovieEntry.CONTENT_URI;
-        TestUtils.Movie m = TestUtils.defaultMovies[0];
-        ContentValues contentValues = TestUtils.createMovieContent(m);
+        ProviderTestUtils.Movie m = ProviderTestUtils.defaultMovies[0];
+        ContentValues contentValues = ProviderTestUtils.createMovieContent(m);
         Uri inserted = resolve.insert(uri, contentValues);
 
         Cursor c = resolve.query(inserted, null, null, null, null);
 
-        TestUtils.validateCursor(c, contentValues);
+        ProviderTestUtils.validateCursor(c, contentValues);
 
         int rowsAffected = resolve.delete(inserted, null, null);
 
         assertEquals(1, rowsAffected);
 
         c.close();
-    }
-
-    public void testDeleteGenresList() {
-        final Uri uri = MoviesContract.GenreEntry.CONTENT_URI;
-        final int len = TestUtils.defaultGenres.length;
-
-        int inserted = insertGenresInContentProvider();
-        assertEquals(len, inserted);
-
-        int deleted = resolve.delete(uri, null, null);
-        assertEquals(len, deleted);
-
-        Cursor res = resolve.query(uri, null, null, null, null);
-
-        assertFalse(res.moveToFirst());
-
-        res.close();
     }
 
     /*
@@ -278,25 +159,12 @@ public class MoviesProviderTest extends ProviderTestCase2<MoviesProvider> {
     */
     private int insertMoviesInContentProvider() {
         final Uri uri = MoviesContract.MovieEntry.CONTENT_URI;
-        final int len = TestUtils.defaultMovies.length;
+        final int len = ProviderTestUtils.defaultMovies.length;
 
         ContentValues[] values = new ContentValues[len];
 
         for (int i = 0; i < values.length; i++) {
-            values[i] = TestUtils.createMovieContent(TestUtils.defaultMovies[i]);
-        }
-
-        return resolve.bulkInsert(uri, values);
-    }
-
-    private int insertGenresInContentProvider() {
-        final Uri uri = MoviesContract.GenreEntry.CONTENT_URI;
-        final int len = TestUtils.defaultGenres.length;
-
-        ContentValues[] values = new ContentValues[len];
-
-        for (int i = 0; i < values.length; i++) {
-            values[i] = TestUtils.createGenreContent(TestUtils.defaultGenres[i]);
+            values[i] = ProviderTestUtils.createMovieContent(ProviderTestUtils.defaultMovies[i]);
         }
 
         return resolve.bulkInsert(uri, values);

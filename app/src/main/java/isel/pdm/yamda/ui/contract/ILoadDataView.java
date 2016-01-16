@@ -1,5 +1,7 @@
 package isel.pdm.yamda.ui.contract;
 
+import android.content.Context;
+
 /**
  * This interface is a contract for representing a loading data view
  * @param <T>
@@ -12,9 +14,14 @@ public interface ILoadDataView<T> {
     void showLoading();
 
     /**
-     * Hide a loading view.
+     * Hide a loading view and show the results
      */
-    void hideLoading();
+    void showResults();
+
+    /**
+     * Show a view saying there is no connection
+     */
+    void showNoConnection();
 
     /**
      * Show an error message
@@ -24,8 +31,14 @@ public interface ILoadDataView<T> {
     void showError(String message);
 
     /**
-     * Add data
+     * Add data to the view
      * @param data
      */
     void setData(T data);
+
+    /**
+     * Get the context
+     */
+    Context getViewContext();
+
 }

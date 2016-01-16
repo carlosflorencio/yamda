@@ -8,9 +8,9 @@ import android.test.RenamingDelegatingContext;
 
 import java.util.HashSet;
 
-import isel.pdm.yamda.data.provider.table.FollowMoviesTable;
-import isel.pdm.yamda.data.provider.table.MoviesTable;
-
+/**
+ * Test the DB helper
+ */
 public class TestDb extends AndroidTestCase {
 
     private MoviesDatabaseHelper databaseHelper;
@@ -34,8 +34,8 @@ public class TestDb extends AndroidTestCase {
      */
     public void testCreateDb() throws Throwable {
         final HashSet<String> tableNameHashSet = new HashSet<String>();
-        tableNameHashSet.add(MoviesTable.NAME);
-        tableNameHashSet.add(FollowMoviesTable.NAME);
+        tableNameHashSet.add(MoviesContract.MovieEntry.TABLE_NAME);
+        tableNameHashSet.add(MoviesContract.FollowEntry.TABLE_NAME);
 
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
         assertEquals(true, db.isOpen());
@@ -62,15 +62,16 @@ public class TestDb extends AndroidTestCase {
     public void testInsertMovies() {
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
 
-        for (TestUtils.Movie movie : TestUtils.defaultMovies) {
-            ContentValues cMovie = TestUtils.createMovieContent(movie);
-            assertTrue(db.insert(MoviesTable.NAME, null, cMovie) != -1L);
+        for (ProviderTestUtils.Movie movie : ProviderTestUtils.defaultMovies) {
+            ContentValues cMovie = ProviderTestUtils.createMovieContent(movie);
+            assertTrue(db.insert(MoviesContract.MovieEntry.TABLE_NAME, null, cMovie) != -1L);
         }
 
         // Count rows
-        Cursor c = db.rawQuery("SELECT * FROM " + MoviesTable.NAME, null);
-        assertEquals(TestUtils.defaultMovies.length, c.getCount());
+        Cursor c = db.rawQuery("SELECT * FROM " + MoviesContract.MovieEntry.TABLE_NAME, null);
+        assertEquals(ProviderTestUtils.defaultMovies.length, c.getCount());
 
+        c.close();
         db.close();
     }
 }

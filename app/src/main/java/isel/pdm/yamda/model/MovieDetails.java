@@ -8,24 +8,32 @@ import java.util.Date;
 /**
  * This class is used for representing a Movie obtained from the data layer with all the details
  */
-public final class MovieDetails extends MovieListDetails {
+public class MovieDetails extends Movie {
 
     /**
      * The movie run time
      **/
-    private final int runtime;
+    private int runtime;
     /**
      * The movie overview description
      **/
-    private final String overview;
+    private String overview;
+    /**
+     * The movie backdrop
+     **/
+    protected String backdrop;
     /**
      * The movie crew team
      **/
-    private final Crew[] crew;
+    private Crew[] crew;
     /**
      * The movie Cast team
      **/
-    private final Actor[] actors;
+    private Actor[] actors;
+    /**
+     * The movie genres, must be filled
+     **/
+    private Genre[] genres;
     /**
      * Set the movie is being followed
      */
@@ -35,11 +43,13 @@ public final class MovieDetails extends MovieListDetails {
                         String poster, String backdrop, double rating, double popularity,
                         int runtime, String overview, Genre[] genres,
                         Crew[] crew, Actor[] actors) {
-        super(id, title, original_title, release_date, poster, backdrop, rating, popularity, genres);
+        super(id, title, original_title, release_date, poster, rating, popularity);
         this.runtime = runtime;
         this.overview = overview;
         this.crew = crew;
         this.actors = actors;
+        this.backdrop = backdrop;
+        this.genres = genres;
         this.isBeingFollowed = false;
     }
 
@@ -67,6 +77,14 @@ public final class MovieDetails extends MovieListDetails {
 
     public String getOverview() {
         return overview;
+    }
+
+    public String getBackdrop() {
+        return backdrop;
+    }
+
+    public Genre[] getGenres() {
+        return getGenres();
     }
 
     public Crew[] getCrew() {

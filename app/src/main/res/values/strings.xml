@@ -48,4 +48,6 @@
     <string name="once_a_week">Once a Week</string>
     <string name="twice_a_month">Twice a Month</string>
     <string name="once_a_month">Once a Month</string>
+    <string name="offline_text">No connection!</string>
+    <string name="retry_button">Try Again</string>
 </resources>

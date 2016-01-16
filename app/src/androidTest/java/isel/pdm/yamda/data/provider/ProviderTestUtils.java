@@ -4,15 +4,15 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.test.AndroidTestCase;
 
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import isel.pdm.yamda.data.provider.table.GenresTable;
-import isel.pdm.yamda.data.provider.table.MoviesTable;
 import isel.pdm.yamda.model.Genre;
 
-public class TestUtils extends AndroidTestCase {
+/**
+ * Helpers to the MoviesProviderTest test file
+ */
+public class ProviderTestUtils extends AndroidTestCase {
 
     static class Movie {
         public int id;
@@ -70,15 +70,15 @@ public class TestUtils extends AndroidTestCase {
     //important: should be ordered by popularity to some tests work
     public static Movie[] defaultMovies = new Movie[]{
             new Movie(1, "Original: Star Wars", "path/back", "2015-12-01", 8.2, "path/poster",
-                      MoviesTable.TYPE_NOW, 9, "en", "EN: Star Wars", true, 124, "EN: Overview"),
+                      MoviesContract.MovieEntry.TYPE_NOW, 9, "en", "EN: Star Wars", true, 124, "EN: Overview"),
             new Movie(2, "Original: Lego", "path/back", "2015-11-05", 7.5, "path/poster",
-                      MoviesTable.TYPE_NOW, 8.5, "en", "EN: LEGO"),
+                      MoviesContract.MovieEntry.TYPE_NOW, 8.5, "en", "EN: LEGO"),
             new Movie(3, "Original: Joy", "path/back", "2015-12-25", 7, "path/poster",
-                      MoviesTable.TYPE_NOW, 8.0, "en", "EN: Joy"),
+                      MoviesContract.MovieEntry.TYPE_NOW, 8.0, "en", "EN: Joy"),
             new Movie(4, "Original: Big", "path/back", "2016-01-06", 5.4, "path/poster",
-                      MoviesTable.TYPE_SOON, 7.6, "en", "EN: Big", true, 215, "EN: Overview"),
+                      MoviesContract.MovieEntry.TYPE_SOON, 7.6, "en", "EN: Big", true, 215, "EN: Overview"),
             new Movie(5, "Original: Small", "path/back", "2016-01-03", 5, "path/poster",
-                      MoviesTable.TYPE_SOON, 7.3, "en", "EN: Small"),
+                      MoviesContract.MovieEntry.TYPE_SOON, 7.3, "en", "EN: Small"),
     };
 
     public static Genre[] defaultGenres = new Genre[] {
@@ -93,34 +93,16 @@ public class TestUtils extends AndroidTestCase {
     |--------------------------------------------------------------------------
     */
     static ContentValues createMovieContent(Movie m) {
-
         ContentValues testValues = new ContentValues();
-        testValues.put(MoviesTable.COLUMN_ID, m.id);
-        testValues.put(MoviesTable.COLUMN_ORIGINAL_TITLE, m.original_title);
-        testValues.put(MoviesTable.COLUMN_BACKDROP, m.backdrop);
-        testValues.put(MoviesTable.COLUMN_RELEASE_DATE, m.release_date);
-        testValues.put(MoviesTable.COLUMN_RATING, m.rating);
-        testValues.put(MoviesTable.COLUMN_POSTER, m.poster);
-        testValues.put(MoviesTable.COLUMN_LIST_TYPE, m.list_type);
-        testValues.put(MoviesTable.COLUMN_POPULARITY, m.popularity);
-        testValues.put(MoviesTable.COLUMN_LANG, m.lang);
-        testValues.put(MoviesTable.COLUMN_TITLE, m.title);
-
-        testValues.put(MoviesTable.COLUMN_DOWNLOADED, m.downloaded ? 1 : 0);
-        testValues.put(MoviesTable.COLUMN_RUNTIME, m.runtime);
-        testValues.put(MoviesTable.COLUMN_OVERVIEW, m.overview);
-
-
-        return testValues;
-    }
-
-    static ContentValues createGenreContent(Genre m) {
-
-        ContentValues testValues = new ContentValues();
-        testValues.put(GenresTable.COLUMN_ID, m.getId());
-        testValues.put(GenresTable.COLUMN_LANG, Locale.getDefault().getLanguage());
-        testValues.put(GenresTable.COLUMN_TITLE, m.getName());
-
+        testValues.put(MoviesContract.MovieEntry.COLUMN_ID, m.id);
+        testValues.put(MoviesContract.MovieEntry.COLUMN_ORIGINAL_TITLE, m.original_title);
+        testValues.put(MoviesContract.MovieEntry.COLUMN_RELEASE_DATE, m.release_date);
+        testValues.put(MoviesContract.MovieEntry.COLUMN_RATING, m.rating);
+        testValues.put(MoviesContract.MovieEntry.COLUMN_POSTER, m.poster);
+        testValues.put(MoviesContract.MovieEntry.COLUMN_LIST_TYPE, m.list_type);
+        testValues.put(MoviesContract.MovieEntry.COLUMN_POPULARITY, m.popularity);
+        testValues.put(MoviesContract.MovieEntry.COLUMN_LANG, m.lang);
+        testValues.put(MoviesContract.MovieEntry.COLUMN_TITLE, m.title);
 
         return testValues;
     }

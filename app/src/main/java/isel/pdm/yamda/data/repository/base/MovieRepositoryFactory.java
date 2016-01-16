@@ -18,7 +18,7 @@ public class MovieRepositoryFactory {
      * Create and return an instance of a TMDbMovieRepository
      * @return
      */
-    public static IMovieRepository getCloudRepository() {
+    public static ICloudMovieRepository getCloudRepository() {
         return new TMDbMovieRepository(new TMDbApiSync(), new DTOModelEntitiesDataMapper());
     }
 

@@ -13,14 +13,14 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import isel.pdm.yamda.R;
-import isel.pdm.yamda.model.MovieListDetails;
+import isel.pdm.yamda.model.Movie;
 
 /**
- * Adapter used to show a list of MovieListDetails
+ * Adapter used to show a list of Movie
  */
 public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdapter.ViewHolder> {
 
-    private List<MovieListDetails> data;
+    private List<Movie> data;
     private Context                context;
     private IClickListener         listener;
 
@@ -38,7 +38,7 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
      *
      * @param data
      */
-    public void setData(List<MovieListDetails> data) {
+    public void setData(List<Movie> data) {
         this.data = data;
         notifyDataSetChanged();
     }
@@ -62,14 +62,14 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                                  .inflate(R.layout.home_tab_list_row, parent, false);
+                                  .inflate(R.layout.list_movies_row_layout, parent, false);
 
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        MovieListDetails movie = data.get(position);
+        Movie movie = data.get(position);
 
         holder.title.setText(movie.getTitle());
         holder.title_original.setText(movie.getOriginalTitle());
@@ -118,6 +118,6 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
      * Interface for click listeners for this adapter
      */
     public interface IClickListener {
-        void onItemClick(MovieListDetails movie);
+        void onItemClick(Movie movie);
     }
 }

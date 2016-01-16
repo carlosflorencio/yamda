@@ -11,8 +11,8 @@ import isel.pdm.yamda.data.api.entity.MovieListingDTO;
 import isel.pdm.yamda.model.Actor;
 import isel.pdm.yamda.model.Crew;
 import isel.pdm.yamda.model.Genre;
+import isel.pdm.yamda.model.Movie;
 import isel.pdm.yamda.model.MovieDetails;
-import isel.pdm.yamda.model.MovieListDetails;
 
 /**
  * This class knows how to transform a data entity to a model entity
@@ -53,16 +53,14 @@ public class DTOModelEntitiesDataMapper {
      * @param dto
      * @return
      */
-    public MovieListDetails transform(MovieListingDTO.MovieListDTO dto) {
-        return new MovieListDetails(dto.getId(),
-                                    dto.getTitle(),
-                                    dto.getOriginalTitle(),
-                                    dto.getReleaseDate(),
-                                    createPosterLink(dto.getPosterPath()),
-                                    createBackdropLink(dto.getBackdropPath()),
-                                    dto.getVoteAverage(),
-                                    dto.getPopularity(),
-                                    null
+    public Movie transform(MovieListingDTO.MovieListDTO dto) {
+        return new Movie(dto.getId(),
+                         dto.getTitle(),
+                         dto.getOriginalTitle(),
+                         dto.getReleaseDate(),
+                         createPosterLink(dto.getPosterPath()),
+                         dto.getVoteAverage(),
+                         dto.getPopularity()
         );
     }
 
@@ -72,8 +70,8 @@ public class DTOModelEntitiesDataMapper {
      * @param dto
      * @return
      */
-    public List<MovieListDetails> transform(MovieListingDTO dto) {
-        List<MovieListDetails> movies = new ArrayList<>();
+    public List<Movie> transform(MovieListingDTO dto) {
+        List<Movie> movies = new ArrayList<>();
         List<MovieListingDTO.MovieListDTO> dtoList = dto.getResults();
         for (MovieListingDTO.MovieListDTO movie : dtoList) {
             movies.add(transform(movie));

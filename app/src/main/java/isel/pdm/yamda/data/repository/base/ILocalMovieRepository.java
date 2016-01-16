@@ -2,14 +2,24 @@ package isel.pdm.yamda.data.repository.base;
 
 import java.util.List;
 
-import isel.pdm.yamda.model.Genre;
-import isel.pdm.yamda.model.MovieDetails;
-import isel.pdm.yamda.model.MovieListDetails;
+import isel.pdm.yamda.model.Movie;
 
 /**
  * Contract of the local repository, witch has more functions due to content provider
  */
-public interface ILocalMovieRepository extends IMovieRepository {
+public interface ILocalMovieRepository {
+
+    /**
+     * Get the movies in theaters right now from the local repo
+     * @return
+     */
+    List<Movie> getTheatersMovies();
+
+    /**
+     * Get movies in the soon list from the local repo
+     * @return
+     */
+    List<Movie> getSoonMovies();
 
     /**
      * Save the movies in a local repository, like a content provider
@@ -17,22 +27,7 @@ public interface ILocalMovieRepository extends IMovieRepository {
      * @param type
      * @return total of inserts
      */
-    int insertMovies(List<MovieListDetails> movies, String type);
-
-    /**
-     * Associate in the local repository, the movie and genres
-     * @param movie
-     * @param genres
-     * @return
-     */
-    int associateGenres(MovieListDetails movie, List<Genre> genres);
-
-    /**
-     * Update the local repository with a new details
-     * @param movie
-     * @return
-     */
-    boolean updateMovieDetails(MovieDetails movie);
+    int insertMovies(List<Movie> movies, String type);
 
     /**
      * Checks if there are movies in the local repo

@@ -14,39 +14,36 @@ import android.widget.Toast;
 import java.util.List;
 
 import isel.pdm.yamda.R;
-import isel.pdm.yamda.model.MovieListDetails;
-import isel.pdm.yamda.ui.activity.base.PresentableActivity;
+import isel.pdm.yamda.model.Movie;
+import isel.pdm.yamda.ui.activity.base.LoadDataActivity;
 import isel.pdm.yamda.ui.adapter.MovieRecyclerAdapter;
-import isel.pdm.yamda.ui.contract.ILoadDataView;
 import isel.pdm.yamda.ui.presenter.SearchMovieViewPresenter;
 import isel.pdm.yamda.ui.presenter.base.IPresenter;
 
 /**
  * Activity to display the movie search results
  */
-public class SearchableActivity extends PresentableActivity
-        implements ILoadDataView<List<MovieListDetails>> {
+public class SearchableActivity extends LoadDataActivity<List<Movie>> {
 
-
-    // TODO: 22/12/2015 change this to use a fragment
     private RecyclerView listView;
-    private View loadingView;
     private MovieRecyclerAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.home_tab);
-        this.listView = (RecyclerView) this.findViewById(R.id.list_view);
-        this.loadingView = this.findViewById(R.id.tab_progress_bar);
-
+        this.listView = (RecyclerView) this.mainView;
         this.setupListView();
         this.setListViewAdapter();
 
         this.setUpSupportActionBar();
 
         handleIntent(getIntent());
+    }
+
+    @Override
+    protected int getLayout() {
+        return R.layout.list_movies_layout;
     }
 
 
@@ -69,7 +66,7 @@ public class SearchableActivity extends PresentableActivity
 
         adapter.setListener(new MovieRecyclerAdapter.IClickListener() {
             @Override
-            public void onItemClick(MovieListDetails movie) {
+            public void onItemClick(Movie movie) {
                 Intent i = MovieActivity.createIntent(SearchableActivity.this, movie.getId());
                 SearchableActivity.this.startActivity(i);
             }
@@ -137,6 +134,16 @@ public class SearchableActivity extends PresentableActivity
         this.loadingView.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    public void showResults() {
+
+    }
+
+    @Override
+    public void showNoConnection() {
+
+    }
+
     public void hideLoading() {
         this.loadingView.setVisibility(View.GONE);
         this.listView.setVisibility(View.VISIBLE);
@@ -147,7 +154,7 @@ public class SearchableActivity extends PresentableActivity
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    public void setData(List<MovieListDetails> data) {
+    public void setData(List<Movie> data) {
         this.hideLoading();
         this.adapter.setData(data);
     }

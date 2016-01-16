@@ -3,56 +3,48 @@ package isel.pdm.yamda.model;
 /**
  * This class is used for representing a Movie details obtained from the data layer
  * by a movies list. It contains less data than a MovieDetails
+ *
+ * Genres must be filled after retrieved
  */
-public class MovieListDetails {
+public class Movie {
     /**
      * The movie id
      **/
-    protected final int id;
+    protected int id;
     /**
      * The movie title
      **/
-    protected final String title;
+    protected String title;
     /**
      * The movie original title
      **/
-    protected final String original_title;
+    protected String original_title;
     /**
      * The movie release date
      **/
-    protected final String release_date;
+    protected String release_date;
     /**
      * The movie rating
      **/
-    protected final double rating;
+    protected double rating;
     /**
      * The movie popularity
      **/
-    protected final double popularity;
+    protected double popularity;
     /**
      * The movie poster image
      **/
-    protected final String poster;
-    /**
-     * The movie backdrop
-     **/
-    protected final String backdrop;
-    /**
-     * The movie genres
-     **/
-    private final Genre[] genres;
+    protected String poster;
 
-    public MovieListDetails(int id, String title, String original_title, String release_date,
-                            String poster, String backdrop, double rating, double popularity, Genre[] genres) {
+    public Movie(int id, String title, String original_title, String release_date,
+                 String poster, double rating, double popularity) {
         this.id = id;
         this.title = title;
         this.original_title = original_title;
         this.release_date = release_date;
         this.poster = poster;
-        this.backdrop = backdrop;
         this.rating = rating;
         this.popularity = popularity;
-        this.genres = genres;
     }
 
     public int getId() {
@@ -81,13 +73,5 @@ public class MovieListDetails {
 
     public String getPoster() {
         return poster;
-    }
-
-    public String getBackdrop() {
-        return backdrop;
-    }
-
-    public Genre[] getGenres() {
-        return genres;
     }
 }
