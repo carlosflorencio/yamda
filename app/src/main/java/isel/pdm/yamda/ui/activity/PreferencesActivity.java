@@ -2,13 +2,16 @@ package isel.pdm.yamda.ui.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import isel.pdm.yamda.R;
 import isel.pdm.yamda.ui.activity.base.LoggingActivity;
 import isel.pdm.yamda.ui.fragment.PreferencesFragment;
 
 /**
  * Class used to store shared preferences of some details of the application
+ * Uses a PreferencesFragment
  */
 public class PreferencesActivity extends LoggingActivity {
 
@@ -16,8 +19,18 @@ public class PreferencesActivity extends LoggingActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.setUpSupportActionBar();
-        getFragmentManager().beginTransaction().replace(android.R.id.content, new PreferencesFragment()).commit();
+        this.setContentView(R.layout.activity_preferences);
+
+        Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
+
+        this.setSupportActionBar(toolbar);
+
+        ActionBar actionBar = this.getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+        getFragmentManager().beginTransaction()
+                            .replace(R.id.list_pref, new PreferencesFragment()).commit();
     }
 
     /**
@@ -32,17 +45,8 @@ public class PreferencesActivity extends LoggingActivity {
             case android.R.id.home:
                 finish();
                 break;
-
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * Display the back button
-     */
-    protected void setUpSupportActionBar() {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
 }

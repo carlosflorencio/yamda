@@ -8,10 +8,10 @@
         android:defaultValue="true" />
 
     <CheckBoxPreference
-        android:key="@string/enable_update"
-        android:title="@string/enable_update_title"
-        android:summary="@string/enable_update_summary"
-        android:defaultValue="true" />
+        android:key="@string/only_wifi"
+        android:title="@string/only_wifi_title"
+        android:summary="@string/only_wifi_summary"
+        android:defaultValue="false" />
 
     <ListPreference
         android:key="@string/periodicity"

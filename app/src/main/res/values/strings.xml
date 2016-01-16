@@ -37,14 +37,14 @@
     <!-- PREFERENCES -->
     <string name="get_notified" translatable="false">get_notified</string>
     <string name="get_notified_title">Get notifications?</string>
-    <string name="get_notified_summary">Yes/No</string>
+    <string name="get_notified_summary">Receive notification when a movie you follow is in exhibition</string>
 
-    <string name="enable_update" translatable="false">enable_update</string>
-    <string name="enable_update_title">Auto update local data</string>
-    <string name="enable_update_summary">Enable periodic local update</string>
+    <string name="only_wifi" translatable="false">only_wifi</string>
+    <string name="only_wifi_title">Only use Wifi</string>
+    <string name="only_wifi_summary">Download movies only using wifi</string>
 
     <string name="periodicity" translatable="false">periodicity</string>
-    <string name="periodicity_title">Actualizations periodicity</string>
+    <string name="periodicity_title">Update periodicity</string>
     <string name="once_a_week">Once a Week</string>
     <string name="twice_a_month">Twice a Month</string>
     <string name="once_a_month">Once a Month</string>

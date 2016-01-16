@@ -6,15 +6,15 @@ import android.preference.PreferenceFragment;
 import isel.pdm.yamda.R;
 
 /**
- * Class used to //TODO: comentary
+ * Preferences fragment, loading the preferences.xml
+ * For Android 3.0 and higher, you should instead use this fragment instead of PreferencesActivity
  */
 public class PreferencesFragment extends PreferenceFragment {
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         addPreferencesFromResource(R.xml.preferences);
     }
-
 }

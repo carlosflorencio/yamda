@@ -36,10 +36,10 @@
 
     <!-- PREFERENCES -->
     <string name="get_notified_title">Receber notificações?</string>
-    <string name="get_notified_summary">Sim/Não</string>
+    <string name="get_notified_summary">Receber notificações quando um filme que segue entra em exibição</string>
 
-    <string name="enable_update_title">Atualizar dados locais automaticamente</string>
-    <string name="enable_update_summary">Possibilita atualização periodica dos dados</string>
+    <string name="only_wifi_title">Usar Apenas Wifi</string>
+    <string name="only_wifi_summary">Download dos filmes apenas por wifi</string>
 
     <string name="periodicity_title">Periodicidade das actualizações</string>
     <string name="once_a_week">Uma vez por semana</string>
