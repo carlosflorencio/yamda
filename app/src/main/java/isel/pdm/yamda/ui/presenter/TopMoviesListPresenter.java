@@ -35,6 +35,13 @@ public class TopMoviesListPresenter extends Presenter<List<Movie>> {
             ICloudMovieRepository repo = MovieRepositoryFactory.getCloudRepository();
 
             try {
+                Thread.sleep(2000);
+            } catch(InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
+
+
+            try {
                 return repo.getTopMovies(1);
             } catch (FailedGettingDataException e) {
                 Log.d(TAG, "Unreachable code!");
@@ -47,7 +54,10 @@ public class TopMoviesListPresenter extends Presenter<List<Movie>> {
         protected void onPostExecute(List<Movie> list) {
             super.onPostExecute(list);
 
-            view.setData(list);
+            if(list != null)
+                view.setData(list);
+            else
+                view.showNoConnection();
         }
     }
 }

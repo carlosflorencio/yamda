@@ -36,6 +36,8 @@ public class SplashPresenter extends Presenter<Void> {
 
             if(success)
                 view.setData(null);
+            else
+                view.showNoConnection();
         }
 
         @Override
@@ -63,7 +65,6 @@ public class SplashPresenter extends Presenter<Void> {
                 res = true;
             } catch (FailedGettingDataException e) {
                 Log.d(TAG, "Failed getting data! Error: " + e.getMessage());
-                view.showNoConnection();
             }
 
             // Loading data is so fast that we really want a small delay to see the splash

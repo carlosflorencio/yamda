@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -17,7 +18,7 @@ import isel.pdm.yamda.ui.contract.ILoadDataView;
  * Abstract class to simplify fragments with multiple states views, loading, error, no connection
  * @param <T>
  */
-public abstract class LoadDataFragment<T> extends PresentableFragment implements ILoadDataView<T> {
+public abstract class LoadDataFragment<T> extends PresentableFragment implements ILoadDataView<T>, View.OnClickListener {
 
     protected FrameLayout frameLayout;
     protected View mainView;
@@ -44,6 +45,9 @@ public abstract class LoadDataFragment<T> extends PresentableFragment implements
         this.mainView = stub.inflate();
         this.loadingView = viewContainer.findViewById(R.id.progress_view);
         this.retryView = viewContainer.findViewById(R.id.retry_view);
+
+        Button btn = (Button) this.retryView.findViewById(R.id.retry_button);
+        btn.setOnClickListener(this);
         showLoading();
 
         return viewContainer;
@@ -82,5 +86,11 @@ public abstract class LoadDataFragment<T> extends PresentableFragment implements
     @Override
     public Context getViewContext() {
         return getContext();
+    }
+
+    @Override
+    public void onClick(View v) {
+        showLoading();
+        this.presenter.execute();
     }
 }

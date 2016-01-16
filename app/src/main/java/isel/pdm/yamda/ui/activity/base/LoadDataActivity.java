@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewStub;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -14,7 +15,7 @@ import isel.pdm.yamda.ui.contract.ILoadDataView;
  * Abstract class to simplify activities with multiple states views, loading, error, no connection
  * @param <T>
  */
-public abstract class LoadDataActivity<T> extends PresentableActivity implements ILoadDataView<T> {
+public abstract class LoadDataActivity<T> extends PresentableActivity implements ILoadDataView<T>, View.OnClickListener {
 
     protected FrameLayout frameLayout;
     protected View mainView;
@@ -34,6 +35,9 @@ public abstract class LoadDataActivity<T> extends PresentableActivity implements
         this.mainView = stub.inflate();
         this.loadingView = this.findViewById(R.id.progress_view);
         this.retryView = this.findViewById(R.id.retry_view);
+
+        Button btn = (Button) this.retryView.findViewById(R.id.retry_button);
+        btn.setOnClickListener(this);
 
         showLoading();
     }
@@ -71,5 +75,11 @@ public abstract class LoadDataActivity<T> extends PresentableActivity implements
     @Override
     public Context getViewContext() {
         return this;
+    }
+
+    @Override
+    public void onClick(View v) {
+        showLoading();
+        this.presenter.execute();
     }
 }

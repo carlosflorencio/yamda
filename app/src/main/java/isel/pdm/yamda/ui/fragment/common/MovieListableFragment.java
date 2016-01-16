@@ -23,6 +23,7 @@ import isel.pdm.yamda.ui.fragment.base.LoadDataFragment;
  */
 public abstract class MovieListableFragment extends LoadDataFragment<List<Movie>> {
 
+    public static final String RETRY_VIEW = "retry_view";
     protected RecyclerView listView;
     protected MovieRecyclerAdapter adapter;
 
@@ -38,17 +39,29 @@ public abstract class MovieListableFragment extends LoadDataFragment<List<Movie>
         this.setupListView();
         this.setListViewAdapter();
 
-        // switching tabs will cause to onCreateView and onDestroyView to be called!!!!!
-        // restored view? do we have data? set it again! and need do save the list position
-        // TODO: 23/12/2015 improve this restore method
-        if(data != null) {
-            this.setData(data);
+        // if no connection, retry_view retains state on rotate
+        if(savedInstanceState != null && savedInstanceState.getBoolean(RETRY_VIEW)) {
+            showNoConnection();
         } else {
-            Log.d(TAG, "onCreateView: execute presenter!");
-            this.presenter.execute();
+            //first time creating the fragment? ask for data
+            if(data == null) {
+                Log.d(TAG, "onCreateView: execute presenter!");
+                this.presenter.execute();
+            } else {
+                //there is already data? screen must be rotating or tab switching
+                this.setData(data);
+            }
         }
 
         return viewContainer;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        //save state if retry_view is active
+        outState.putBoolean(RETRY_VIEW, data == null);
     }
 
     /**
