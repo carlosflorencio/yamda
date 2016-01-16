@@ -27,7 +27,7 @@ public abstract class MovieListableFragment extends LoadDataFragment<List<Movie>
     protected RecyclerView listView;
     protected MovieRecyclerAdapter adapter;
 
-    List<Movie> data;
+    protected List<Movie> data;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -67,7 +67,7 @@ public abstract class MovieListableFragment extends LoadDataFragment<List<Movie>
     /**
      * Setup the RecyclerView
      */
-    private void setupListView() {
+    protected void setupListView() {
         listView.setHasFixedSize(true);
 
         // use a linear layout manager
@@ -78,7 +78,7 @@ public abstract class MovieListableFragment extends LoadDataFragment<List<Movie>
     /**
      * Setup the adapter
      */
-    private void setListViewAdapter() {
+    protected void setListViewAdapter() {
          this.adapter = new MovieRecyclerAdapter(this.getActivity());
 
         adapter.setListener(new MovieRecyclerAdapter.IClickListener() {

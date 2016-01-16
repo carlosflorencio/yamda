@@ -19,7 +19,7 @@ public class PreferencesActivity extends LoggingActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.setContentView(R.layout.activity_preferences);
+        this.setContentView(R.layout.toolbar_content);
 
         Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
 
@@ -30,7 +30,7 @@ public class PreferencesActivity extends LoggingActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         getFragmentManager().beginTransaction()
-                            .replace(R.id.list_pref, new PreferencesFragment()).commit();
+                            .replace(R.id.content, new PreferencesFragment()).commit();
     }
 
     /**

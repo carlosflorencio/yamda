@@ -44,7 +44,7 @@ public class MovieViewPresenter extends Presenter<MovieDetails> {
             try {
                 return repo.getMovieById(params[0]);
             } catch (FailedGettingDataException e) {
-                Log.d(TAG, "Unreachable code!");
+                Log.d(TAG, "Failed getting data! Error: " + e.getMessage());
             }
 
             return null;

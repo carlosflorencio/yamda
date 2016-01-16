@@ -29,6 +29,10 @@ public abstract class PresentableFragment extends LoggingFragment {
             this.presenter = this.createPresenter();
     }
 
+    public IPresenter getPresenter() {
+        return this.presenter;
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Control presenter lifecycle

@@ -35,7 +35,8 @@ public class SearchMovieViewPresenter extends Presenter<List<Movie>> {
 
     @Override
     public void execute() {
-        new LoadDataTask().execute(query);
+        if(query != null && !query.isEmpty())
+            new LoadDataTask().execute(query);
     }
 
     /**
@@ -51,7 +52,7 @@ public class SearchMovieViewPresenter extends Presenter<List<Movie>> {
             try {
                 return repo.getMovieSearch(params[0], 1);
             } catch (FailedGettingDataException e) {
-                Log.d(TAG, "Unreachable code!");
+                Log.d(TAG, "Failed getting data! Error: " + e.getMessage());
             }
 
             return null;

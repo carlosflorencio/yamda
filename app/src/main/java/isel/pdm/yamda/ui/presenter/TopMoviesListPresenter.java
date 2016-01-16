@@ -44,7 +44,7 @@ public class TopMoviesListPresenter extends Presenter<List<Movie>> {
             try {
                 return repo.getTopMovies(1);
             } catch (FailedGettingDataException e) {
-                Log.d(TAG, "Unreachable code!");
+                Log.d(TAG, "Failed getting data! Error: " + e.getMessage());
             }
 
             return null;
