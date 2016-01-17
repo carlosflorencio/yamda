@@ -39,6 +39,7 @@ public class MovieViewPresenter extends Presenter<MovieDetails> {
 
         @Override
         protected MovieDetails doInBackground(Integer... params) {
+            Log.d(TAG, "doInBackground: Getting movie from the api");
             ICloudMovieRepository repo = MovieRepositoryFactory.getCloudRepository();
 
             try {

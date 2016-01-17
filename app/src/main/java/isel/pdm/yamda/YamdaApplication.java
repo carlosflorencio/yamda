@@ -3,6 +3,8 @@ package isel.pdm.yamda;
 import android.app.Application;
 import android.content.res.Configuration;
 
+import com.squareup.picasso.Picasso;
+
 /**
  * Singleton class (note that we have one instance per application process) that plays the role
  * of Service Locator, decoupling the remaining code base of the concrete service provider types.
@@ -15,6 +17,10 @@ public class YamdaApplication extends Application {
         super.onCreate();
 
         //initPeriodicUpdates();
+
+        //debug picasso
+        Picasso.with(this).setLoggingEnabled(true);
+        Picasso.with(this).setIndicatorsEnabled(true);
     }
 
     @Override

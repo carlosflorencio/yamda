@@ -33,7 +33,7 @@ public class DTOModelEntitiesDataMapper {
 
         return new MovieDetails(dto.getId(),
                                 dto.getTitle(),
-                                dto.getReleaseDate(),
+                                dto.getOriginalTitle(),
                                 dto.getReleaseDate(),
                                 createPosterLink(dto.getPosterPath()),
                                 createBackdropLink(dto.getBackdropPath()),

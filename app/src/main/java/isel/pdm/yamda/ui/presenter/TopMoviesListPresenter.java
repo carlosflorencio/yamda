@@ -32,6 +32,7 @@ public class TopMoviesListPresenter extends Presenter<List<Movie>> {
 
         @Override
         protected List<Movie> doInBackground(Void... params) {
+            Log.d(TAG, "doInBackground: Getting movies from the api");
             ICloudMovieRepository repo = MovieRepositoryFactory.getCloudRepository();
 
             try {

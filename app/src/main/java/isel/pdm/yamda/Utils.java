@@ -5,8 +5,10 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.widget.Toast;
 
+import isel.pdm.yamda.model.Genre;
+
 /**
- * Utility class that provides some usefull methods for the app
+ * Utility class that provides some useful methods for the app
  */
 public class Utils {
 
@@ -28,5 +30,34 @@ public class Utils {
      */
     public static void showToastMessage(Activity activity, String message) {
         Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Create a nice time string from a runtime
+     * @param runtime
+     * @return
+     */
+    public static String createRuntimeText(int runtime) {
+        if(runtime == 0) return "";
+
+        int hours = runtime / 60;
+        int minutes = runtime % 60;
+        return hours + "h " + minutes + "m";
+    }
+
+    /**
+     * Create a genres string from an array
+     * @param genres
+     * @return
+     */
+    public static String createGenreText(Genre[] genres) {
+        StringBuilder stringbuilder = new StringBuilder();
+        for (int i = 0; i < genres.length; i++) {
+            stringbuilder.append(genres[i].getName());
+            if (i < genres.length - 1) {
+                stringbuilder.append(", ");
+            }
+        }
+        return stringbuilder.toString();
     }
 }

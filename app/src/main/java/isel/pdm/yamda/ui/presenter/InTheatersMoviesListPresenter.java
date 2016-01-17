@@ -2,6 +2,7 @@ package isel.pdm.yamda.ui.presenter;
 
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.util.List;
 
@@ -32,6 +33,7 @@ public class InTheatersMoviesListPresenter extends Presenter<List<Movie>> {
 
         @Override
         protected List<Movie> doInBackground(Void... params) {
+            Log.d(TAG, "doInBackground: Getting movies from content provider");
             ILocalMovieRepository repo = MovieRepositoryFactory.getLocalRepository(view.getViewContext());
 
             try {

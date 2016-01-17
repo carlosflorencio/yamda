@@ -100,7 +100,7 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
 
         public ViewHolder(View itemView) {
             super(itemView);
-            title = (TextView) itemView.findViewById(R.id.movie_title);
+            title = (TextView) itemView.findViewById(R.id.movie_title_details);
             title_original = (TextView) itemView.findViewById(R.id.title_original);
             rating = (TextView) itemView.findViewById(R.id.rating);
             releaseYear = (TextView) itemView.findViewById(R.id.release_year);

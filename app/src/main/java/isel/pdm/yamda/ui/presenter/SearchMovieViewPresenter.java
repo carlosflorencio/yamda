@@ -47,6 +47,7 @@ public class SearchMovieViewPresenter extends Presenter<List<Movie>> {
 
         @Override
         protected List<Movie> doInBackground(String... params) {
+            Log.d(TAG, "doInBackground: Searching movies from the api");
             ICloudMovieRepository repo = MovieRepositoryFactory.getCloudRepository();
 
             try {

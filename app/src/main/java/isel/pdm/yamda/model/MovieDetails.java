@@ -84,7 +84,7 @@ public class MovieDetails extends Movie {
     }
 
     public Genre[] getGenres() {
-        return getGenres();
+        return this.genres;
     }
 
     public Crew[] getCrew() {
