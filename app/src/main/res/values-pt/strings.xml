@@ -17,6 +17,8 @@
 
     <!-- NOTIFICATIONS -->
     <string name="movie_released">Chegou!</string>
+    <string name="offline_text">Sem ligação!</string>
+    <string name="retry_button">Tentar outra vez</string>
 
     <!-- PROGRESS BAR -->
     <string name="loading">A Carregar..</string>
@@ -28,6 +30,7 @@
     <!-- MOVIE DETAILS -->
     <string name="follow">Seguir</string>
     <string name="following">A Seguir</string>
+    <string name="movie_credits">Creditos</string>
 
     <!-- TOASTS -->
     <string name="no_connection">Sem conecção à internet</string>
@@ -41,11 +44,12 @@
     <string name="only_wifi_title">Usar Apenas Wifi</string>
     <string name="only_wifi_summary">Download dos filmes apenas por wifi</string>
 
-    <string name="periodicity_title">Periodicidade das actualizações</string>
+    <string name="soon_periodicity_title">Periodicidade dos A Estrear</string>
+
+    <string name="in_theaters_periodicity_title">Periodicidade dos Em Cartaz</string>
+
+    <string name="twice_a_day">Duas vezes por dia</string>
+    <string name="twice_a_week">Duas vezes por semana</string>
     <string name="once_a_week">Uma vez por semana</string>
-    <string name="twice_a_month">Duas vezes por mês</string>
-    <string name="once_a_month">Uma vez por mês</string>
-    <string name="offline_text">Sem ligação!</string>
-    <string name="retry_button">Tentar outra vez</string>
-    <string name="movie_credits">Creditos</string>
+
 </resources>

@@ -73,6 +73,19 @@ public abstract class MovieListableFragment extends LoadDataFragment<List<Movie>
         // use a linear layout manager
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         listView.setLayoutManager(mLayoutManager);
+
+        listView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                if(!recyclerView.canScrollVertically(1)){
+                    //TODO: get next page from web
+                    showError("End");
+                }
+            }
+        });
     }
 
     /**
