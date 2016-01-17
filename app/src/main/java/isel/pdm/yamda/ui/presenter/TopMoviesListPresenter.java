@@ -12,6 +12,9 @@ import isel.pdm.yamda.model.Movie;
 import isel.pdm.yamda.ui.contract.ILoadDataView;
 import isel.pdm.yamda.ui.presenter.base.Presenter;
 
+/**
+ * Top movies presenter
+ */
 public class TopMoviesListPresenter extends Presenter<List<Movie>> {
 
     public TopMoviesListPresenter(

@@ -10,6 +10,9 @@ import isel.pdm.yamda.model.MovieCredits;
 import isel.pdm.yamda.ui.contract.ILoadDataView;
 import isel.pdm.yamda.ui.presenter.base.Presenter;
 
+/**
+ * Presenter class for setting data to the credits view
+ */
 public class MovieCreditsPresenter extends Presenter<MovieCredits> {
 
     private int movieId;
