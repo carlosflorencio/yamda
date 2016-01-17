@@ -15,6 +15,10 @@ import isel.pdm.yamda.model.Movie;
 import isel.pdm.yamda.ui.contract.ILoadDataView;
 import isel.pdm.yamda.ui.presenter.base.Presenter;
 
+/**
+ * Splash presenter, contains the logic for download the data for the first time and put it
+ * on the local repo
+ */
 public class SplashPresenter extends Presenter<Void> {
 
     private static final int STATUS_OK = 0;
