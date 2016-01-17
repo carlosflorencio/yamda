@@ -1,6 +1,8 @@
 package isel.pdm.yamda.ui.activity;
 
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
+import android.widget.TextView;
 
 import isel.pdm.yamda.R;
 import isel.pdm.yamda.ui.activity.base.ToolbarActivity;
@@ -17,6 +19,9 @@ public class AboutActivity extends ToolbarActivity {
 
         this.enableBackButton();
         toolbar.setTitle(R.string.about);
+
+        ((TextView)findViewById(R.id.linkedin_carlos)).setMovementMethod(LinkMovementMethod.getInstance());
+        ((TextView)findViewById(R.id.linkedin_nuno)).setMovementMethod(LinkMovementMethod.getInstance());
     }
 
 }

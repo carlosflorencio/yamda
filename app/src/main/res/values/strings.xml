@@ -61,6 +61,8 @@
     <string name="crew">Crew</string>
     <string name="credits">Credits</string>
     <string name="reference">Data from TMDb</string>
+    <string name="linkedin_nuno"><a href="https://www.linkedin.com/in/nuno-reis-520301b6">LinkedIn</a></string>
+    <string name="linkedin_carlos"><a href="https://www.linkedin.com/in/carlos-florêncio-bb8b643a">LinkedIn</a></string>
 
 
 </resources>
