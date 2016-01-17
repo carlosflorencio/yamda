@@ -20,6 +20,9 @@ import isel.pdm.yamda.ui.fragment.base.LoadDataFragment;
 import isel.pdm.yamda.ui.presenter.MovieViewPresenter;
 import isel.pdm.yamda.ui.presenter.base.IPresenter;
 
+/**
+ * Movie details fragment, shows all the movie details
+ */
 public class MovieDetailsFragment extends LoadDataFragment<MovieDetails> {
 
     private MovieDetails movie;

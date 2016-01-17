@@ -2,7 +2,6 @@ package isel.pdm.yamda.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,12 +25,9 @@ public class SearchMoviesListFragment extends MovieListableFragment {
         this.searchPresenter = (SearchMovieViewPresenter) this.presenter;
 
         if(!getArguments().isEmpty()) {
-            Log.d(TAG, "onCreateView: temos argumentos! execute presenter!");
             String query = getArguments().getString("query");
             this.searchPresenter.setQuery(query);
             this.searchPresenter.execute();
-        } else {
-            Log.d(TAG, "onCreateView: nao temos argumentos ainda e o data ta vazio? " + (data == null ? "sim" : "nao"));
         }
 
         return viewContainer;

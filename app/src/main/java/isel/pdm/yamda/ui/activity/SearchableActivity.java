@@ -24,17 +24,20 @@ public class SearchableActivity extends ToolbarActivity {
         handleIntent(getIntent());
     }
 
+    /**
+     * Case this activity is in the stack, a back press to here also works
+     * @param intent
+     */
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+
         handleIntent(intent);
     }
 
     private void handleIntent(Intent intent) {
-        Log.v(TAG, "new search handle intent!");
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
-
             Log.v(TAG, "Searched: " + query);
 
             //create the fragment and add it

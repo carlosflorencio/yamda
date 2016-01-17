@@ -5,45 +5,40 @@
     android:id="@+id/movie_view"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@android:color/white">
 
 
         <ImageView
             android:id="@+id/movie_back_drop_path"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop"
+            tools:src="@drawable/placeholder"/>
 
         <!-- Details layout -->
         <LinearLayout
             android:background="@android:color/white"
             android:id="@+id/movie_details_layout"
-            android:layout_below="@+id/movie_back_drop_path"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:orientation="horizontal"
             android:paddingBottom="20dp"
             android:paddingLeft="21dp"
             android:paddingRight="30dp">
 
-            <LinearLayout
+            <ImageView
+                android:id="@+id/movie_cover"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
                 android:layout_width="wrap_content"
-                android:orientation="vertical">
-
-
-                <ImageView
-                    android:id="@+id/movie_cover"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
-                    android:layout_width="wrap_content"/>
-
-            </LinearLayout>
+                tools:src="@drawable/cover"/>
 
             <LinearLayout
                 android:layout_height="wrap_content"
@@ -58,7 +53,8 @@
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:textSize="@dimen/movie_title"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold"
+                    tools:text="Movie title"/>
 
                 <!-- Runtime text view -->
                 <TextView
@@ -67,7 +63,8 @@
                     android:layout_marginTop="5dp"
                     android:layout_width="wrap_content"
                     android:textColor="@color/genre"
-                    android:textSize="@dimen/movie_runtime"/>
+                    android:textSize="@dimen/movie_runtime"
+                    tools:text="1h20m"/>
 
                 <!-- Date text view -->
                 <TextView
@@ -76,7 +73,8 @@
                     android:layout_marginTop="11dp"
                     android:layout_width="wrap_content"
                     android:textColor="@color/genre"
-                    android:textSize="@dimen/movie_release_date"/>
+                    android:textSize="@dimen/movie_release_date"
+                    tools:text="2015-12-05"/>
 
                 <!-- Rating text view -->
                 <TextView
@@ -85,7 +83,8 @@
                     android:layout_marginTop="5dp"
                     android:layout_width="wrap_content"
                     android:textColor="@color/genre"
-                    android:textSize="@dimen/movie_rating"/>
+                    android:textSize="@dimen/movie_rating"
+                    tools:text="5.5"/>
 
                 <!-- Genres text view -->
                 <TextView
@@ -94,38 +93,13 @@
                     android:layout_marginTop="20dp"
                     android:layout_width="wrap_content"
                     android:textColor="@color/genre"
-                    android:textSize="@dimen/movie_genre"/>
-
+                    android:textSize="@dimen/movie_genre"
+                    tools:text="Drama, Romance"/>
             </LinearLayout>
-        </LinearLayout>
 
-
-        <LinearLayout
-            android:id="@+id/movie_similar_holder"
-            android:layout_below="@+id/movie_details_layout"
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            android:orientation="vertical">
-
-
-            <LinearLayout
-                android:layout_height="match_parent"
-                android:layout_marginLeft="2dp"
-                android:layout_marginRight="2dp"
-                android:layout_width="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/movie_overview"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:paddingBottom="20dp"
-                    android:paddingLeft="15dp"/>
-            </LinearLayout>
         </LinearLayout>
 
         <ToggleButton
-            android:background="@drawable/follow_state"
             android:focusable="false"
             android:id="@+id/movie_follow"
             android:layout_below="@+id/movie_similar_holder"
@@ -135,8 +109,19 @@
             android:layout_width="wrap_content"
             android:textOff="@string/follow"
             android:textOn="@string/following"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:layout_gravity="center_horizontal"/>
 
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/movie_overview"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:paddingBottom="20dp"
+            android:paddingLeft="15dp"
+            tools:text="Overview about the movie"
+            android:paddingRight="15dp"/>
+
+    </LinearLayout>
 
 </ScrollView>
