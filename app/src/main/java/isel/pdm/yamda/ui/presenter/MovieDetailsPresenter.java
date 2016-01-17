@@ -80,7 +80,7 @@ public class MovieDetailsPresenter extends Presenter<MovieDetails> {
             Log.d(TAG, "doInBackground: Storing movie follow state");
             ILocalMovieRepository repo = MovieRepositoryFactory.getLocalRepository(view.getViewContext());
 
-            if(params[0]){
+            if(!params[0]){
                 repo.followMovie(id);
             } else {
                 repo.unfollowMovie(id);
