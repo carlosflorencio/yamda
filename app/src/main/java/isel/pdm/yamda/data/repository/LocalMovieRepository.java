@@ -132,7 +132,13 @@ public class LocalMovieRepository implements ILocalMovieRepository {
      */
     @Override
     public boolean isBeingFollowed(int movieId) {
-        throw new UnsupportedOperationException();
+        final Uri uri = MoviesContract.FollowEntry.buildFollowUri(movieId);
+
+        Cursor c = ctx.getContentResolver().query(uri, null, null, null, null);
+        int rows = c.getCount();
+
+        c.close();
+        return rows > 0;
     }
 
 
@@ -143,7 +149,13 @@ public class LocalMovieRepository implements ILocalMovieRepository {
      */
     @Override
     public void followMovie(int movieId) {
-        throw new UnsupportedOperationException();
+        final Uri uri = MoviesContract.FollowEntry.CONTENT_URI;
+
+        ContentValues values = new ContentValues();
+        values.put(MoviesContract.FollowEntry.COLUMN_MOVIE_ID, movieId);
+        values.put(MoviesContract.FollowEntry.COLUMN_MOVIE_LIST, MoviesContract.MovieEntry.TYPE_SOON);
+
+        ctx.getContentResolver().insert(uri, values);
     }
 
     /**
@@ -153,6 +165,8 @@ public class LocalMovieRepository implements ILocalMovieRepository {
      */
     @Override
     public void unfollowMovie(int movieId) {
-        throw new UnsupportedOperationException();
+        final Uri uri = MoviesContract.FollowEntry.buildFollowUri(movieId);
+
+        ctx.getContentResolver().delete(uri, null, null);
     }
 }

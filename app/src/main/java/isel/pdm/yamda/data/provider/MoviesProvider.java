@@ -4,7 +4,6 @@ import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
@@ -24,6 +23,7 @@ public class MoviesProvider extends ContentProvider {
     static final int MOVIE_LIST = 100;
     static final int MOVIE_ID = 101;
     static final int FOLLOW = 200;
+    static final int FOLLOW_ID = 201;
 
     static UriMatcher buildUriMatcher() {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -80,6 +80,10 @@ public class MoviesProvider extends ContentProvider {
                 retCursor = getSimpleCursor(MoviesContract.MovieEntry.TABLE_NAME, projection, selection,
                                             selectionArgs, sortOrder);
                 break;
+            case FOLLOW_ID:
+                retCursor = getSimpleCursor(MoviesContract.MovieEntry.TABLE_NAME, projection, MoviesContract.FollowEntry.COLUMN_MOVIE_ID + " = ?",
+                                            new String[] {uri.getLastPathSegment()}, sortOrder);
+                break;
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
         }
@@ -106,15 +110,19 @@ public class MoviesProvider extends ContentProvider {
 
     @Nullable
     @Override
-    public Uri insert(Uri uri, ContentValues values) throws SQLException {
+    public Uri insert(Uri uri, ContentValues values) {
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         Uri returnUri;
 
         long id = 0;
         switch (sUriMatcher.match(uri)) {
             case MOVIE_LIST:
-                id = db.insertOrThrow(MoviesContract.MovieEntry.TABLE_NAME, null, values);
+                id = db.insert(MoviesContract.MovieEntry.TABLE_NAME, null, values);
                 returnUri = MoviesContract.MovieEntry.buildMovieUri((int) id);
+                break;
+            case FOLLOW:
+                id = db.insert(MoviesContract.FollowEntry.TABLE_NAME, null, values);
+                returnUri = MoviesContract.FollowEntry.buildFollowUri((int) id);
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -142,6 +150,10 @@ public class MoviesProvider extends ContentProvider {
                 break;
             case MOVIE_ID:
                 rowsDeleted = db.delete(MoviesContract.MovieEntry.TABLE_NAME, MoviesContract.MovieEntry.COLUMN_ID + " = ?",
+                                        new String[]{uri.getLastPathSegment()});
+                break;
+            case FOLLOW_ID:
+                rowsDeleted = db.delete(MoviesContract.FollowEntry.TABLE_NAME, MoviesContract.FollowEntry.COLUMN_MOVIE_ID + " = ?",
                                         new String[]{uri.getLastPathSegment()});
                 break;
             default:
