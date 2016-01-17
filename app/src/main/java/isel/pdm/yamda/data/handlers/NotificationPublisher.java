@@ -11,7 +11,7 @@ import android.util.Log;
 import isel.pdm.yamda.R;
 
 /**
- * Class used to //TODO: comentary
+ * Class used to display the notification of a followed movie
  */
 public class NotificationPublisher extends BroadcastReceiver {
 
