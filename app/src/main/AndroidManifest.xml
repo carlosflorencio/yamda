@@ -96,9 +96,6 @@
             android:name=".data.services.lists.TheatersListService"
             android:exported="false"/>
         <service
-            android:name=".data.services.lists.TopListService"
-            android:exported="false"/>
-        <service
             android:name=".data.services.lists.SoonListService"
             android:exported="false"/>
         <service
