@@ -29,13 +29,12 @@ import isel.pdm.yamda.ui.presenter.base.IPresenter;
 public class MovieDetailsFragment extends LoadDataFragment<MovieDetails> {
 
     public interface IFollowListener{
-        void storeFollow(int id, boolean follow);
+        void storeFollow(boolean follow);
     }
 
     private IFollowListener followListener;
 
     private MovieDetails movie;
-    private boolean isBeingFollowed;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -111,7 +110,7 @@ public class MovieDetailsFragment extends LoadDataFragment<MovieDetails> {
     public void onDestroy() {
         super.onDestroy();
         if(followListener != null){
-            followListener.storeFollow(movie.getId(), movie.isBeingFollowed());
+            followListener.storeFollow(movie.isBeingFollowed());
         }
     }
 
