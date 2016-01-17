@@ -88,5 +88,9 @@ public class MoviesContract {
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_FOLLOW;
         public static final String CONTENT_ITEM_TYPE =
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_FOLLOW;
+
+        public static Uri buildFollowUri(int id) {
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
     }
 }
