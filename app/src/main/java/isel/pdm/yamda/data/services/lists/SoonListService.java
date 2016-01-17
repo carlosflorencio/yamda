@@ -21,9 +21,12 @@ public class SoonListService extends ListService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        if(!canDownload()) return;
+
         try {
             ICloudMovieRepository cloudRepo = MovieRepositoryFactory.getCloudRepository();
             ILocalMovieRepository localRepo = MovieRepositoryFactory.getLocalRepository(getApplicationContext());
+
             int page = intent.getIntExtra(PAGE, 1);
             List<Movie> movies = cloudRepo.getSoonMovies(page);
 
