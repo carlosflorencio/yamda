@@ -15,11 +15,11 @@ import isel.pdm.yamda.ui.presenter.base.Presenter;
 /**
  * Movie view details presenter
  */
-public class MovieViewPresenter extends Presenter<MovieDetails> implements MovieDetailsFragment.IFollowListener {
+public class MovieDetailsPresenter extends Presenter<MovieDetails> implements MovieDetailsFragment.IFollowListener {
 
     private int id;
 
-    public MovieViewPresenter(final ILoadDataView<MovieDetails> view) {
+    public MovieDetailsPresenter(final ILoadDataView<MovieDetails> view) {
         super(view);
 
         ((MovieDetailsFragment)view).setFollowListener(this);
@@ -39,7 +39,6 @@ public class MovieViewPresenter extends Presenter<MovieDetails> implements Movie
     public void storeFollow(boolean follow) {
         new StoreDataTask().execute(follow);
     }
-
 
     /**
      * Load movie details in a worker thread using an AsyncTask
