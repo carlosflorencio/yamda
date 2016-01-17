@@ -1,10 +1,5 @@
 package isel.pdm.yamda.model;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
 /**
  * This class is used for representing a Movie obtained from the data layer with all the details
  */
@@ -48,16 +43,6 @@ public class MovieDetails extends Movie {
 
     public boolean isBeingFollowed() {
         return isBeingFollowed;
-    }
-
-    public long whenIsBeingReleased() {
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date date = sdf.parse(this.release_date);
-            return date.getTime() - Calendar.getInstance().getTime().getTime();
-        } catch (ParseException e) {
-            return 0;
-        }
     }
 
     public int getRuntime() {
