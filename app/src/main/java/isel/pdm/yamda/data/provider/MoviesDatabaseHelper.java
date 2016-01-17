@@ -14,22 +14,26 @@ public class MoviesDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String CREATE_MOVIES_TABLE_SQL = "CREATE TABLE " + MoviesContract.MovieEntry.TABLE_NAME
             + "("
-            + MoviesContract.MovieEntry.COLUMN_ID + " INTEGER PRIMARY KEY, "
+            + MoviesContract.MovieEntry.COLUMN_ID + " INTEGER, "
             + MoviesContract.MovieEntry.COLUMN_ORIGINAL_TITLE + " TEXT NOT NULL, "
             + MoviesContract.MovieEntry.COLUMN_RELEASE_DATE + " TEXT NOT NULL, "
             + MoviesContract.MovieEntry.COLUMN_RATING + " REAL NOT NULL, "
             + MoviesContract.MovieEntry.COLUMN_POPULARITY + " REAL NOT NULL, "
-            + MoviesContract.MovieEntry.COLUMN_POSTER + " TEXT NOT NULL, "
+            + MoviesContract.MovieEntry.COLUMN_POSTER + " TEXT, "
             + MoviesContract.MovieEntry.COLUMN_LIST_TYPE + " TEXT NOT NULL, "
             + MoviesContract.MovieEntry.COLUMN_LANG + " TEXT NOT NULL, "
-            + MoviesContract.MovieEntry.COLUMN_TITLE + " TEXT NOT NULL"
+            + MoviesContract.MovieEntry.COLUMN_TITLE + " TEXT NOT NULL,"
+            + "PRIMARY KEY(" + MoviesContract.MovieEntry.COLUMN_ID + ", " + MoviesContract.MovieEntry.COLUMN_LIST_TYPE + ")"
             + ");";
 
     private static final String CREATE_FOLLOW_TABLE_SQL = "CREATE TABLE " + MoviesContract.FollowEntry.TABLE_NAME
             + "("
             + MoviesContract.FollowEntry.COLUMN_MOVIE_ID + " INTEGER NOT NULL, "
-            + "PRIMARY KEY(" + MoviesContract.FollowEntry.COLUMN_MOVIE_ID + "), "
-            + "FOREIGN KEY(" + MoviesContract.FollowEntry.COLUMN_MOVIE_ID + ") REFERENCES " + MoviesContract.MovieEntry.TABLE_NAME + "(" + MoviesContract.MovieEntry.COLUMN_ID + ") ON DELETE CASCADE"
+            + MoviesContract.FollowEntry.COLUMN_MOVIE_LIST + " INTEGER NOT NULL, "
+            + "PRIMARY KEY(" + MoviesContract.FollowEntry.COLUMN_MOVIE_ID + ", " + MoviesContract.FollowEntry.COLUMN_MOVIE_LIST +"), "
+            + "FOREIGN KEY(" + MoviesContract.FollowEntry.COLUMN_MOVIE_ID + ", " + MoviesContract.FollowEntry.COLUMN_MOVIE_LIST +
+            ") REFERENCES " + MoviesContract.MovieEntry.TABLE_NAME + "(" + MoviesContract.MovieEntry.COLUMN_ID + ", "
+            + MoviesContract.MovieEntry.COLUMN_LIST_TYPE + ") ON DELETE CASCADE"
             + ");";
 
     public MoviesDatabaseHelper(Context context) {

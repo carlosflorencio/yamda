@@ -29,7 +29,7 @@ public class YamdaApplication extends Application {
         initPeriodicUpdates();
 
         //debug picasso
-        Picasso.with(this).setLoggingEnabled(true);
+        //Picasso.with(this).setLoggingEnabled(true);
         Picasso.with(this).setIndicatorsEnabled(true);
     }
 

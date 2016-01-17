@@ -4,6 +4,7 @@ import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
@@ -105,14 +106,14 @@ public class MoviesProvider extends ContentProvider {
 
     @Nullable
     @Override
-    public Uri insert(Uri uri, ContentValues values) {
+    public Uri insert(Uri uri, ContentValues values) throws SQLException {
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         Uri returnUri;
 
         long id = 0;
         switch (sUriMatcher.match(uri)) {
             case MOVIE_LIST:
-                id = db.insert(MoviesContract.MovieEntry.TABLE_NAME, null, values);
+                id = db.insertOrThrow(MoviesContract.MovieEntry.TABLE_NAME, null, values);
                 returnUri = MoviesContract.MovieEntry.buildMovieUri((int) id);
                 break;
             default:
@@ -214,7 +215,7 @@ public class MoviesProvider extends ContentProvider {
         int returnCount = 0;
         try {
             for (ContentValues value : values) {
-                long _id = db.insert(table, null, value);
+                long _id = db.insertOrThrow(table, null, value);
                 if (_id != -1) {
                     returnCount++;
                 }
