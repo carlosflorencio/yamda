@@ -74,6 +74,7 @@ public class MoviesContract {
         */
         public static final String TABLE_NAME = "movies_followed";
         public static final String COLUMN_MOVIE_ID = "_movie_id";
+        public static final String COLUMN_MOVIE_LIST = "_movie_list_type";
 
         /*
         |--------------------------------------------------------------------------

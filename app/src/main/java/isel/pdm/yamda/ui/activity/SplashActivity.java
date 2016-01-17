@@ -20,6 +20,7 @@ public class SplashActivity extends LoadDataActivity<Void> {
 
         //show the splash instead of the loading
         showResults();
+        // FIXME: 17/01/2016 not working!
 
         this.presenter.execute();
     }
