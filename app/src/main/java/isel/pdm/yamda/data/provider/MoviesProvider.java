@@ -119,7 +119,9 @@ public class MoviesProvider extends ContentProvider {
         switch (sUriMatcher.match(uri)) {
             case MOVIE_LIST:
                 id = db.insert(MoviesContract.MovieEntry.TABLE_NAME, null, values);
-                returnUri = MoviesContract.MovieEntry.buildMovieUri((int) id);
+                //get the movie id, because the primary of movies is two tables id is not the real id
+                int movieId = values.getAsInteger(MoviesContract.MovieEntry.COLUMN_ID);
+                returnUri = MoviesContract.MovieEntry.buildMovieUri(movieId);
                 break;
             case FOLLOW:
                 id = db.insert(MoviesContract.FollowEntry.TABLE_NAME, null, values);

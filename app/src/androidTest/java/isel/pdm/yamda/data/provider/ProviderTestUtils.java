@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.test.AndroidTestCase;
 
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -70,15 +71,15 @@ public class ProviderTestUtils extends AndroidTestCase {
     //important: should be ordered by popularity to some tests work
     public static Movie[] defaultMovies = new Movie[]{
             new Movie(1, "Original: Star Wars", "path/back", "2015-12-01", 8.2, "path/poster",
-                      MoviesContract.MovieEntry.TYPE_NOW, 9, "en", "EN: Star Wars", true, 124, "EN: Overview"),
+                      MoviesContract.MovieEntry.TYPE_NOW, 9, Locale.getDefault().getLanguage(), "EN: Star Wars", true, 124, "EN: Overview"),
             new Movie(2, "Original: Lego", "path/back", "2015-11-05", 7.5, "path/poster",
-                      MoviesContract.MovieEntry.TYPE_NOW, 8.5, "en", "EN: LEGO"),
+                      MoviesContract.MovieEntry.TYPE_NOW, 8.5, Locale.getDefault().getLanguage(), "EN: LEGO"),
             new Movie(3, "Original: Joy", "path/back", "2015-12-25", 7, "path/poster",
-                      MoviesContract.MovieEntry.TYPE_NOW, 8.0, "en", "EN: Joy"),
+                      MoviesContract.MovieEntry.TYPE_NOW, 8.0, Locale.getDefault().getLanguage(), "EN: Joy"),
             new Movie(4, "Original: Big", "path/back", "2016-01-06", 5.4, "path/poster",
-                      MoviesContract.MovieEntry.TYPE_SOON, 7.6, "en", "EN: Big", true, 215, "EN: Overview"),
+                      MoviesContract.MovieEntry.TYPE_SOON, 7.6, Locale.getDefault().getLanguage(), "EN: Big", true, 215, "EN: Overview"),
             new Movie(5, "Original: Small", "path/back", "2016-01-03", 5, "path/poster",
-                      MoviesContract.MovieEntry.TYPE_SOON, 7.3, "en", "EN: Small"),
+                      MoviesContract.MovieEntry.TYPE_SOON, 7.3, Locale.getDefault().getLanguage(), "EN: Small"),
     };
 
     public static Genre[] defaultGenres = new Genre[] {

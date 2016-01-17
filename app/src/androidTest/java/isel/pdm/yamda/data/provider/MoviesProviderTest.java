@@ -28,11 +28,6 @@ public class MoviesProviderTest extends ProviderTestCase2<MoviesProvider> {
         resolve = this.getMockContentResolver();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-
     /**
      * Test if the provider is registered correctly
      */
