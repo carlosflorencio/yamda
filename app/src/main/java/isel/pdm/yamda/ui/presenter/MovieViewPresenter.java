@@ -5,6 +5,7 @@ import android.util.Log;
 
 import isel.pdm.yamda.data.exception.FailedGettingDataException;
 import isel.pdm.yamda.data.repository.base.ICloudMovieRepository;
+import isel.pdm.yamda.data.repository.base.ILocalMovieRepository;
 import isel.pdm.yamda.data.repository.base.MovieRepositoryFactory;
 import isel.pdm.yamda.model.MovieDetails;
 import isel.pdm.yamda.ui.contract.ILoadDataView;
@@ -14,23 +15,14 @@ import isel.pdm.yamda.ui.presenter.base.Presenter;
 /**
  * Movie view details presenter
  */
-public class MovieViewPresenter extends Presenter<MovieDetails> {
+public class MovieViewPresenter extends Presenter<MovieDetails> implements MovieDetailsFragment.IFollowListener {
 
     private int id;
 
     public MovieViewPresenter(final ILoadDataView<MovieDetails> view) {
         super(view);
 
-        ((MovieDetailsFragment)view).setFollowListener(new MovieDetailsFragment.IFollowListener() {
-            @Override
-            public void storeFollow(int id, boolean follow) {
-                if(follow){
-                    MovieRepositoryFactory.getLocalRepository(((MovieDetailsFragment) view).getActivity()).followMovie(id);
-                } else {
-                    MovieRepositoryFactory.getLocalRepository(((MovieDetailsFragment) view).getActivity()).unfollowMovie(id);
-                }
-            }
-        });
+        ((MovieDetailsFragment)view).setFollowListener(this);
     }
 
 
@@ -41,6 +33,11 @@ public class MovieViewPresenter extends Presenter<MovieDetails> {
     @Override
     public void execute() {
         new LoadDataTask().execute(id);
+    }
+
+    @Override
+    public void storeFollow(boolean follow) {
+        new StoreDataTask().execute(follow);
     }
 
 
@@ -71,6 +68,30 @@ public class MovieViewPresenter extends Presenter<MovieDetails> {
                 view.setData(movie);
             else
                 view.showNoConnection();
+        }
+    }
+
+    /**
+     * Store movie follow state in a worker thread using an AsyncTask
+     */
+    private class StoreDataTask extends AsyncTask<Boolean, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Boolean... params) {
+            Log.d(TAG, "doInBackground: Storing movie follow state");
+            ILocalMovieRepository repo = MovieRepositoryFactory.getLocalRepository(view.getViewContext());
+
+            if(params[0]){
+                repo.followMovie(id);
+            } else {
+                repo.unfollowMovie(id);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
         }
     }
 }
