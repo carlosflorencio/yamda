@@ -4,6 +4,7 @@ import java.util.List;
 
 import isel.pdm.yamda.data.exception.FailedGettingDataException;
 import isel.pdm.yamda.model.Movie;
+import isel.pdm.yamda.model.MovieCredits;
 import isel.pdm.yamda.model.MovieDetails;
 
 /**
@@ -63,4 +64,14 @@ public interface ICloudMovieRepository {
      * @throws FailedGettingDataException
      */
     MovieDetails getMovieById(int id) throws FailedGettingDataException;
+
+    /**
+     * Get movie credits synchronously
+     * And convert to a model entity
+     *
+     * @param id
+     * @return
+     * @throws FailedGettingDataException
+     */
+    MovieCredits getCreditsOfMovie(int id) throws FailedGettingDataException;
 }
