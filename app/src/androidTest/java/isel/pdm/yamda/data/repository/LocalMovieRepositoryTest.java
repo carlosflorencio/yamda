@@ -63,6 +63,25 @@ public class LocalMovieRepositoryTest extends ProviderTestCase2<MoviesProvider> 
         assertTrue(repo.hasMovies());
     }
 
+    public void testDeleteMoviesWithOneTypeInContentProvider(){
+        List<Movie> movies = getMovieList1();
+        repo.insertMovies(movies, MoviesContract.MovieEntry.TYPE_NOW);
+        assertTrue(repo.hasMovies());
+
+        int rows = repo.deleteMovies(MoviesContract.MovieEntry.TYPE_NOW);
+        assertEquals(movies.size(), rows);
+    }
+
+    public void testDeleteWithSeveralTypes(){
+        List<Movie> movies = getMovieList1();
+        repo.insertMovies(movies, MoviesContract.MovieEntry.TYPE_NOW);
+        repo.insertMovies(getMovieList2(), MoviesContract.MovieEntry.TYPE_SOON);
+        assertTrue(repo.hasMovies());
+
+        int rows = repo.deleteMovies(MoviesContract.MovieEntry.TYPE_NOW);
+        assertEquals(movies.size(), rows);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Utils

@@ -13,6 +13,7 @@ public class AboutActivity extends ToolbarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.setContentView(R.layout.activity_about);
 
         this.enableBackButton();
         toolbar.setTitle(R.string.about);

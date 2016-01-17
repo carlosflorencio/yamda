@@ -1,31 +1,34 @@
 package isel.pdm.yamda.data.services.lists;
 
 import android.content.Intent;
+import android.util.Log;
 
+import java.util.List;
+
+import isel.pdm.yamda.data.exception.FailedGettingDataException;
+import isel.pdm.yamda.data.provider.MoviesContract;
+import isel.pdm.yamda.data.repository.base.MovieRepositoryFactory;
 import isel.pdm.yamda.data.services.ListService;
+import isel.pdm.yamda.model.Movie;
 
 /**
  * Class used to //TODO: comentary
  */
 public class TheatersListService extends ListService {
-    public static final String NOTIFICATION = "isel.pdm.yamda.data.handlers.service.list.TheatersListService";
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        //TODO: get from web to content provider
-//        Intent newIntent = new Intent(NOTIFICATION);
-//        try {
-//            int page = intent.getIntExtra(PAGE, 1);
-//            //Log.v("DEBUG", "Page: "+ page+", : ignoreDisk: "+ignoreDisk);     DEBUG PURPOSE
-//            List<Movie> movies = ((YamdaApplication) getApplication()).getMovieRepository().getTheatersMovies(page);
-//
-//            newIntent.putExtra(DATA, true);
-//            newIntent.putExtra(MOVIES_PARAM, (Serializable) movies);
-//        } catch (FailedGettingDataException e) {
-//            newIntent.putExtra(DATA, false);
-//            Log.v(TAG, "Exception! Message: " + e.getMessage());
-//        }
-//        sendBroadcast(newIntent);
+        try {
+            int page = intent.getIntExtra(PAGE, 1);
+            List<Movie> movies = MovieRepositoryFactory.getCloudRepository().getTheatersMovies(page);
+
+            MovieRepositoryFactory.getLocalRepository(getApplication()).deleteMovies(MoviesContract.MovieEntry.TYPE_NOW);
+            if(MovieRepositoryFactory.getLocalRepository(getApplication()).insertMovies(movies, MoviesContract.MovieEntry.TYPE_NOW)<=0){
+                Log.d(TAG, "onHandleIntent: (Theaters) nothing has been inserted");
+            }
+        } catch (FailedGettingDataException e) {
+            Log.d(TAG, "onHandleIntent: error loading from web");
+        }
     }
 
 }

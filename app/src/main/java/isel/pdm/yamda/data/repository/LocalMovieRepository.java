@@ -68,8 +68,8 @@ public class LocalMovieRepository implements ILocalMovieRepository {
     /**
      * Insert movies in the content provider
      *
-     * @param movies
-     * @param type
+     * @param movies    list of movies
+     * @param type      list in which movies are
      */
     @Override
     public int insertMovies(List<Movie> movies, String type) {
@@ -93,6 +93,15 @@ public class LocalMovieRepository implements ILocalMovieRepository {
         }
 
         return ctx.getContentResolver().bulkInsert(uri, values);
+    }
+
+    @Override
+    public int deleteMovies(String type) {
+        final Uri uri = MoviesContract.MovieEntry.CONTENT_URI;
+
+        return ctx.getContentResolver().delete(uri,
+                MoviesContract.MovieEntry.COLUMN_LIST_TYPE + " = ?",
+                new String[]{type});
     }
 
     /**
