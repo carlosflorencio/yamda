@@ -142,7 +142,7 @@ public class HomeActivity extends ToolbarActivity implements ViewPager.OnPageCha
         super.onRestoreInstanceState(savedInstanceState);
 
         int pos = savedInstanceState.getInt("tab_pos");
-        this.viewPager.setCurrentItem(pos);
+        //this.viewPager.setCurrentItem(pos);
     }
 
     @Override

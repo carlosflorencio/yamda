@@ -2,7 +2,6 @@ package isel.pdm.yamda.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import isel.pdm.yamda.R;
 import isel.pdm.yamda.ui.activity.base.LoadDataActivity;
@@ -40,7 +39,6 @@ public class SplashActivity extends LoadDataActivity<Void> {
         //launch home activity when presenter is done
         Intent i = new Intent(this, HomeActivity.class);
         startActivity(i);
-        Log.d(TAG, "onPostExecute: Starting home activity");
         finish();
     }
 }

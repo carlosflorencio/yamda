@@ -50,4 +50,5 @@
     <string name="once_a_month">Once a Month</string>
     <string name="offline_text">No connection!</string>
     <string name="retry_button">Try Again</string>
+    <string name="movie_credits">Movie Credits</string>
 </resources>

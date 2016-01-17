@@ -28,12 +28,6 @@ public class SoonMoviesListPresenter extends Presenter<List<Movie>> {
             Log.d(TAG, "doInBackground: Getting movies from content provider");
             ILocalMovieRepository repo = MovieRepositoryFactory.getLocalRepository(view.getViewContext());
 
-            try {
-                Thread.sleep(2000);
-            } catch(InterruptedException ex) {
-                Thread.currentThread().interrupt();
-            }
-
             return repo.getSoonMovies();
         }
 

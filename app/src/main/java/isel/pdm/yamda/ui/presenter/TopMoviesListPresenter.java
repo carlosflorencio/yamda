@@ -36,13 +36,6 @@ public class TopMoviesListPresenter extends Presenter<List<Movie>> {
             ICloudMovieRepository repo = MovieRepositoryFactory.getCloudRepository();
 
             try {
-                Thread.sleep(2000);
-            } catch(InterruptedException ex) {
-                Thread.currentThread().interrupt();
-            }
-
-
-            try {
                 return repo.getTopMovies(1);
             } catch (FailedGettingDataException e) {
                 Log.d(TAG, "Failed getting data! Error: " + e.getMessage());

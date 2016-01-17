@@ -67,13 +67,6 @@ public class SplashPresenter extends Presenter<Void> {
                 Log.d(TAG, "Failed getting data! Error: " + e.getMessage());
             }
 
-            // Loading data is so fast that we really want a small delay to see the splash
-            try {
-                Thread.sleep(2000);
-            } catch(InterruptedException ex) {
-                Thread.currentThread().interrupt();
-            }
-
             return res;
         }
     }

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Checkable;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -64,6 +65,7 @@ public class MovieDetailsFragment extends LoadDataFragment<MovieDetails> {
         TextView runtime = (TextView) this.mainView.findViewById(R.id.movie_runtime);
         TextView releaseYear = (TextView) this.mainView.findViewById(R.id.movie_release_date);
         TextView overview = (TextView) this.mainView.findViewById(R.id.movie_overview);
+        Button creditsButton = (Button) this.mainView.findViewById(R.id.credits_button);
 
         Picasso.with(getContext()).load(movie.getBackdrop()).into(backdropView);
         Picasso.with(getContext()).load(movie.getPoster()).into(imageView);
@@ -78,6 +80,15 @@ public class MovieDetailsFragment extends LoadDataFragment<MovieDetails> {
             this.mainView.findViewById(R.id.movie_follow).setVisibility(View.VISIBLE);
             ((Checkable) this.mainView.findViewById(R.id.movie_follow)).setChecked(isBeingFollowed);
         }
+
+        creditsButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                MovieDetailsFragment.this.showError("clicou");
+            }
+        });
+
     }
 
     @Override

@@ -11,7 +11,7 @@ import isel.pdm.yamda.ui.fragment.MovieDetailsFragment;
 /**
  * Activity to display the movie details
  */
-public class MovieActivity extends ToolbarActivity {
+public class MovieCreditsActivity extends ToolbarActivity {
 
 
     public static final String ID_TAG = "movie_id";
@@ -23,16 +23,14 @@ public class MovieActivity extends ToolbarActivity {
         int movieId = getIntent().getIntExtra(ID_TAG, 0);
         this.enableBackButton();
 
-        if(savedInstanceState == null) {
-            // create and add the fragment
-            MovieDetailsFragment firstFragment = new MovieDetailsFragment();
-            Bundle b = new Bundle();
-            b.putInt(ID_TAG, movieId);
-            firstFragment.setArguments(b);
+        // create and add the fragment
+        MovieDetailsFragment firstFragment = new MovieDetailsFragment();
+        Bundle b = new Bundle();
+        b.putInt(ID_TAG, movieId);
+        firstFragment.setArguments(b);
 
-            getSupportFragmentManager().beginTransaction()
-                                       .add(R.id.content, firstFragment).commit();
-        }
+        getSupportFragmentManager().beginTransaction()
+                                   .add(R.id.content, firstFragment).commit();
     }
 
     /**
@@ -42,7 +40,7 @@ public class MovieActivity extends ToolbarActivity {
      * @return
      */
     public static Intent createIntent(Context context, int id) {
-        Intent intent = new Intent(context, MovieActivity.class);
+        Intent intent = new Intent(context, MovieCreditsActivity.class);
         intent.putExtra(ID_TAG, id);
 
         return intent;
