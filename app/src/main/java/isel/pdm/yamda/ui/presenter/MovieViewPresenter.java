@@ -49,10 +49,13 @@ public class MovieViewPresenter extends Presenter<MovieDetails> implements Movie
         @Override
         protected MovieDetails doInBackground(Integer... params) {
             Log.d(TAG, "doInBackground: Getting movie from the api");
-            ICloudMovieRepository repo = MovieRepositoryFactory.getCloudRepository();
+            ICloudMovieRepository cloudRepo = MovieRepositoryFactory.getCloudRepository();
+            ILocalMovieRepository localRepo = MovieRepositoryFactory.getLocalRepository(view.getViewContext());
 
             try {
-                return repo.getMovieById(params[0]);
+                MovieDetails movie = cloudRepo.getMovieById(params[0]);
+                movie.setBeingFollowed(localRepo.isBeingFollowed(movie.getId()));
+                return movie;
             } catch (FailedGettingDataException e) {
                 Log.d(TAG, "Failed getting data! Error: " + e.getMessage());
             }
