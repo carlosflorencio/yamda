@@ -1,5 +1,6 @@
 package isel.pdm.yamda.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import com.squareup.picasso.Picasso;
 import isel.pdm.yamda.R;
 import isel.pdm.yamda.Utils;
 import isel.pdm.yamda.model.MovieDetails;
+import isel.pdm.yamda.ui.activity.MovieCreditsActivity;
 import isel.pdm.yamda.ui.fragment.base.LoadDataFragment;
 import isel.pdm.yamda.ui.presenter.MovieViewPresenter;
 import isel.pdm.yamda.ui.presenter.base.IPresenter;
@@ -82,10 +84,10 @@ public class MovieDetailsFragment extends LoadDataFragment<MovieDetails> {
         }
 
         creditsButton.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-                MovieDetailsFragment.this.showError("clicou");
+                Intent i = MovieCreditsActivity.createIntent(getActivity(), movie.getId(), movie.getTitle());
+                startActivity(i);
             }
         });
 
