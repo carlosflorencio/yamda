@@ -1,18 +1,9 @@
 package isel.pdm.yamda.ui.fragment;
 
-import android.annotation.TargetApi;
-import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
-import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,9 +17,7 @@ import com.squareup.picasso.Picasso;
 
 import isel.pdm.yamda.R;
 import isel.pdm.yamda.Utils;
-import isel.pdm.yamda.data.handlers.NotificationPublisher;
 import isel.pdm.yamda.model.MovieDetails;
-import isel.pdm.yamda.ui.activity.MovieActivity;
 import isel.pdm.yamda.ui.activity.MovieCreditsActivity;
 import isel.pdm.yamda.ui.fragment.base.LoadDataFragment;
 import isel.pdm.yamda.ui.presenter.MovieDetailsPresenter;
@@ -117,54 +106,12 @@ public class MovieDetailsFragment extends LoadDataFragment<MovieDetails> {
 
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    private void scheduleNotification(Notification notification) {
-        Intent notificationIntent = new Intent(getViewContext(), NotificationPublisher.class);
-        notificationIntent
-                .putExtra(NotificationPublisher.NOTIFICATION_ID, movie.getId());  // Movie id
-        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION,
-                notification);      // Notification (argument)
-
-        PendingIntent pendingIntent = PendingIntent
-                .getBroadcast(getViewContext(), 0, notificationIntent, PendingIntent.FLAG_ONE_SHOT);
-
-//        long futureInMillis = movie.whenIsBeingReleased();
-        long futureInMillis = SystemClock.elapsedRealtime() + 5000;   //DEBUG PURPOSES
-
-        ((AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE)).set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis,
-                pendingIntent);  // Set an alarm to tick at x time
-    }
-
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    private Notification getNotificationReleased() {
-        Intent intent = new Intent(getViewContext(),
-                MovieActivity.class);      // Activity instantiated after clicking notification
-        intent.putExtra(MovieActivity.ID_TAG, movie.getId());       // id of movie
-
-        PendingIntent pIntent = TaskStackBuilder.create(getViewContext())
-                .addParentStack(MovieActivity.class)
-                .addNextIntent(intent)
-                .getPendingIntent(0, PendingIntent.FLAG_ONE_SHOT);
-
-        return new NotificationCompat.Builder(getViewContext())
-                .setContentTitle(
-                        movie.getTitle())                                  // Title of notification
-                .setContentText(getResources().getString(
-                        R.string.movie_released))                                  // Text of notification
-                .setSmallIcon(
-                        R.drawable.yamda)                                 // Icon of notification
-                .setContentIntent(pIntent).build();
-    }
-
     @Override
-    public void onDestroy() {
+    public void onPause() {
+        super.onPause();
         if(followListener != null){
-            if(movie.isBeingFollowed()){
-                scheduleNotification(getNotificationReleased());
-            }
             followListener.storeFollow(movie.isBeingFollowed());
         }
-        super.onDestroy();
     }
 
     @Override
