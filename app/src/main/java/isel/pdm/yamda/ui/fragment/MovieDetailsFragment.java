@@ -158,13 +158,13 @@ public class MovieDetailsFragment extends LoadDataFragment<MovieDetails> {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         if(followListener != null){
             if(movie.isBeingFollowed()){
                 scheduleNotification(getNotificationReleased());
             }
             followListener.storeFollow(movie.isBeingFollowed());
         }
+        super.onDestroy();
     }
 
     @Override
