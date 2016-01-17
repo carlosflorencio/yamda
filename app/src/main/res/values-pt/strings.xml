@@ -56,5 +56,6 @@
     <string name="actors">Actores</string>
     <string name="crew">Equipa Técnica</string>
     <string name="credits">Créditos</string>
+    <string name="reference">Dados provenientes de TMDb</string>
 
 </resources>

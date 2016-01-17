@@ -60,6 +60,7 @@
     <string name="actors">Actors</string>
     <string name="crew">Crew</string>
     <string name="credits">Credits</string>
+    <string name="reference">Data from TMDb</string>
 
 
 </resources>

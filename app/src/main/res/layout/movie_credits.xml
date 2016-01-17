@@ -39,6 +39,13 @@
             android:layout_marginTop="10dip">
         </ListView>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/reference"
+            android:layout_gravity="center_horizontal"/>
+
     </LinearLayout>
 
 </ScrollView>
