@@ -52,7 +52,7 @@
     <string name="in_theaters_periodicity" translatable="false">in_theaters_periodicity</string>
     <string name="in_theaters_periodicity_title">Update In Theaters periodicity</string>
 
-    <string name="twice_a_day">Twice a Day</string>
+    <string name="once_a_day">Once a Day</string>
     <string name="twice_a_week">Twice a Week</string>
     <string name="once_a_week">Once a Week</string>
 

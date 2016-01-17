@@ -10,14 +10,14 @@
     </string-array>
 
     <string-array name="in_theaters_list">
-        <item>@string/twice_a_day</item>
+        <item>@string/once_a_day</item>
         <item>@string/twice_a_week</item>
         <item>@string/once_a_week</item>
     </string-array>
 
     <string-array name="in_theaters_list_values">
-        <item>0.5</item>
-        <item>3.5</item>
+        <item>1</item>
+        <item>4</item>
         <item>7</item>
     </string-array>
 
