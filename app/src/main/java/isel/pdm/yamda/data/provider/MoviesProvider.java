@@ -33,6 +33,7 @@ public class MoviesProvider extends ContentProvider {
         matcher.addURI(authority, MoviesContract.PATH_MOVIES + "/#", MOVIE_ID);
 
         matcher.addURI(authority, MoviesContract.PATH_FOLLOW, FOLLOW);
+        matcher.addURI(authority, MoviesContract.PATH_FOLLOW + "/#", FOLLOW_ID);
 
         return matcher;
     }
@@ -77,11 +78,11 @@ public class MoviesProvider extends ContentProvider {
                 );
                 break;
             case FOLLOW:
-                retCursor = getSimpleCursor(MoviesContract.MovieEntry.TABLE_NAME, projection, selection,
+                retCursor = getSimpleCursor(MoviesContract.FollowEntry.TABLE_NAME, projection, selection,
                                             selectionArgs, sortOrder);
                 break;
             case FOLLOW_ID:
-                retCursor = getSimpleCursor(MoviesContract.MovieEntry.TABLE_NAME, projection, MoviesContract.FollowEntry.COLUMN_MOVIE_ID + " = ?",
+                retCursor = getSimpleCursor(MoviesContract.FollowEntry.TABLE_NAME, projection, MoviesContract.FollowEntry.COLUMN_MOVIE_ID + " = ?",
                                             new String[] {uri.getLastPathSegment()}, sortOrder);
                 break;
             default:
