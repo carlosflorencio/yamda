@@ -19,6 +19,11 @@ public class SoonMoviesListPresenter extends Presenter<List<Movie>> {
         super(view);
     }
 
+    @Override
+    public void execute() {
+        new LoadDataTask().execute();
+    }
+
     /**
      * Load movie list in a worker thread using an AsyncTask
      */
@@ -37,10 +42,5 @@ public class SoonMoviesListPresenter extends Presenter<List<Movie>> {
 
             view.setData(list);
         }
-    }
-
-    @Override
-    public void execute() {
-        new LoadDataTask().execute();
     }
 }

@@ -12,6 +12,7 @@ public class TheatersListService extends ListService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        //TODO: get from web to content provider
 //        Intent newIntent = new Intent(NOTIFICATION);
 //        try {
 //            int page = intent.getIntExtra(PAGE, 1);

@@ -1,8 +1,10 @@
 package isel.pdm.yamda.ui.activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import isel.pdm.yamda.R;
+import isel.pdm.yamda.YamdaApplication;
 import isel.pdm.yamda.ui.activity.base.ToolbarActivity;
 import isel.pdm.yamda.ui.fragment.PreferencesFragment;
 
@@ -10,7 +12,7 @@ import isel.pdm.yamda.ui.fragment.PreferencesFragment;
  * Class used to store shared preferences of some details of the application
  * Uses a PreferencesFragment
  */
-public class PreferencesActivity extends ToolbarActivity {
+public class PreferencesActivity extends ToolbarActivity implements SharedPreferences.OnSharedPreferenceChangeListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,4 +24,8 @@ public class PreferencesActivity extends ToolbarActivity {
                             .replace(R.id.content, new PreferencesFragment()).commit();
     }
 
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        ((YamdaApplication)getApplication()).initPeriodicUpdates();
+    }
 }
