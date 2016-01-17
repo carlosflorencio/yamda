@@ -37,8 +37,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="10dp"
-        android:src="@drawable/user"
-        tools:src="@drawable/user"
+        android:src="@drawable/carlos"
+        tools:src="@drawable/carlos"
         android:layout_marginRight="10dp" />
 
     <TextView
@@ -56,7 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Email: xxx@gmail.com"
+        android:text="Site: hdn.pt"
         android:id="@+id/email"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
