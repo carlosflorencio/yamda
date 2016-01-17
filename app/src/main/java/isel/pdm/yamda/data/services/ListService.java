@@ -12,12 +12,6 @@ public abstract class ListService extends IntentService {
 
     protected static final String PAGE = ListService.class.getName() + ".id";
 
-    public static final String DATA = "data_ok";
-
-    public static final String IGNORE_DISK = "ignore_disk";
-
-    public static final String MOVIES_PARAM = "movies_parameter";
-
     public ListService() {
         super("MovieListService");
     }

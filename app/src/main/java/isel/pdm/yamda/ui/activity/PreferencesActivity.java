@@ -18,7 +18,7 @@ public class PreferencesActivity extends ToolbarActivity implements SharedPrefer
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        toolbar.setTitle(R.string.preferences);
         this.enableBackButton();
 
         PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);

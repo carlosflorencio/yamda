@@ -98,9 +98,6 @@
         <service
             android:name=".data.services.lists.SoonListService"
             android:exported="false"/>
-        <service
-            android:name=".data.services.MovieSearchService"
-            android:exported="false"/>
         <!-- /Services -->
 
         <!-- Provider -->
