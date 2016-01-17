@@ -9,20 +9,17 @@ import isel.pdm.yamda.data.repository.base.ILocalMovieRepository;
 import isel.pdm.yamda.data.repository.base.MovieRepositoryFactory;
 import isel.pdm.yamda.model.MovieDetails;
 import isel.pdm.yamda.ui.contract.ILoadDataView;
-import isel.pdm.yamda.ui.fragment.MovieDetailsFragment;
 import isel.pdm.yamda.ui.presenter.base.Presenter;
 
 /**
  * Movie view details presenter
  */
-public class MovieDetailsPresenter extends Presenter<MovieDetails> implements MovieDetailsFragment.IFollowListener {
+public class MovieDetailsPresenter extends Presenter<MovieDetails> {
 
     private int id;
 
     public MovieDetailsPresenter(final ILoadDataView<MovieDetails> view) {
         super(view);
-
-        ((MovieDetailsFragment)view).setFollowListener(this);
     }
 
 
@@ -30,14 +27,14 @@ public class MovieDetailsPresenter extends Presenter<MovieDetails> implements Mo
         this.id = id;
     }
 
-    @Override
-    public void execute() {
-        new LoadDataTask().execute(id);
+
+    public void storeFollow(boolean follow) {
+        new StoreDataTask().execute(follow);
     }
 
     @Override
-    public void storeFollow(boolean follow) {
-        new StoreDataTask().execute(follow);
+    public void execute() {
+        new LoadDataTask().execute(id);
     }
 
     /**

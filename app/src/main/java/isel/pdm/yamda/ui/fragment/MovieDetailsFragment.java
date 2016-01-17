@@ -28,23 +28,20 @@ import isel.pdm.yamda.ui.presenter.base.IPresenter;
  */
 public class MovieDetailsFragment extends LoadDataFragment<MovieDetails> {
 
-    public interface IFollowListener{
-        void storeFollow(boolean follow);
-    }
-
-    private IFollowListener followListener;
-
     private MovieDetails movie;
+    private MovieDetailsPresenter moviePresenter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View viewContainer = super.onCreateView(inflater, container, savedInstanceState);
 
+        this.moviePresenter = (MovieDetailsPresenter) this.presenter;
+
         //ask for the movie
         if(!getArguments().isEmpty() && getArguments().getInt("movie_id") != 0) {
             Log.d(TAG, "onCreateView: we have a movie id!");
-            ((MovieDetailsPresenter)this.presenter).setMovieId(getArguments().getInt("movie_id"));
+            this.moviePresenter.setMovieId(getArguments().getInt("movie_id"));
             this.presenter.execute();
         }
 
@@ -100,26 +97,14 @@ public class MovieDetailsFragment extends LoadDataFragment<MovieDetails> {
         followButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                movie.setBeingFollowed(followButton.isActivated());
+                moviePresenter.storeFollow(followButton.isActivated());
             }
         });
 
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        if(followListener != null){
-            followListener.storeFollow(movie.isBeingFollowed());
-        }
-    }
-
-    @Override
     protected IPresenter createPresenter() {
         return new MovieDetailsPresenter(this);
-    }
-
-    public void setFollowListener(IFollowListener followListener) {
-        this.followListener = followListener;
     }
 }
