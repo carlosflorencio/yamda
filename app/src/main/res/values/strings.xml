@@ -17,6 +17,8 @@
 
     <!-- NOTIFICATIONS -->
     <string name="loading">Loading..</string>
+    <string name="offline_text">No connection!</string>
+    <string name="retry_button">Try Again</string>
 
     <!-- PROGRESS BAR -->
     <string name="movie_released">It\'s arrived!</string>
@@ -28,6 +30,7 @@
     <!-- MOVIE DETAILS -->
     <string name="follow">Follow</string>
     <string name="following">Following</string>
+    <string name="movie_credits">Movie Credits</string>
 
     <!-- TOASTS -->
     <string name="no_connection">No Internet Connection</string>
@@ -43,12 +46,15 @@
     <string name="only_wifi_title">Only use Wifi</string>
     <string name="only_wifi_summary">Download movies only using wifi</string>
 
-    <string name="periodicity" translatable="false">periodicity</string>
-    <string name="periodicity_title">Update periodicity</string>
+    <string name="soon_periodicity" translatable="false">soon_periodicity</string>
+    <string name="soon_periodicity_title">Update Soon periodicity</string>
+
+    <string name="in_theaters_periodicity" translatable="false">in_theaters_periodicity</string>
+    <string name="in_theaters_periodicity_title">Update In Theaters periodicity</string>
+
+    <string name="twice_a_day">Twice a Day</string>
+    <string name="twice_a_week">Twice a Week</string>
     <string name="once_a_week">Once a Week</string>
-    <string name="twice_a_month">Twice a Month</string>
-    <string name="once_a_month">Once a Month</string>
-    <string name="offline_text">No connection!</string>
-    <string name="retry_button">Try Again</string>
-    <string name="movie_credits">Movie Credits</string>
+
+
 </resources>

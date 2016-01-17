@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="list">
+    <string-array name="soon_list">
         <item>@string/once_a_week</item>
-        <item>@string/twice_a_month</item>
-        <item>@string/once_a_month</item>
     </string-array>
 
-    <string-array name="list_values">
+    <string-array name="soon_list_values">
         <item>7</item>
-        <item>14</item>
-        <item>28</item>
+    </string-array>
+
+    <string-array name="in_theaters_list">
+        <item>@string/twice_a_day</item>
+        <item>@string/twice_a_week</item>
+        <item>@string/once_a_week</item>
+    </string-array>
+
+    <string-array name="in_theaters_list_values">
+        <item>0.5</item>
+        <item>3.5</item>
+        <item>7</item>
     </string-array>
 
 
