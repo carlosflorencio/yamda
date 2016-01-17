@@ -3,6 +3,7 @@ package isel.pdm.yamda.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import isel.pdm.yamda.R;
 import isel.pdm.yamda.ui.activity.base.ToolbarActivity;
@@ -46,5 +47,23 @@ public class MovieActivity extends ToolbarActivity {
         intent.putExtra(ID_TAG, id);
 
         return intent;
+    }
+
+    /**
+     * Back has two possibilities, search activity or home activity
+     *
+     * @param item
+     * @return
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Back Button
+            case android.R.id.home:
+                finish();
+                return true;
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

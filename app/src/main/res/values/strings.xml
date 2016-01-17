@@ -56,5 +56,10 @@
     <string name="twice_a_week">Twice a Week</string>
     <string name="once_a_week">Once a Week</string>
 
+    <!-- MOVIE CREDITS -->
+    <string name="actors">Actors</string>
+    <string name="crew">Crew</string>
+    <string name="credits">Credits</string>
+
 
 </resources>

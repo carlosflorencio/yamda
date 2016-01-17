@@ -58,7 +58,7 @@ public abstract class ToolbarActivity extends LoggingActivity {
             // Back Button
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
-                break;
+                return true;
 
         }
         return super.onOptionsItemSelected(item);

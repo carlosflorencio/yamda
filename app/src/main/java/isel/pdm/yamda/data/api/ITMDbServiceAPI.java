@@ -106,7 +106,7 @@ public interface ITMDbServiceAPI {
      * @param language
      * @return
      */
-    @GET("/3/movie/{movie}")
+    @GET("/3/movie/{movie}/credits")
     Call<CreditsListingDTO> getMovieCredits(@Path("movie") int movieId,
                                             @Query("api_key") String API_KEY,
                                             @Query("language") String language);

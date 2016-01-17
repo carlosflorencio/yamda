@@ -95,6 +95,7 @@ public class TMDbApiSync {
 
     /**
      * Get the credits of a movie
+     *
      * @param movieId
      * @return
      * @throws IOException

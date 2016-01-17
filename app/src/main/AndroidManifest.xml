@@ -53,10 +53,17 @@
         <activity
             android:name=".ui.activity.MovieActivity"
             android:label="@string/app_name"
-            android:parentActivityName=".ui.activity.HomeActivity">
+            android:launchMode="singleTop">
+        </activity>
+
+        <activity
+            android:name=".ui.activity.MovieCreditsActivity"
+            android:label="@string/app_name"
+            android:parentActivityName=".ui.activity.MovieActivity">
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.activity.HomeActivity"/>
+                android:value=".ui.activity.MovieActivity"/>
         </activity>
 
         <activity
