@@ -29,11 +29,8 @@ public class PreferencesActivity extends ToolbarActivity implements SharedPrefer
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        int days = Integer.parseInt(sharedPreferences.getString(key, "7"));
-
         if(key.equals(getResources().getString(R.string.soon_periodicity))){
-            ((YamdaApplication)getApplication()).refreshSoonAlarm(days);
-        } else if(key.equals(getResources().getString(R.string.soon_periodicity))){
+            int days = Integer.parseInt(sharedPreferences.getString(key, "7"));
             ((YamdaApplication)getApplication()).refreshTheatersAlarm(days);
         }
     }

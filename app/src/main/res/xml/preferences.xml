@@ -14,13 +14,6 @@
         android:defaultValue="false" />
 
     <ListPreference
-        android:key="@string/soon_periodicity"
-        android:title="@string/soon_periodicity_title"
-        android:defaultValue="7"
-        android:entries="@array/soon_list"
-        android:entryValues="@array/soon_list_values" />
-
-    <ListPreference
         android:key="@string/in_theaters_periodicity"
         android:title="@string/in_theaters_periodicity_title"
         android:defaultValue="7"
