@@ -55,7 +55,10 @@ public class MovieViewPresenter extends Presenter<MovieDetails> {
         protected void onPostExecute(MovieDetails movie) {
             super.onPostExecute(movie);
 
-            view.setData(movie);
+            if(movie != null)
+                view.setData(movie);
+            else
+                view.showNoConnection();
         }
     }
 }

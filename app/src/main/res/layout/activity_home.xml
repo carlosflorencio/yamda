@@ -6,7 +6,6 @@
               android:orientation="vertical">
 
     <include
-        android:id="@+id/home_toolbar"
         layout="@layout/home_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

@@ -41,5 +41,6 @@ public class SplashActivity extends LoadDataActivity<Void> {
         Intent i = new Intent(this, HomeActivity.class);
         startActivity(i);
         Log.d(TAG, "onPostExecute: Starting home activity");
+        finish();
     }
 }

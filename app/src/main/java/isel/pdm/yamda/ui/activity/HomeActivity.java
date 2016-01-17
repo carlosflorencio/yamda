@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SearchView;
@@ -15,7 +15,7 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
 import isel.pdm.yamda.R;
-import isel.pdm.yamda.ui.activity.base.LoggingActivity;
+import isel.pdm.yamda.ui.activity.base.ToolbarActivity;
 import isel.pdm.yamda.ui.fragment.InTheatersMoviesListFragment;
 import isel.pdm.yamda.ui.fragment.SoonMoviesListFragment;
 import isel.pdm.yamda.ui.fragment.TopMoviesListFragment;
@@ -23,22 +23,22 @@ import isel.pdm.yamda.ui.fragment.TopMoviesListFragment;
 /**
  * Launcher activity that displays the tabs and fragments containing the movies lists
  */
-public class HomeActivity extends LoggingActivity {
+public class HomeActivity extends ToolbarActivity implements ViewPager.OnPageChangeListener {
 
-    protected Toolbar toolbar;
     protected SearchView searchView;
+    protected ViewPager viewPager;
+    protected int tabPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.setContentView(R.layout.activity_home);
-
-        //set the toolbar
-        this.toolbar = (Toolbar) findViewById(R.id.home_toolbar);
-        setSupportActionBar(toolbar);
-
         this.setPager();
+    }
+
+    @Override
+    protected int getToolbarLayout() {
+        return R.layout.activity_home;
     }
 
     /**
@@ -57,21 +57,13 @@ public class HomeActivity extends LoggingActivity {
                                   .create());
 
         //Set the fragments pager
-        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(adapter);
 
         //Set the tabs names pager
         SmartTabLayout viewPagerTab = (SmartTabLayout) findViewById(R.id.tabs);
         viewPagerTab.setViewPager(viewPager);
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        //Clear the search query and remove keyboard on back from the search activity
-        searchView.setQuery("", false);
-        searchView.clearFocus();
+        viewPagerTab.setOnPageChangeListener(this);
     }
 
     /**
@@ -117,4 +109,50 @@ public class HomeActivity extends LoggingActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        Log.d(TAG, "onPageSelected: " + position);
+        tabPosition = position;
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+
+    @Override
+    protected void onDestroy() {
+
+
+        super.onDestroy();
+    }
+
+    /*
+   |--------------------------------------------------------------------------
+   | Save state
+   |--------------------------------------------------------------------------
+   */
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        int pos = savedInstanceState.getInt("tab_pos");
+        this.viewPager.setCurrentItem(pos);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        //Clear the search query and remove keyboard on back from the search activity
+        searchView.setQuery("", false);
+        searchView.clearFocus();
+
+        outState.putInt("tab_pos", tabPosition);
+
+        super.onSaveInstanceState(outState);
+    }
 }
