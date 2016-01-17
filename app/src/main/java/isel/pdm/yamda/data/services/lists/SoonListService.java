@@ -7,23 +7,31 @@ import java.util.List;
 
 import isel.pdm.yamda.data.exception.FailedGettingDataException;
 import isel.pdm.yamda.data.provider.MoviesContract;
+import isel.pdm.yamda.data.repository.base.ICloudMovieRepository;
+import isel.pdm.yamda.data.repository.base.ILocalMovieRepository;
 import isel.pdm.yamda.data.repository.base.MovieRepositoryFactory;
 import isel.pdm.yamda.data.services.ListService;
 import isel.pdm.yamda.model.Movie;
 
 /**
- * Class used to //TODO: comentary
+ * This service runs every thursday and its purpose is to fetch the upcoming movies
+ * and save it in the local repo
  */
 public class SoonListService extends ListService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        try {
-            int page = intent.getIntExtra(PAGE, 1);
-            List<Movie> movies = MovieRepositoryFactory.getCloudRepository().getSoonMovies(page);
+        if(!canDownload()) return;
 
-            MovieRepositoryFactory.getLocalRepository(getApplication()).deleteMovies(MoviesContract.MovieEntry.TYPE_SOON);
-            if(MovieRepositoryFactory.getLocalRepository(getApplication()).insertMovies(movies, MoviesContract.MovieEntry.TYPE_SOON)<=0){
+        try {
+            ICloudMovieRepository cloudRepo = MovieRepositoryFactory.getCloudRepository();
+            ILocalMovieRepository localRepo = MovieRepositoryFactory.getLocalRepository(getApplicationContext());
+
+            int page = intent.getIntExtra(PAGE, 1);
+            List<Movie> movies = cloudRepo.getSoonMovies(page);
+
+           localRepo.deleteMovies(MoviesContract.MovieEntry.TYPE_SOON);
+            if(localRepo.insertMovies(movies, MoviesContract.MovieEntry.TYPE_SOON) <= 0){
                 Log.d(TAG, "onHandleIntent: (Soon) nothing has been inserted");
             }
         } catch (FailedGettingDataException e) {
