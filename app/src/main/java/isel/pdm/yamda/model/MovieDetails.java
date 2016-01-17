@@ -23,14 +23,6 @@ public class MovieDetails extends Movie {
      **/
     protected String backdrop;
     /**
-     * The movie crew team
-     **/
-    private Crew[] crew;
-    /**
-     * The movie Cast team
-     **/
-    private Actor[] actors;
-    /**
      * The movie genres, must be filled
      **/
     private Genre[] genres;
@@ -41,13 +33,10 @@ public class MovieDetails extends Movie {
 
     public MovieDetails(int id, String title, String original_title, String release_date,
                         String poster, String backdrop, double rating, double popularity,
-                        int runtime, String overview, Genre[] genres,
-                        Crew[] crew, Actor[] actors) {
+                        int runtime, String overview, Genre[] genres) {
         super(id, title, original_title, release_date, poster, rating, popularity);
         this.runtime = runtime;
         this.overview = overview;
-        this.crew = crew;
-        this.actors = actors;
         this.backdrop = backdrop;
         this.genres = genres;
         this.isBeingFollowed = false;
@@ -85,13 +74,5 @@ public class MovieDetails extends Movie {
 
     public Genre[] getGenres() {
         return this.genres;
-    }
-
-    public Crew[] getCrew() {
-        return crew;
-    }
-
-    public Actor[] getActors() {
-        return actors;
     }
 }

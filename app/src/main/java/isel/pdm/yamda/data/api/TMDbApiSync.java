@@ -3,6 +3,7 @@ package isel.pdm.yamda.data.api;
 import java.io.IOException;
 import java.util.Locale;
 
+import isel.pdm.yamda.data.api.entity.CreditsListingDTO;
 import isel.pdm.yamda.data.api.entity.GenreListingDTO;
 import isel.pdm.yamda.data.api.entity.MovieDTO;
 import isel.pdm.yamda.data.api.entity.MovieListingDTO;
@@ -66,8 +67,7 @@ public class TMDbApiSync {
      * @throws IOException
      */
     public MovieDTO getMovie(int id) throws IOException {
-        return this.api.getMovie(id, ITMDbServiceAPI.API_KEY, this.language,
-                                 "credits") //Append credits (crew and actors)
+        return this.api.getMovie(id, ITMDbServiceAPI.API_KEY, this.language)
                        .execute().body();
     }
 
@@ -91,5 +91,16 @@ public class TMDbApiSync {
      */
     public GenreListingDTO getGenres() throws IOException {
         return this.api.getGenres(ITMDbServiceAPI.API_KEY, this.language).execute().body();
+    }
+
+    /**
+     * Get the credits of a movie
+     * @param movieId
+     * @return
+     * @throws IOException
+     */
+    public CreditsListingDTO getMovieCredits(int movieId) throws IOException {
+        return this.api.getMovieCredits(movieId, ITMDbServiceAPI.API_KEY, this.language).execute()
+                       .body();
     }
 }

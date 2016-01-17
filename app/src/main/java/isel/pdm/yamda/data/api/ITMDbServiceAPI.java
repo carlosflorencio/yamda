@@ -1,5 +1,6 @@
 package isel.pdm.yamda.data.api;
 
+import isel.pdm.yamda.data.api.entity.CreditsListingDTO;
 import isel.pdm.yamda.data.api.entity.GenreListingDTO;
 import isel.pdm.yamda.data.api.entity.MovieDTO;
 import isel.pdm.yamda.data.api.entity.MovieListingDTO;
@@ -20,26 +21,24 @@ public interface ITMDbServiceAPI {
     String BACKDROP_SIZE = "w780";
 
     /**
-     *  Retrieves a specific movie through his {@code id}
+     * Retrieves a specific movie through his {@code id}
      *
-     * @param id         movie id
-     * @param api_key    api_key used to retrieve information
-     * @param lang       to retrieve in this language (ISO 639-1 code)
-     * @param append what to append to the movie info, like credits and so..
+     * @param id      movie id
+     * @param api_key api_key used to retrieve information
+     * @param lang    to retrieve in this language (ISO 639-1 code)
      * @return
      */
     @GET("/3/movie/{id}")
     Call<MovieDTO> getMovie(@Path("id") int id,
                             @Query("api_key") String api_key,
-                            @Query("language") String lang,
-                            @Query("append_to_response") String append);
+                            @Query("language") String lang);
 
     /**
-     *  Retrieves a list of movies that are now on cinema.
+     * Retrieves a list of movies that are now on cinema.
      *
-     * @param API_KEY     api_key used to retrieve information
-     * @param page        page (Minimum 1, maximum 1000)
-     * @param language    to retrieve in this language (ISO 639-1 code)
+     * @param API_KEY  api_key used to retrieve information
+     * @param page     page (Minimum 1, maximum 1000)
+     * @param language to retrieve in this language (ISO 639-1 code)
      * @return
      */
     @GET("/3/movie/now_playing")
@@ -48,30 +47,30 @@ public interface ITMDbServiceAPI {
                                         @Query("language") String language);
 
     /**
-     *  Retrieves a list of movies that are to come to cinema.
+     * Retrieves a list of movies that are to come to cinema.
      *
-     * @param API_KEY     api_key used to retrieve information
-     * @param page        page (Minimum 1, maximum 1000)
-     * @param language    to retrieve in this language (ISO 639-1 code)
+     * @param API_KEY  api_key used to retrieve information
+     * @param page     page (Minimum 1, maximum 1000)
+     * @param language to retrieve in this language (ISO 639-1 code)
      * @return
      */
     @GET("/3/movie/upcoming")
     Call<MovieListingDTO> getUpcoming(@Query("api_key") String API_KEY,
-                                  @Query("page") int page,
-                                  @Query("language") String language);
+                                      @Query("page") int page,
+                                      @Query("language") String language);
 
     /**
-     *  Retrieves a list of movies that are the most popular on TMDb.
+     * Retrieves a list of movies that are the most popular on TMDb.
      *
-     * @param API_KEY     api_key used to retrieve information
-     * @param page        page (Minimum 1, maximum 1000)
-     * @param language    to retrieve in this language (ISO 639-1 code)
+     * @param API_KEY  api_key used to retrieve information
+     * @param page     page (Minimum 1, maximum 1000)
+     * @param language to retrieve in this language (ISO 639-1 code)
      * @return
      */
     @GET("/3/movie/popular")
     Call<MovieListingDTO> getMostPopular(@Query("api_key") String API_KEY,
-                                     @Query("page") int page,
-                                     @Query("language") String language);
+                                         @Query("page") int page,
+                                         @Query("language") String language);
 
     /**
      * Retrieves a list of movies by title
@@ -84,18 +83,32 @@ public interface ITMDbServiceAPI {
      */
     @GET("/3/search/movie")
     Call<MovieListingDTO> getSearchedMovies(@Query("api_key") String API_KEY,
-                                               @Query("query") String movie,
-                                               @Query("page") int page,
-                                               @Query("language") String lang);
+                                            @Query("query") String movie,
+                                            @Query("page") int page,
+                                            @Query("language") String lang);
 
     /**
      * Retrieves a lisf of the movies genres
+     *
      * @param API_KEY
      * @param language
      * @return
      */
     @GET("/3/genre/movie/list")
     Call<GenreListingDTO> getGenres(@Query("api_key") String API_KEY,
-                                         @Query("language") String language);
+                                    @Query("language") String language);
+
+    /**
+     * Retrieves the credits of a movie
+     *
+     * @param movieId
+     * @param API_KEY
+     * @param language
+     * @return
+     */
+    @GET("/3/movie/{movie}")
+    Call<CreditsListingDTO> getMovieCredits(@Path("movie") int movieId,
+                                            @Query("api_key") String API_KEY,
+                                            @Query("language") String language);
 
 }

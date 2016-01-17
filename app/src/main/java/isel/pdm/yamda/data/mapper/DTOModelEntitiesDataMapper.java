@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import isel.pdm.yamda.data.api.ITMDbServiceAPI;
+import isel.pdm.yamda.data.api.entity.CreditsListingDTO;
 import isel.pdm.yamda.data.api.entity.GenreListingDTO;
 import isel.pdm.yamda.data.api.entity.MovieDTO;
 import isel.pdm.yamda.data.api.entity.MovieListingDTO;
@@ -12,6 +13,7 @@ import isel.pdm.yamda.model.Actor;
 import isel.pdm.yamda.model.Crew;
 import isel.pdm.yamda.model.Genre;
 import isel.pdm.yamda.model.Movie;
+import isel.pdm.yamda.model.MovieCredits;
 import isel.pdm.yamda.model.MovieDetails;
 
 /**
@@ -28,8 +30,6 @@ public class DTOModelEntitiesDataMapper {
      */
     public MovieDetails transform(MovieDTO dto) {
         Genre[] genres = this.createGenres(dto.getGenres());
-        Actor[] actors = this.createActors(dto.getCredits().getActors());
-        Crew[] crew = this.createCrew(dto.getCredits().getCrew());
 
         return new MovieDetails(dto.getId(),
                                 dto.getTitle(),
@@ -41,9 +41,7 @@ public class DTOModelEntitiesDataMapper {
                                 dto.getPopularity(),
                                 dto.getRuntime(),
                                 dto.getOverview(),
-                                genres,
-                                crew,
-                                actors
+                                genres
         );
     }
 
@@ -80,6 +78,17 @@ public class DTOModelEntitiesDataMapper {
     }
 
     /**
+     * Transform a credits list data entity to a business model
+     * @param data
+     * @return
+     */
+    public MovieCredits transform(CreditsListingDTO data) {
+        Actor[] actors = createActors(data.getActors());
+        Crew[] crew = createCrew(data.getCrew());
+        return new MovieCredits(data.getMovieId(), crew, actors);
+    }
+
+    /**
      * Transform a genres list data entity to a business list model
      *
      * @param dto
@@ -100,7 +109,7 @@ public class DTOModelEntitiesDataMapper {
      * @param crew
      * @return
      */
-    private Crew[] createCrew(MovieDTO.CrewDTO[] crew) {
+    private Crew[] createCrew(CreditsListingDTO.CrewDTO[] crew) {
         Crew[] res = new Crew[crew.length];
 
         for (int i = 0; i < crew.length; i++) {
@@ -122,7 +131,7 @@ public class DTOModelEntitiesDataMapper {
      * @param actors
      * @return
      */
-    private Actor[] createActors(MovieDTO.ActorDTO[] actors) {
+    private Actor[] createActors(CreditsListingDTO.ActorDTO[] actors) {
         Actor[] res = new Actor[actors.length];
 
         for (int i = 0; i < actors.length; i++) {
