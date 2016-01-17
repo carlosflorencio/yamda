@@ -101,7 +101,7 @@
 
         <ToggleButton
             android:focusable="false"
-            android:id="@+id/movie_follow"
+            android:id="@+id/follow_button"
             android:layout_below="@+id/movie_similar_holder"
             android:layout_centerHorizontal="true"
             android:layout_height="wrap_content"

@@ -14,7 +14,6 @@ import isel.pdm.yamda.ui.fragment.MovieDetailsFragment;
  */
 public class MovieActivity extends ToolbarActivity {
 
-
     public static final String ID_TAG = "movie_id";
 
     @Override

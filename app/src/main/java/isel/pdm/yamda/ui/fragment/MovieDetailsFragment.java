@@ -28,6 +28,12 @@ import isel.pdm.yamda.ui.presenter.base.IPresenter;
  */
 public class MovieDetailsFragment extends LoadDataFragment<MovieDetails> {
 
+    public interface IFollowListener{
+        void storeFollow(int id, boolean follow);
+    }
+
+    private IFollowListener followListener;
+
     private MovieDetails movie;
     private boolean isBeingFollowed;
 
@@ -68,6 +74,7 @@ public class MovieDetailsFragment extends LoadDataFragment<MovieDetails> {
         TextView releaseYear = (TextView) this.mainView.findViewById(R.id.movie_release_date);
         TextView overview = (TextView) this.mainView.findViewById(R.id.movie_overview);
         Button creditsButton = (Button) this.mainView.findViewById(R.id.credits_button);
+        final Button followButton = (Button) this.mainView.findViewById(R.id.follow_button);
 
         Picasso.with(getContext()).load(movie.getBackdrop()).into(backdropView);
         Picasso.with(getContext()).load(movie.getPoster()).into(imageView);
@@ -79,8 +86,8 @@ public class MovieDetailsFragment extends LoadDataFragment<MovieDetails> {
         overview.setText(movie.getOverview());
 
         if (movie.whenIsBeingReleased() > 0) {
-            this.mainView.findViewById(R.id.movie_follow).setVisibility(View.VISIBLE);
-            ((Checkable) this.mainView.findViewById(R.id.movie_follow)).setChecked(isBeingFollowed);
+            this.mainView.findViewById(R.id.follow_button).setVisibility(View.VISIBLE);
+            ((Checkable) followButton).setChecked(movie.isBeingFollowed());
         }
 
         creditsButton.setOnClickListener(new View.OnClickListener() {
@@ -91,10 +98,29 @@ public class MovieDetailsFragment extends LoadDataFragment<MovieDetails> {
             }
         });
 
+        followButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                movie.setBeingFollowed(followButton.isActivated());
+            }
+        });
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(followListener != null){
+            followListener.storeFollow(movie.getId(), movie.isBeingFollowed());
+        }
     }
 
     @Override
     protected IPresenter createPresenter() {
         return new MovieViewPresenter(this);
+    }
+
+    public void setFollowListener(IFollowListener followListener) {
+        this.followListener = followListener;
     }
 }

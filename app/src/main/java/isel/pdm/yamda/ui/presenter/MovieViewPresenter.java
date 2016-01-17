@@ -8,6 +8,7 @@ import isel.pdm.yamda.data.repository.base.ICloudMovieRepository;
 import isel.pdm.yamda.data.repository.base.MovieRepositoryFactory;
 import isel.pdm.yamda.model.MovieDetails;
 import isel.pdm.yamda.ui.contract.ILoadDataView;
+import isel.pdm.yamda.ui.fragment.MovieDetailsFragment;
 import isel.pdm.yamda.ui.presenter.base.Presenter;
 
 /**
@@ -17,8 +18,19 @@ public class MovieViewPresenter extends Presenter<MovieDetails> {
 
     private int id;
 
-    public MovieViewPresenter(ILoadDataView<MovieDetails> view) {
+    public MovieViewPresenter(final ILoadDataView<MovieDetails> view) {
         super(view);
+
+        ((MovieDetailsFragment)view).setFollowListener(new MovieDetailsFragment.IFollowListener() {
+            @Override
+            public void storeFollow(int id, boolean follow) {
+                if(follow){
+                    MovieRepositoryFactory.getLocalRepository(((MovieDetailsFragment) view).getActivity()).followMovie(id);
+                } else {
+                    MovieRepositoryFactory.getLocalRepository(((MovieDetailsFragment) view).getActivity()).unfollowMovie(id);
+                }
+            }
+        });
     }
 
 
