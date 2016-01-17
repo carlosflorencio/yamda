@@ -29,7 +29,7 @@ public class MoviesDatabaseHelper extends SQLiteOpenHelper {
     private static final String CREATE_FOLLOW_TABLE_SQL = "CREATE TABLE " + MoviesContract.FollowEntry.TABLE_NAME
             + "("
             + MoviesContract.FollowEntry.COLUMN_MOVIE_ID + " INTEGER NOT NULL, "
-            + MoviesContract.FollowEntry.COLUMN_MOVIE_LIST + " INTEGER NOT NULL, "
+            + MoviesContract.FollowEntry.COLUMN_MOVIE_LIST + " TEXT NOT NULL, "
             + "PRIMARY KEY(" + MoviesContract.FollowEntry.COLUMN_MOVIE_ID + ", " + MoviesContract.FollowEntry.COLUMN_MOVIE_LIST +"), "
             + "FOREIGN KEY(" + MoviesContract.FollowEntry.COLUMN_MOVIE_ID + ", " + MoviesContract.FollowEntry.COLUMN_MOVIE_LIST +
             ") REFERENCES " + MoviesContract.MovieEntry.TABLE_NAME + "(" + MoviesContract.MovieEntry.COLUMN_ID + ", "

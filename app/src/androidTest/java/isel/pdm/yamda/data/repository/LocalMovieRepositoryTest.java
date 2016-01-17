@@ -82,6 +82,19 @@ public class LocalMovieRepositoryTest extends ProviderTestCase2<MoviesProvider> 
         assertEquals(movies.size(), rows);
     }
 
+    public void testFollowMovieAndUnfollow() {
+        List<Movie> movies = getMovieList1();
+        repo.insertMovies(movies, MoviesContract.MovieEntry.TYPE_SOON);
+
+        repo.followMovie(movies.get(1).getId());
+
+        assertTrue(repo.isBeingFollowed(movies.get(1).getId()));
+
+        repo.unfollowMovie(movies.get(1).getId());
+
+        assertFalse(repo.isBeingFollowed(movies.get(1).getId()));
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Utils
