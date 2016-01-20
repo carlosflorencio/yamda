@@ -25,8 +25,8 @@
             android:layout_marginTop="10dp"
             android:layout_alignRight="@+id/imageView3"
             android:layout_alignEnd="@+id/imageView3"
-            android:src="@drawable/user"
-            tools:src="@drawable/user"/>
+            android:src="@drawable/carlos"
+            tools:src="@drawable/carlos"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -47,8 +47,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_marginTop="10dp"
-            android:src="@drawable/carlos"
-            tools:src="@drawable/carlos"
+            android:src="@drawable/user"
+            tools:src="@drawable/user"
             android:layout_marginRight="10dp"/>
 
         <TextView
