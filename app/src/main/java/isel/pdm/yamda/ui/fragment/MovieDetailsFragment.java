@@ -9,9 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Checkable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.squareup.picasso.Picasso;
 
@@ -70,7 +70,7 @@ public class MovieDetailsFragment extends LoadDataFragment<MovieDetails> {
         TextView releaseYear = (TextView) this.mainView.findViewById(R.id.movie_release_date);
         TextView overview = (TextView) this.mainView.findViewById(R.id.movie_overview);
         Button creditsButton = (Button) this.mainView.findViewById(R.id.credits_button);
-        final Button followButton = (Button) this.mainView.findViewById(R.id.follow_button);
+        final ToggleButton followButton = (ToggleButton) this.mainView.findViewById(R.id.follow_button);
 
         Picasso.with(getContext()).load(movie.getBackdrop()).into(backdropView);
         Picasso.with(getContext()).load(movie.getPoster()).into(imageView);
@@ -83,7 +83,7 @@ public class MovieDetailsFragment extends LoadDataFragment<MovieDetails> {
 
         if (movie.whenIsBeingReleased() > 0) {
             this.mainView.findViewById(R.id.follow_button).setVisibility(View.VISIBLE);
-            ((Checkable) followButton).setChecked(movie.isBeingFollowed());
+            followButton.setChecked(movie.isBeingFollowed());
         }
 
         creditsButton.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +97,7 @@ public class MovieDetailsFragment extends LoadDataFragment<MovieDetails> {
         followButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                moviePresenter.storeFollow(followButton.isActivated());
+                moviePresenter.storeFollow(followButton.isChecked());
             }
         });
 

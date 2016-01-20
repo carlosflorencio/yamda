@@ -81,7 +81,7 @@ public class MovieDetailsPresenter extends Presenter<MovieDetails> {
             ILocalMovieRepository repo = MovieRepositoryFactory.getLocalRepository(view.getViewContext());
 
             //if not following, begin to follow
-            if(!params[0]){
+            if(params[0]){
                 repo.followMovie(id);
             } else {
                 repo.unfollowMovie(id);
