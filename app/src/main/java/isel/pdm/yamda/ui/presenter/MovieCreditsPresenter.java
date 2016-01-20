@@ -32,6 +32,11 @@ public class MovieCreditsPresenter extends Presenter<MovieCredits> {
             new LoadDataTask().execute();
     }
 
+    @Override
+    public void getMoreData(int page) {
+        throw new UnsupportedOperationException();
+    }
+
     /**
      * Download movie credits in a worker thread using an AsyncTask
      * From cloud repo

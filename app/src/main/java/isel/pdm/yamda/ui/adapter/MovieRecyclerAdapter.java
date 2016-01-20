@@ -44,6 +44,16 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
     }
 
     /**
+     * Replace data in the adapter
+     *
+     * @param data
+     */
+    public void addMoreData(List<Movie> data) {
+        this.data.addAll(data);
+        notifyDataSetChanged();
+    }
+
+    /**
      * Sets the click listener
      * @param listener
      */
@@ -89,6 +99,13 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
     }
 
     /**
+     * Interface for click listeners for this adapter
+     */
+    public interface IClickListener {
+        void onItemClick(Movie movie);
+    }
+
+    /**
      * List row members
      */
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -112,12 +129,5 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
         public void onClick(View v) {
             listener.onItemClick(data.get(getAdapterPosition()));
         }
-    }
-
-    /**
-     * Interface for click listeners for this adapter
-     */
-    public interface IClickListener {
-        void onItemClick(Movie movie);
     }
 }

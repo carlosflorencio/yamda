@@ -10,6 +10,7 @@ import isel.pdm.yamda.data.repository.base.ICloudMovieRepository;
 import isel.pdm.yamda.data.repository.base.MovieRepositoryFactory;
 import isel.pdm.yamda.model.Movie;
 import isel.pdm.yamda.ui.contract.ILoadDataView;
+import isel.pdm.yamda.ui.fragment.common.MovieListableFragment;
 import isel.pdm.yamda.ui.presenter.base.Presenter;
 
 /**
@@ -25,6 +26,11 @@ public class TopMoviesListPresenter extends Presenter<List<Movie>> {
     @Override
     public void execute() {
         new LoadDataTask().execute();
+    }
+
+    @Override
+    public void getMoreData(int page) {
+        new LoadMorePagesTask().execute(page);
     }
 
     /**
@@ -55,6 +61,34 @@ public class TopMoviesListPresenter extends Presenter<List<Movie>> {
                 view.setData(list);
             else
                 view.showNoConnection();
+        }
+    }
+
+    /**
+     * Download specific page top movie list and adds to the list in a worker thread using an AsyncTask
+     * From cloud repo
+     */
+    private class LoadMorePagesTask extends AsyncTask<Integer, Void, List<Movie>> {
+
+        @Override
+        protected List<Movie> doInBackground(Integer... params) {
+            Log.d(TAG, "doInBackground: Getting movies from the api");
+            ICloudMovieRepository repo = MovieRepositoryFactory.getCloudRepository();
+
+            try {
+                return repo.getTopMovies(params[0]);
+            } catch (FailedGettingDataException e) {
+                Log.d(TAG, "Failed getting data! Error: " + e.getMessage());
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(List<Movie> list) {
+            super.onPostExecute(list);
+
+            ((MovieListableFragment)view).addMoreData(list);
         }
     }
 }

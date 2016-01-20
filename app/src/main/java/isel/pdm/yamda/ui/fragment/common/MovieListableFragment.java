@@ -28,6 +28,7 @@ public abstract class MovieListableFragment extends LoadDataFragment<List<Movie>
     protected MovieRecyclerAdapter adapter;
 
     protected List<Movie> data;
+    private int page;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -81,8 +82,7 @@ public abstract class MovieListableFragment extends LoadDataFragment<List<Movie>
                 super.onScrolled(recyclerView, dx, dy);
 
                 if(!recyclerView.canScrollVertically(1)){
-                    //TODO: get next page from web
-                    showError("End");
+                        presenter.getMoreData(++page);
                 }
             }
         });
@@ -105,10 +105,18 @@ public abstract class MovieListableFragment extends LoadDataFragment<List<Movie>
         this.listView.setAdapter(adapter);
     }
 
+    public void addMoreData(List<Movie> data){
+        this.showResults();
+        this.data.addAll(data);
+        Log.d(TAG, "addMoreData: data size: "+this.data.size());
+        this.adapter.addMoreData(data);
+    }
+
     @Override
     public void setData(List<Movie> data) {
         Log.d(TAG, "setData: data! size: " + data.size());
         this.showResults();
+        this.page = 1;
         this.data = data;
         this.adapter.setData(data);
     }
