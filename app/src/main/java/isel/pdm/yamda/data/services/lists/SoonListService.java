@@ -1,14 +1,13 @@
 package isel.pdm.yamda.data.services.lists;
 
 import android.annotation.TargetApi;
-import android.app.AlarmManager;
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.os.SystemClock;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
@@ -16,7 +15,6 @@ import java.util.List;
 
 import isel.pdm.yamda.R;
 import isel.pdm.yamda.data.exception.FailedGettingDataException;
-import isel.pdm.yamda.data.handlers.NotificationPublisher;
 import isel.pdm.yamda.data.provider.MoviesContract;
 import isel.pdm.yamda.data.repository.base.ICloudMovieRepository;
 import isel.pdm.yamda.data.repository.base.ILocalMovieRepository;
@@ -57,26 +55,11 @@ public class SoonListService extends ListService {
 
     private void checkForNotifications(Movie movie, boolean follow){
         if(follow){
+            NotificationManager notificationManager =
+                    (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
             Notification notification = getNotificationReleased(movie);
-            scheduleNotification(movie, notification);
+            notificationManager.notify(movie.getId(), notification);
         }
-    }
-
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    private void scheduleNotification(Movie movie, Notification notification) {
-        Intent notificationIntent = new Intent(getApplicationContext(), NotificationPublisher.class);
-        notificationIntent
-                .putExtra(NotificationPublisher.NOTIFICATION_ID, movie.getId());  // Movie id
-        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION,
-                notification);      // Notification (argument)
-
-        PendingIntent pendingIntent = PendingIntent
-                .getBroadcast(getApplicationContext(), 0, notificationIntent, PendingIntent.FLAG_ONE_SHOT);
-
-        long futureInMillis = SystemClock.elapsedRealtime() + 5000;
-
-        ((AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE)).set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis,
-                pendingIntent);  // Set an alarm to tick at x time
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
