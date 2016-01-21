@@ -10,18 +10,28 @@ import isel.pdm.yamda.data.repository.base.ICloudMovieRepository;
 import isel.pdm.yamda.data.repository.base.MovieRepositoryFactory;
 import isel.pdm.yamda.model.Movie;
 import isel.pdm.yamda.ui.contract.ILoadDataView;
-import isel.pdm.yamda.ui.presenter.base.Presenter;
+import isel.pdm.yamda.ui.presenter.base.ListablePresenter;
 
 /**
  * Search presenter
  */
-public class SearchMovieViewPresenter extends Presenter<List<Movie>> {
+public class SearchMovieViewPresenter extends ListablePresenter<List<Movie>> {
 
     private String query;
 
     public SearchMovieViewPresenter(
             ILoadDataView<List<Movie>> view) {
         super(view);
+    }
+
+    @Override
+    public void getMoreData(int page) {
+        view.showError("No More Results");
+    }
+
+    @Override
+    public void refresh() {
+        new LoadDataTask().execute(query);
     }
 
     /**
