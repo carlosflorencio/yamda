@@ -34,11 +34,6 @@ public class SplashPresenter extends Presenter<Void> {
         new LoadDataTask().execute();
     }
 
-    @Override
-    public void getMoreData(int page) {
-        throw new UnsupportedOperationException();
-    }
-
     /**
      * Download data from the cloud if the local repo (content provider) is empty
      */

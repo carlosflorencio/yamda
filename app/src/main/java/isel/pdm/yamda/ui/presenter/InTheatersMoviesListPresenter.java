@@ -13,12 +13,12 @@ import isel.pdm.yamda.data.repository.base.MovieRepositoryFactory;
 import isel.pdm.yamda.model.Movie;
 import isel.pdm.yamda.ui.contract.ILoadDataView;
 import isel.pdm.yamda.ui.fragment.common.MovieListableFragment;
-import isel.pdm.yamda.ui.presenter.base.Presenter;
+import isel.pdm.yamda.ui.presenter.base.ListablePresenter;
 
 /**
  * Presenter class for the InTheatersFragment
  */
-public class InTheatersMoviesListPresenter extends Presenter<List<Movie>> {
+public class InTheatersMoviesListPresenter extends ListablePresenter<List<Movie>> {
 
     public InTheatersMoviesListPresenter(ILoadDataView<List<Movie>> view) {
         super(view);

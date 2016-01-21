@@ -10,8 +10,6 @@ public interface IPresenter {
      */
     void execute();
 
-    void getMoreData(int page);
-
     /**
      * Method that control the lifecycle of the view. It should be called in the view's
      * (Activity or Fragment) onResume() method.

@@ -39,11 +39,6 @@ public class SearchMovieViewPresenter extends Presenter<List<Movie>> {
             new LoadDataTask().execute(query);
     }
 
-    @Override
-    public void getMoreData(int page) {
-        throw new UnsupportedOperationException();
-    }
-
     /**
      * Download movie list in a worker thread using an AsyncTask
      * From cloud repo

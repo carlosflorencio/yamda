@@ -10,6 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
+
 import java.util.List;
 
 import isel.pdm.yamda.R;
@@ -17,6 +20,7 @@ import isel.pdm.yamda.model.Movie;
 import isel.pdm.yamda.ui.activity.MovieActivity;
 import isel.pdm.yamda.ui.adapter.MovieRecyclerAdapter;
 import isel.pdm.yamda.ui.fragment.base.LoadDataFragment;
+import isel.pdm.yamda.ui.presenter.base.ListablePresenter;
 
 /**
  * Common code for the movies list fragments
@@ -24,10 +28,15 @@ import isel.pdm.yamda.ui.fragment.base.LoadDataFragment;
 public abstract class MovieListableFragment extends LoadDataFragment<List<Movie>> {
 
     public static final String RETRY_VIEW = "retry_view";
+
+    protected SwipyRefreshLayout refreshLayout;
+
     protected RecyclerView listView;
+
     protected MovieRecyclerAdapter adapter;
 
     protected List<Movie> data;
+
     private int page;
 
     @Override
@@ -35,7 +44,8 @@ public abstract class MovieListableFragment extends LoadDataFragment<List<Movie>
                              @Nullable Bundle savedInstanceState) {
         View viewContainer = super.onCreateView(inflater, container, savedInstanceState);
 
-        this.listView = (RecyclerView) this.mainView;
+        this.refreshLayout = (SwipyRefreshLayout) this.mainView;
+        this.listView = (RecyclerView) this.mainView.findViewById(R.id.list_view);
 
         this.setupListView();
         this.setListViewAdapter();
@@ -75,14 +85,13 @@ public abstract class MovieListableFragment extends LoadDataFragment<List<Movie>
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         listView.setLayoutManager(mLayoutManager);
 
-        listView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-
+        refreshLayout.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                if(!recyclerView.canScrollVertically(1)){
-                        presenter.getMoreData(++page);
+            public void onRefresh(SwipyRefreshLayoutDirection direction) {
+                if(direction == SwipyRefreshLayoutDirection.BOTTOM){
+                    ((ListablePresenter)presenter).getMoreData(++page);
+                } else if (direction == SwipyRefreshLayoutDirection.TOP){
+                    presenter.execute();
                 }
             }
         });
@@ -109,7 +118,7 @@ public abstract class MovieListableFragment extends LoadDataFragment<List<Movie>
         this.showResults();
         this.data.addAll(data);
         Log.d(TAG, "addMoreData: data size: "+this.data.size());
-        this.adapter.addMoreData(data);
+        this.adapter.setData(this.data);
     }
 
     @Override
@@ -129,6 +138,7 @@ public abstract class MovieListableFragment extends LoadDataFragment<List<Movie>
     @Override
     public void showResults() {
         this.frameLayout.removeAllViews();
-        this.frameLayout.addView(listView);
+        this.frameLayout.addView(refreshLayout);
+        refreshLayout.setRefreshing(false);
     }
 }

@@ -44,16 +44,6 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
     }
 
     /**
-     * Replace data in the adapter
-     *
-     * @param data
-     */
-    public void addMoreData(List<Movie> data) {
-        this.data.addAll(data);
-        notifyDataSetChanged();
-    }
-
-    /**
      * Sets the click listener
      * @param listener
      */

@@ -37,11 +37,6 @@ public class MovieDetailsPresenter extends Presenter<MovieDetails> {
         new LoadDataTask().execute(id);
     }
 
-    @Override
-    public void getMoreData(int page) {
-        throw new UnsupportedOperationException();
-    }
-
     /**
      * Load movie details in a worker thread using an AsyncTask
      */

@@ -12,9 +12,9 @@ import isel.pdm.yamda.data.repository.base.MovieRepositoryFactory;
 import isel.pdm.yamda.model.Movie;
 import isel.pdm.yamda.ui.contract.ILoadDataView;
 import isel.pdm.yamda.ui.fragment.common.MovieListableFragment;
-import isel.pdm.yamda.ui.presenter.base.Presenter;
+import isel.pdm.yamda.ui.presenter.base.ListablePresenter;
 
-public class SoonMoviesListPresenter extends Presenter<List<Movie>> {
+public class SoonMoviesListPresenter extends ListablePresenter<List<Movie>> {
 
 
     public SoonMoviesListPresenter(
@@ -23,13 +23,13 @@ public class SoonMoviesListPresenter extends Presenter<List<Movie>> {
     }
 
     @Override
-    public void execute() {
-        new LoadDataTask().execute();
+    public void getMoreData(int page) {
+        new LoadMorePagesTask().execute(page);
     }
 
     @Override
-    public void getMoreData(int page) {
-        new LoadMorePagesTask().execute(page);
+    public void execute() {
+        new LoadDataTask().execute();
     }
 
     /**
