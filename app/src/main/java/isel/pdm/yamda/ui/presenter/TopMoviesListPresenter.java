@@ -33,6 +33,11 @@ public class TopMoviesListPresenter extends ListablePresenter<List<Movie>> {
         new LoadMorePagesTask().execute(page);
     }
 
+    @Override
+    public void refresh() {
+        new LoadDataTask().execute();
+    }
+
     /**
      * Download top movie list in a worker thread using an AsyncTask
      * From cloud repo

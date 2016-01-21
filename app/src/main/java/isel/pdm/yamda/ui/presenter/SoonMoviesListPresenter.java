@@ -6,6 +6,7 @@ import android.util.Log;
 import java.util.List;
 
 import isel.pdm.yamda.data.exception.FailedGettingDataException;
+import isel.pdm.yamda.data.provider.MoviesContract;
 import isel.pdm.yamda.data.repository.base.ICloudMovieRepository;
 import isel.pdm.yamda.data.repository.base.ILocalMovieRepository;
 import isel.pdm.yamda.data.repository.base.MovieRepositoryFactory;
@@ -28,14 +29,19 @@ public class SoonMoviesListPresenter extends ListablePresenter<List<Movie>> {
     }
 
     @Override
-    public void execute() {
+    public void refresh() {
         new LoadDataTask().execute();
+    }
+
+    @Override
+    public void execute() {
+        new LoadDataFromDatabaseTask().execute();
     }
 
     /**
      * Load movie list in a worker thread using an AsyncTask
      */
-    private class LoadDataTask extends AsyncTask<Void, Void, List<Movie>> {
+    private class LoadDataFromDatabaseTask extends AsyncTask<Void, Void, List<Movie>> {
         @Override
         protected List<Movie> doInBackground(Void... params) {
             Log.d(TAG, "doInBackground: Getting movies from content provider");
@@ -49,6 +55,40 @@ public class SoonMoviesListPresenter extends ListablePresenter<List<Movie>> {
             super.onPostExecute(list);
 
             view.setData(list);
+        }
+    }
+
+    /**
+     * Load movie list in a worker thread using an AsyncTask from Web
+     */
+    private class LoadDataTask extends AsyncTask<Void, Void, List<Movie>> {
+
+        @Override
+        protected List<Movie> doInBackground(Void... params) {
+            Log.d(TAG, "doInBackground: Getting movies from content provider");
+            ICloudMovieRepository repo = MovieRepositoryFactory.getCloudRepository();
+
+            try {
+                return repo.getSoonMovies(1);
+            } catch (FailedGettingDataException e) {
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(List<Movie> list) {
+            super.onPostExecute(list);
+            ILocalMovieRepository localRepo = MovieRepositoryFactory.getLocalRepository(view.getViewContext());
+
+            if(list == null){
+                view.showError("No Connection");
+                return;
+            }
+            view.setData(list);
+            localRepo.deleteMovies(MoviesContract.MovieEntry.TYPE_SOON);
+            if(localRepo.insertMovies(list, MoviesContract.MovieEntry.TYPE_SOON) <= 0){
+                Log.d(TAG, "onHandleIntent: (Theaters) nothing has been inserted");
+            }
         }
     }
 

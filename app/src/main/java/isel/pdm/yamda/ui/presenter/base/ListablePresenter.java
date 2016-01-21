@@ -12,4 +12,6 @@ public abstract class ListablePresenter<T> extends Presenter<T> {
     }
 
     public abstract void getMoreData(int page);
+
+    public abstract void refresh();
 }

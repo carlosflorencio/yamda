@@ -45,6 +45,7 @@ public abstract class MovieListableFragment extends LoadDataFragment<List<Movie>
         View viewContainer = super.onCreateView(inflater, container, savedInstanceState);
 
         this.refreshLayout = (SwipyRefreshLayout) this.mainView;
+        this.refreshLayout.setColorSchemeResources(R.color.colorPrimary);
         this.listView = (RecyclerView) this.mainView.findViewById(R.id.list_view);
 
         this.setupListView();
@@ -91,7 +92,7 @@ public abstract class MovieListableFragment extends LoadDataFragment<List<Movie>
                 if(direction == SwipyRefreshLayoutDirection.BOTTOM){
                     ((ListablePresenter)presenter).getMoreData(++page);
                 } else if (direction == SwipyRefreshLayoutDirection.TOP){
-                    presenter.execute();
+                    ((ListablePresenter)presenter).refresh();
                 }
             }
         });
@@ -139,6 +140,12 @@ public abstract class MovieListableFragment extends LoadDataFragment<List<Movie>
     public void showResults() {
         this.frameLayout.removeAllViews();
         this.frameLayout.addView(refreshLayout);
+        refreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void showError(String message) {
+        super.showError(message);
         refreshLayout.setRefreshing(false);
     }
 }
