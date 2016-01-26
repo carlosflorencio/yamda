@@ -10,6 +10,6 @@
 ###### TODO:
 - Tests and more tests
 - Change notifications because some movies don't debut at thursdays
-- 
+
 ###### Docs
 - Documentation in the wiki
