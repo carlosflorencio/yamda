@@ -50,6 +50,13 @@ public class InTheatersMoviesListPresenter extends ListablePresenter<List<Movie>
             Log.d(TAG, "doInBackground: Getting movies from content provider");
             ILocalMovieRepository repo = MovieRepositoryFactory.getLocalRepository(view.getViewContext());
 
+
+            try {
+                Thread.sleep(9000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
             return repo.getTheatersMovies();
         }
 

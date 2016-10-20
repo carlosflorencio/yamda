@@ -1,7 +1,9 @@
 # YAMDA DELUXE
 
+Android app for displaying movies using the themoviedb api.
+
 ###### The Movie DB Api
-- Api key: 3b4c65c3780fc1ef44ec5500b186d833
+- Api key: xxxxxxxxxxxxxxxxxxxxxxxxxxx (Change in ITMDbServiceAPI.java)
 - Docs: https://www.themoviedb.org/documentation/api
 
 ###### Project Info
@@ -12,4 +14,4 @@
 - Change notifications because some movies don't debut at thursdays
 
 ###### Docs
-- Documentation in the wiki
+- Documentation was gone :/
