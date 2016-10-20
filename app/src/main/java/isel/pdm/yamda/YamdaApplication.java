@@ -35,7 +35,7 @@ public class YamdaApplication extends Application {
 
         //debug picasso
         //Picasso.with(this).setLoggingEnabled(true);
-        Picasso.with(this).setIndicatorsEnabled(true);
+        //Picasso.with(this).setIndicatorsEnabled(true);
     }
 
     @Override

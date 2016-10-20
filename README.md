@@ -15,3 +15,8 @@ Android app for displaying movies using the themoviedb api.
 
 ###### Docs
 - Documentation was gone :/
+
+
+![Home](home.png)
+
+![Movie](movie.png)
